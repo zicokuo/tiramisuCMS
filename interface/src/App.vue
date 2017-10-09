@@ -12,22 +12,22 @@
 </template>
 
 <script>
-
   import VueRouter from 'vue-router'
   import AdminBar from './components/admin_bar.vue'
-
+  import UserStore from './store/user'
   const router = new VueRouter({
     routes: [
       {path: '*', component: AdminBar}
     ]
   })
 
-  //  var serverUrl = 'http://127.0.0.1:80/tiramisu/public/'
   var serverUrl = '/server/'
 
   export default {
     data () {
-      return {}
+      return {
+        serverUrl: serverUrl,
+      }
     },
     router,
     components: {AdminBar},
@@ -35,6 +35,7 @@
       console.log('Tiramisu is init ... ')
       this.$http.post(serverUrl + 'admin/user/checkLogin').then(function (res) {
         console.log(res)
+        UserStore.commit('updateInfo',res.body);
       })
     },
     methods: {}

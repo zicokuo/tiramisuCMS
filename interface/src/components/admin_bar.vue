@@ -7,6 +7,9 @@
                 <i v-if="isCollapse" class="el-icon-taobao-all"></i>
                 <i v-if="!isCollapse" class="el-icon-taobao-stop"></i>
             </div>
+            <userAvatarItem>
+
+            </userAvatarItem>
             <!--首页-->
             <el-menu-item index="0" :route="{path:'/index'}">
                 <i class="el-icon-taobao-home_fill_light"></i>
@@ -50,9 +53,10 @@
 <script>
   import VueRouter from 'vue-router'
   import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
+  import userAvatarItem from './admin/user_avatar_s.vue'
 
   export default {
-    components: {ElMenuItem},
+    components: {ElMenuItem, userAvatarItem},
     name: 'adminMenu',
     data () {
       return {

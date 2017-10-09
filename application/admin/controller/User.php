@@ -9,14 +9,19 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\Session;
+use think\Cookie;
+use app\tiramisu\User as TiramisuUser;
 
 class User extends Controller
 {
     public function checkLogin()
     {
-        Session::start();
-        $usid = Session::init();
-        return ['sid' => $usid];
+        $token = Cookie::has('user_token') ? Cookie::get('user_token') : null;
+        if (is_null($token)) {
+            $user = TiramisuUser::born();
+        }
+
+        //  todo 添加用户登录验证并返回用户信息
+        return $user;
     }
 }
