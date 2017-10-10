@@ -4,8 +4,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const url = require('url')
-const Express = require('express')
-const Proxy = require('http-proxy-middleware')
+// const Express = require('express')
+// const Proxy = require('http-proxy-middleware')
 const publicPath = ''
 
 module.exports = (options = {}) => {

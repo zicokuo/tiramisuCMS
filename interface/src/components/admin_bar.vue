@@ -3,15 +3,15 @@
         <el-menu default-active="1-4-1" class="admin-bar" @open="handleOpen" @close="handleClose"
                  :collapse="isCollapse" :router="true">
             <h2 align="center">标题</h2>
-            <div v-on:click="adminBarWidthToggle">
-                <i v-if="isCollapse" class="el-icon-taobao-all"></i>
-                <i v-if="!isCollapse" class="el-icon-taobao-stop"></i>
+            <div class="tiramisu-text-center" v-on:click="adminBarWidthToggle">
+                <i v-if="isCollapse" class="el-icon-i-fullscreen tiramisu-icon"></i>
+                <i v-if=" !isCollapse" class="el-icon-i-narrow tiramisu-icon"></i>
             </div>
-            <userAvatarItem>
+            <component_userAvatar>
 
-            </userAvatarItem>
+            </component_userAvatar>
             <!--首页-->
-            <el-menu-item index="0" :route="{path:'/index'}">
+            <el-menu-item index="0" :route="{path:'/admin/index'}">
                 <i class="el-icon-taobao-home_fill_light"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
@@ -51,12 +51,11 @@
     </div>
 </template>
 <script>
-  import VueRouter from 'vue-router'
   import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-  import userAvatarItem from './admin/user_avatar_s.vue'
+  import component_userAvatar from './admin/user_avatar_s.vue'
 
   export default {
-    components: {ElMenuItem, userAvatarItem},
+    components: {ElMenuItem, component_userAvatar},
     name: 'adminMenu',
     data () {
       return {

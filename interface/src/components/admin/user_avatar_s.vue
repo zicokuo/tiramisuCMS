@@ -1,6 +1,12 @@
 <template>
-    <div>
-        <p>{{user.nick}}</p>
+    <div class="tiramisu-text-center">
+        <div v-if="user.avatar">
+            <img :src="user.avatar" alt="userAvatar"/>
+        </div>
+        <div v-else class="">
+
+        </div>
+        <p>{{ user.nick }}</p>
     </div>
 </template>
 <script>
@@ -11,8 +17,8 @@
       return {
         user: {}
       }
-    }, beforeMount: function () {
+    }, mounted: function () {
       this.user = UserStore.state.info
-    }
+    }, methods: {}
   }
 </script>

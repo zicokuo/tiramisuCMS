@@ -1,7 +1,18 @@
 @charset "UTF-8";
 @import "color";
 
-.base {
-  background: white;
+.tiramisu {
+  &-body div {
+    font-family: "微软雅黑", "Tahoma", "monospace";
+  }
+  //  文字
+  &-text {
+    &-center {
+      text-align: center;
+    }
+  }
+  //  图标
+  &-icon {
+    font-size: 16px;
+  }
 }
-

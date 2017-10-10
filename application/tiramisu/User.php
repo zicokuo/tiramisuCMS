@@ -14,9 +14,9 @@ trait User
      * 返回用户角色
      * @return array
      */
-    static function born()
+    static function born($data = [])
     {
-        return ['nick' => 'Visitor', 'isLogin' => false, 'user_token' => self::coding(self::token())];
+        return array_merge(['nick' => 'Visitor', 'isLogin' => false, 'user_token' => self::coding(self::token())], $data);
     }
 
     /**
