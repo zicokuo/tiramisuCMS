@@ -1,4 +1,4 @@
-export default {
+export default({
   set: function (name, value, days) {
     var d = new Date
     d.setTime(d.getTime() + 24 * 60 * 60 * 1000 * days)
@@ -11,4 +11,4 @@ export default {
   delete: function (name) {
     this.set(name, '', -1)
   }
-}
+})

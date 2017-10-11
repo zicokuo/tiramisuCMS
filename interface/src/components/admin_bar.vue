@@ -4,8 +4,8 @@
                  :collapse="isCollapse" :router="true">
             <h2 align="center">标题</h2>
             <div class="tiramisu-text-center" v-on:click="adminBarWidthToggle">
-                <i v-if="isCollapse" class="el-icon-i-fullscreen tiramisu-icon"></i>
-                <i v-if=" !isCollapse" class="el-icon-i-narrow tiramisu-icon"></i>
+                <i v-if="isCollapse" class="el-icon-i--fullscreen tiramisu-icon"></i>
+                <i v-if=" !isCollapse" class="el-icon-i--narrow tiramisu-icon"></i>
             </div>
             <component_userAvatar>
 

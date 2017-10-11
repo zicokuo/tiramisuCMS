@@ -10,7 +10,6 @@
     </div>
 </template>
 <script>
-  import UserStore from './../../store/user'
 
   export default {
     data () {
@@ -18,7 +17,7 @@
         user: {}
       }
     }, mounted: function () {
-      this.user = UserStore.state.info
+      this.user = this.$store.state.user
     }, methods: {}
   }
 </script>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import UserStore from '../store/modules/user'
+import store from './../store/store'
+import VueStorage from './../assets/js/storage'
 import VueCookie from './../assets/js/cookies'
 
 import component_userEntry from './../components/admin/user_entry.vue'
@@ -11,6 +11,7 @@ Vue.use(VueRouter)
 // 引入组件
 
 export default new VueRouter({
+  store,
   mode: 'history',
   routes: [
     {path: '/home/:action/:method', name: 'route', component: component_home, props: true},
@@ -18,10 +19,10 @@ export default new VueRouter({
       path: '/user/entry/:mode',
       name: 'user_login',
       component: component_userEntry,
-      beforeEnter: (to, from, next) => {
-        var userInfo = VueCookie.get('user_info')
-        console.log(userInfo)
-        if (UserStore.state.info.isLogin == true) {
+      beforeEnter: function (to, from, next) {
+        var user_info = VueStorage.get('user_info')
+        console.log(user_info)
+        if (user_info.isLogin == true) {
           next('/admin')
         } else {
           next()
@@ -33,7 +34,8 @@ export default new VueRouter({
       component: component_home,
       path: '/admin*',
       beforeEnter: (to, from, next) => {
-        if (UserStore.state.info.isLogin == true) {
+        var user_info = VueStorage.get('user_info')
+        if (user_info.isLogin == true) {
           next()
         } else {
           next('/user/entry/login')

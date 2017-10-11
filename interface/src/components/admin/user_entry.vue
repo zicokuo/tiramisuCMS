@@ -49,7 +49,6 @@
 <script>
   import _ from 'lodash'
   import TiramisuConfig from './../../config'
-  import UserStore from '../../store/modules/user'
   import VueCookie from './../../assets/js/cookies'
 
   export default {
@@ -72,7 +71,7 @@
       var userInfo = VueCookie.get('user_info')
       console.log(userInfo)
       vm.mode = vm.$route.params.mode || 'login'
-      if (UserStore.state.info.isLogin == true) {
+      if (this.$store.state.user.info.isLogin == true) {
         this.$router.push({path: '/admin/index'})
       }
     },
@@ -117,7 +116,7 @@
 //            todo 用户密码加密传输,不能明码传输
             if (res.body.code === 1) {
               this.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
-              UserStore.commit('updateInfo', res.body.data)
+              this.$store.state.user.info = res.body.data
               this.$router.push({path: '/admin/index'})
               return true
             }

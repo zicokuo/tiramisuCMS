@@ -12,9 +12,22 @@ use think\Cache;
 use think\Controller;
 use think\Cookie;
 use app\tiramisu\User as TiramisuUser;
+use app\tiramisu\Base as TiramisuBase;
+use think\Request;
 
 class User extends Controller
 {
+
+    function __construct(Request $request = null)
+    {
+        parent::__construct($request);
+        if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
+
+        } else {
+            $this->error('无效的数据交互');
+        }
+    }
+
     public function checkLogin()
     {
         $token = Cookie::has('user_token') ? Cookie::get('user_token') : null;
