@@ -21,7 +21,6 @@ export default new VueRouter({
       component: component_userEntry,
       beforeEnter: function (to, from, next) {
         var user_info = VueStorage.get('user_info')
-        console.log(user_info)
         if (user_info.isLogin == true) {
           next('/admin')
         } else {

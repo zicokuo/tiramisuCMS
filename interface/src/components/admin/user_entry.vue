@@ -1,7 +1,7 @@
 <template>
     <div id="userEntry" style="max-width: 600px;margin:auto">
 
-        <el-form ref="form" :model="loginForm" label-width="120px" v-if="mode == 'login'">
+        <el-form ref="form" :model="loginForm" label-width="120px" v-if="method == 'login'">
             <!--用户登录-->
             <h1 class="tiramisu-text-center">用户登录</h1>
             <el-form-item label="登录账户">
@@ -21,7 +21,7 @@
                 <el-button type="primary" v-on:click="navigator('/user/entry/register')">注册</el-button>
             </el-form-item>
         </el-form>
-        <el-form ref="form" :model="registerForm" label-width="120px" v-if="mode == 'register'">
+        <el-form ref="form" :model="registerForm" label-width="120px" v-if="method == 'register'">
             <!--用户注册-->
             <h1>用户注册</h1>
             <el-form-item label="注册账户">
@@ -50,12 +50,14 @@
   import _ from 'lodash'
   import TiramisuConfig from './../../config'
   import VueCookie from './../../assets/js/cookies'
+  import VueStorage from './../../assets/js/storage'
+  import { mapActions } from './../../store/store'
 
   export default {
     name: 'userEntry',
     data () {
       return {
-        mode: 'login',
+        method: 'login',
         loginForm: {
           account: '', password: '', autoLogin: false
         },
@@ -66,21 +68,16 @@
     },
     components: {},
     ready: function () {
-      var vm = this
-      console.log(vm.$route.params.mode)
-      var userInfo = VueCookie.get('user_info')
-      console.log(userInfo)
-      vm.mode = vm.$route.params.mode || 'login'
-      if (this.$store.state.user.info.isLogin == true) {
-        this.$router.push({path: '/admin/index'})
-      }
+      let vm = this
+      vm.method = vm.$route.params.method || 'login';
+      (vm.$store.state.user.info === true) || vm.$router.push({path: '/admin/index'})
     },
     watch: {
       'form.password': function (password) {
         this.passwordChange(password)
       },
-      '$route.params.mode': function (mode) {
-        this.mode = mode
+      '$route.params.method': function (method) {
+        this.method = method
       },
     },
     methods: {
@@ -90,7 +87,7 @@
       }, 500),
       //注册跳转
       navigator: function (url) {
-        this.mode = 'register'
+        this.method = 'register'
         this.$router.push({path: url})
       },
       //表单重设
@@ -101,6 +98,7 @@
       },
       //登录表单提交
       loginSubmit: function (event) {
+        let vm = this
         console.log(event)
         if (event.isTrusted) {
           if (this.loginForm.account.length < 3) {
@@ -111,25 +109,31 @@
             })
             return false
           }
-          var loginUrl = TiramisuConfig.serverUrl + 'user/userLogin'
-          this.$http.get(loginUrl, {'params': this.loginForm}).then(function (res) {
+          let loginUrl = TiramisuConfig.serverUrl + 'user/userLogin'
+          this.$http.get(loginUrl, {'params': this.loginForm}).then((res) => {
 //            todo 用户密码加密传输,不能明码传输
             if (res.body.code === 1) {
-              this.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
-              this.$store.state.user.info = res.body.data
-              this.$router.push({path: '/admin/index'})
+              vm.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
+              let user = res.body.data
+              user.isLogin = true
+              vm.updateUser(user)
+//              vm.$store.dispatch('updateUser', user)
+              //  登录成功跳转
+              vm.$router.push({path: '/admin/index'})
               return true
             }
             console.log(res)
           }, function (res) {
-            this.$notify({title: '警告', message: '登录失败,请重试', type: 'warning'})
+            vm.$notify({title: '警告', message: '登录失败,请重试', type: 'warning'})
           })
         }
       },
       //注册表单提交
       registerSubmit: function (event) {
 
-      }
+      },
+      ...mapActions({updateUser: 'updateUser'})
+
     }
   }
 </script>

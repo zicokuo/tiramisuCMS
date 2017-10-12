@@ -1,15 +1,12 @@
-import _ from 'lodash'
-var storage = _.localStorage
-export default ({
-  set: function (name, value) {
-    value = JSON.stringify(value)
-    storage.setItem(name, value)
+const storage = {
+  get (name) {
+    return JSON.parse(localStorage.getItem(name))
   },
-  get: function (name) {
-    var value = storage(name)
-    return JSON.parse(value)
+  set (name, value) {
+    localStorage.setItem(name, JSON.stringify(value))
   },
-  delete: function (name) {
-    storage.removeItem(name)
+  rem (name) {
+    localStorage.removeItem(name)
   }
-})
+}
+export default storage
