@@ -18,14 +18,14 @@
             <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-taobao-post"></i>
-                    <span slot="title">文章</span>
+                    <span slot="title">微信接入</span>
                 </template>
                 <el-menu-item-group>
-                    <span slot="title">主要功能</span>
-                    <el-menu-item index="1-1" :route="{path:'/post/list/2'}">
-                        <i class="el-icon-taobao-sortlight"></i>
-                        文章列表
+                    <el-menu-item index="1-1" :route="{path:'/admin/weixin/configuration'}">
+                        <i class="el-icon-i--createtask"></i>
+                        参数配置
                     </el-menu-item>
+                    <span slot="title">基本配置</span>
                     <el-menu-item index="/home/list">
                         <i class="el-icon-taobao-sort"></i>
                         我也是文章列表
@@ -49,6 +49,7 @@
             </el-menu-item>
         </el-menu>
     </div>
+
 </template>
 <script>
   import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
@@ -59,6 +60,7 @@
     name: 'adminMenu',
     data () {
       return {
+        wx_menu: {},
         isCollapse: false
       }
     },

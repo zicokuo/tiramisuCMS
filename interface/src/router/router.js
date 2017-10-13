@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import VueStorage from '../plugins/storage'
 
 import admin_router from './admin_router'
+import weixin_router from './weixin_router'
 
 import component_home from './../components/admin/home.vue'
 
@@ -28,6 +29,7 @@ let routes = [
 ]
 
 routes = admin_router.concat(routes)
+routes = weixin_router.concat(routes)
 export default new VueRouter({
   mode: 'history',
   routes: routes,
