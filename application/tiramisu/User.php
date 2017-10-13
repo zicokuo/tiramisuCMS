@@ -14,19 +14,19 @@ trait User
      * 返回用户角色
      * @return array
      */
-    static function born($data = [])
+    static function born($who, $data = [])
     {
-        return array_merge(['nick' => 'Visitor', 'isLogin' => false, 'user_token' => self::coding(self::token())], $data);
+        return array_merge(['nick' => $who, 'isLogin' => false, 'user_token' => self::coding(self::token($who))], $data);
     }
 
     /**
      * 用户基因生成的基因用于验证用户身份与用户行为跟踪
      * @return string
      */
-    static function token()
+    static function token($sign)
     {
         $time = time();
-        return md5('tiramisuUser' . $time);
+        return md5('tiramisuUser' . $sign);
     }
 
     static function coding($token)

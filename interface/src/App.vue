@@ -2,7 +2,7 @@
     <div id="app" class="tiramisu-body">
         <el-row type="flex" :gutter="10" justify="start">
             <!--导航-->
-            <div v-if="$store.state.user.info.isLogin">
+            <div v-if="$store.state.info.isLogin">
                 <transition name="el-fade-in-linear">
                     <component_adminBar></component_adminBar>
                 </transition>
@@ -15,28 +15,32 @@
         </el-row>
     </div>
 </template>
-
 <script>
-  import VueCookie from './assets/js/cookies'
-  import VueStorage from './assets/js/storage'
+
+  import TiramisuConfig from './config'
+  import TiramisuServer from './server'
+  import TiramisuStorage from './plugins/storage'
   import component_adminBar from './components/admin_bar.vue'
 
-  var serverUrl = '/server/'
   export default {
     data () {
-      return {
-        serverUrl: serverUrl,
-      }
+      return {}
     },
     beforeCreate: function () {
-      console.log('Tiramisu is init ... ')
-      var user_token = VueCookie.get('user_token')
-      //    服务器验证身份
-      this.$http.get(serverUrl + 'admin/user/checkLogin', {'params': {'user_token': user_token}}).then(function (res) {
-        console.log(res)
-        this.$store.state.user.info = res.body
-        VueStorage.set('user_info', res.body)
-      })
+      //    检票
+      let user_ticket = TiramisuStorage.get('user_ticket') //  取票
+
+      if (user_ticket === null) {
+        let api_url = TiramisuConfig.SERVER_API_URL + '/get_ticket'
+        this.$http.get(api_url).then((res) => {
+          if (res.body.code === 1) TiramisuStorage.set('user_ticket', res.body.data.user_ticket)
+        })
+      }
+
+      //    同步Storage与Vuex的user_info
+      let user_info = TiramisuStorage.get('user_info')
+      this.$store.dispatch('USER_UPDATE', user_info)
+
     },
     components: {component_adminBar},
     methods: {},

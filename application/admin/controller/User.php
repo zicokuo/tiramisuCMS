@@ -31,7 +31,7 @@ class User extends Controller
     public function checkLogin()
     {
         $token = Cookie::has('user_token') ? Cookie::get('user_token') : null;
-        $user = TiramisuUser::born();
+        $user = TiramisuUser::born('Visitor');
 
         if (!is_null($token)) {
             $cacheLogin = Cache::get('logined.' . $token, null);
@@ -41,16 +41,17 @@ class User extends Controller
         }
 
         //  todo 添加用户登录验证并返回用户信息
-        return $user;
+        return $this->success('', '', ['user' => $user]);
     }
 
     public function userLogin()
     {
         $account = $this->request->get('account', null);
         $password = $this->request->get('password', null);
+
         if ($account == '13828471634' || $password == '123456') {
             //  todo 暂时模拟用户登录数据
-            $user = TiramisuUser::born();
+            $user = TiramisuUser::born($account);
             $user['isLogin'] = true;
             $user['nick'] = $account;
             Cache::set('logined.' . $user['user_token'], $user, 7200);

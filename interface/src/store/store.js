@@ -1,9 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import UserModule from './modules/UserModule'
+import _ from 'lodash'
 
 Vue.use(Vuex)
-const store = new Vuex.Store({
-  modules: {user: UserModule},
+
+const userStore = new Vuex.Store({
+  state: {
+    info: {
+      isLogin: false
+    },
+    express: 0,
+  },
+  mutations: {
+    updateUser (state, payload) {
+      console.log(state.info)
+      state.info = _.extend(state.info, payload)
+    }
+  },
+  actions: {
+    USER_UPDATE ({commit}, user) {
+      commit('updateUser', user)
+    }
+  }
 })
-export default store
+
+export default userStore

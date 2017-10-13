@@ -17,7 +17,7 @@
         user: {}
       }
     }, mounted: function () {
-      this.user = this.$store.state.user
+      this.user = this.$store.state.info
     }, methods: {}
   }
 </script>

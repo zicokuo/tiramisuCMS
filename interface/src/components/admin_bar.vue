@@ -52,7 +52,7 @@
 </template>
 <script>
   import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-  import component_userAvatar from './admin/user_avatar_s.vue'
+  import component_userAvatar from './user/user_avatar_s.vue'
 
   export default {
     components: {ElMenuItem, component_userAvatar},

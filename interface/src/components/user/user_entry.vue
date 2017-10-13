@@ -48,25 +48,26 @@
 </template>
 <script>
   import _ from 'lodash'
-  import TiramisuConfig from './../../config'
-  import VueCookie from './../../assets/js/cookies'
-  import VueStorage from './../../assets/js/storage'
-  import { mapActions } from './../../store/store'
+  import TiramisuConfig from '../../config'
+  import VueCookie from '../../plugins/cookies'
+  import VueStorage from '../../plugins/storage'
+  import UsetStorage from '../../store/store'
 
   export default {
     name: 'userEntry',
+    UsetStorage,
     data () {
       return {
         method: 'login',
         loginForm: {
-          account: '', password: '', autoLogin: false
+          account: '13828471634', password: '123456', autoLogin: false
         },
         registerForm: {
           account: '', password: '', repassword: '', phone: ''
         }
       }
     },
-    components: {},
+    components: {  },
     ready: function () {
       let vm = this
       vm.method = vm.$route.params.method || 'login';
@@ -101,6 +102,7 @@
         let vm = this
         console.log(event)
         if (event.isTrusted) {
+          //    todo 表单验证,需要分离
           if (this.loginForm.account.length < 3) {
             this.$notify({
               title: '警告',
@@ -116,8 +118,8 @@
               vm.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
               let user = res.body.data
               user.isLogin = true
-              vm.updateUser(user)
-//              vm.$store.dispatch('updateUser', user)
+              vm.$store.dispatch('USER_UPDATE', user)
+              VueStorage.set('user_info',user);
               //  登录成功跳转
               vm.$router.push({path: '/admin/index'})
               return true
@@ -125,6 +127,7 @@
             console.log(res)
           }, function (res) {
             vm.$notify({title: '警告', message: '登录失败,请重试', type: 'warning'})
+            return true
           })
         }
       },
@@ -132,9 +135,7 @@
       registerSubmit: function (event) {
 
       },
-      ...mapActions({updateUser: 'updateUser'})
-
-    }
+    },
   }
 </script>
 <style scoped>
