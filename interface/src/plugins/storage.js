@@ -26,10 +26,23 @@ const storage = {
     }
     // return JSON.parse(storageSupport ? localStorage.getItem(name) : C.get(name))
   },
-  set (name, value) {
+  set (name, value, isRewrite = true) {
     // storageSupport ? localStorage.setItem(name, value) : C.set(name, value, 1)
     if (storageSupport) {
-      let data = [value, d.getTime()]
+      let data
+      if (isRewrite === true) {
+        //  覆盖
+        data = [value, d.getTime()]
+      } else {
+        let source = this.get(name)
+        if (source !== null) {
+          //  原来有数据,则合并source和value
+          data = [source.assign(value), d.getTime()]
+        } else {
+          //  原来没有数据或者过期,则直接使用value
+          data = [value, d.getTime()]
+        }
+      }
       localStorage.setItem(name, JSON.stringify(data))
     } else {
       C.set(name, value, 1)

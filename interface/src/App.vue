@@ -17,28 +17,22 @@
 </template>
 <script>
 
-  import TiramisuConfig from './config'
-  import TiramisuServer from './server'
-  import TiramisuStorage from './plugins/storage'
+  import Config from './config'
+  import Server from './server'
+  import Storage from './plugins/storage'
   import component_adminBar from './components/admin_bar.vue'
 
   export default {
     data () {
       return {}
     },
-    beforeCreate: function () {
+    beforeCreate() {
       //    检票
-      let user_ticket = TiramisuStorage.get('user_ticket') //  取票
+      let user_ticket = Storage.get('user_ticket') //  取票
 
-      if (user_ticket === null) {
-        let api_url = TiramisuConfig.SERVER_API_URL + '/get_ticket'
-        this.$http.get(api_url).then((res) => {
-          if (res.body.code === 1) TiramisuStorage.set('user_ticket', res.body.data.user_ticket)
-        })
-      }
-
+      (user_ticket === null) ? user_ticket = Server.get_ticket() : ''
       //    同步Storage与Vuex的user_info
-      let user_info = TiramisuStorage.get('user_info')
+      let user_info = Storage.get('user_info')
       this.$store.dispatch('USER_UPDATE', user_info)
 
     },

@@ -67,8 +67,8 @@
         }
       }
     },
-    components: {  },
-    ready: function () {
+    components: {},
+    beforeMount: function () {
       let vm = this
       vm.method = vm.$route.params.method || 'login';
       (vm.$store.state.user.info === true) || vm.$router.push({path: '/admin/index'})
@@ -119,7 +119,7 @@
               let user = res.body.data
               user.isLogin = true
               vm.$store.dispatch('USER_UPDATE', user)
-              VueStorage.set('user_info',user);
+              VueStorage.set('user_info', user)
               //  登录成功跳转
               vm.$router.push({path: '/admin/index'})
               return true

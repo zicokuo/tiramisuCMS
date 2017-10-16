@@ -13,7 +13,7 @@ const userStore = new Vuex.Store({
   },
   mutations: {
     updateUser (state, payload) {
-      console.log(state.info)
+      // console.log(state.info)
       state.info = _.extend(state.info, payload)
     }
   },
