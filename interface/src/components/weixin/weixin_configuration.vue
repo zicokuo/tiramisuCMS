@@ -9,7 +9,6 @@
     </div>
 </template>
 <script>
-  import Vue from 'vue'
   import Server from './../../server'
 
   export default {

@@ -77,7 +77,7 @@ return [
     // +----------------------------------------------------------------------
 
     // PATHINFO变量名 用于兼容模式
-    'var_pathinfo'           => 's',
+    'var_pathinfo'           => 'set',
     // 兼容PATH_INFO获取
     'pathinfo_fetch'         => ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
     // pathinfo分隔符

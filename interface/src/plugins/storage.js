@@ -3,12 +3,12 @@ import C from './cookies'
 
 let d = new Date()
 
-const expired = 24 * 60 * 60 * 1000 // 1日
+let expired = 24 * 60 * 60 * 1000 // 1日
 let storageSupport = (typeof(Storage) === 'function')
 
 //  todo storage应该增加数据时效性
-const storage = {
-  get (name) {
+export default {
+  get: function (name) {
     if (storageSupport) {
       let value = JSON.parse(localStorage.getItem(name))
       if (value !== null) {
@@ -26,7 +26,7 @@ const storage = {
     }
     // return JSON.parse(storageSupport ? localStorage.getItem(name) : C.get(name))
   },
-  set (name, value, isRewrite = true) {
+  set: function (name, value, isRewrite = true) {
     // storageSupport ? localStorage.setItem(name, value) : C.set(name, value, 1)
     if (storageSupport) {
       let data
@@ -34,7 +34,7 @@ const storage = {
         //  覆盖
         data = [value, d.getTime()]
       } else {
-        let source = this.get(name)
+        let source =localStorage.getItem(name);
         if (source !== null) {
           //  原来有数据,则合并source和value
           data = [source.assign(value), d.getTime()]
@@ -48,8 +48,8 @@ const storage = {
       C.set(name, value, 1)
     }
   },
-  rem (name) {
+  rem: function (name) {
     storageSupport ? localStorage.removeItem(name) : C.delete(name)
   }
 }
-export default storage
+

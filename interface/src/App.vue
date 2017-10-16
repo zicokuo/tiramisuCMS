@@ -16,7 +16,8 @@
     </div>
 </template>
 <script>
-
+  import Vue from 'vue'
+  import VueRouter from 'vue-router'
   import Config from './config'
   import Server from './server'
   import Storage from './plugins/storage'
@@ -26,11 +27,12 @@
     data () {
       return {}
     },
-    beforeCreate() {
+    beforeCreate: function () {
       //    检票
       let user_ticket = Storage.get('user_ticket') //  取票
 
-      (user_ticket === null) ? user_ticket = Server.get_ticket() : ''
+      if (user_ticket === null) user_ticket = Server.get_ticket()
+
       //    同步Storage与Vuex的user_info
       let user_info = Storage.get('user_info')
       this.$store.dispatch('USER_UPDATE', user_info)
