@@ -11,6 +11,14 @@ const userStore = new Vuex.Store({
     },
     express: 0,
   },
+  getters: {
+    getUser: function (state) {
+      return state.info
+    },
+    isLogin: function (state) {
+      return state.isLogin
+    }
+  },
   mutations: {
     updateUser (state, payload) {
       // console.log(state.info)

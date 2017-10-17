@@ -4,11 +4,13 @@ import C from './cookies'
 let d = new Date()
 
 let expired = 24 * 60 * 60 * 1000 // 1日
-let storageSupport = (typeof(Storage) === 'function')
+let storageSupport = (typeof(localStorage) === 'object')
 
 //  todo storage应该增加数据时效性
-export default {
-  get: function (name) {
+const Cache = {
+  get: function (name, defaultValue = null) {
+    // return JSON.parse(storageSupport ? localStorage.getItem(name) : C.get(name))
+    let value = defaultValue
     if (storageSupport) {
       let value = JSON.parse(localStorage.getItem(name))
       if (value !== null) {
@@ -20,11 +22,11 @@ export default {
           value = value[0]
         }
       }
-      return value
+      value = value || defaultValue
     } else {
-      return JSON.parse(C.get(name))
+      value = JSON.parse(C.get(name))
     }
-    // return JSON.parse(storageSupport ? localStorage.getItem(name) : C.get(name))
+    return value
   },
   set: function (name, value, isRewrite = true) {
     // storageSupport ? localStorage.setItem(name, value) : C.set(name, value, 1)
@@ -34,7 +36,7 @@ export default {
         //  覆盖
         data = [value, d.getTime()]
       } else {
-        let source =localStorage.getItem(name);
+        let source = localStorage.getItem(name)
         if (source !== null) {
           //  原来有数据,则合并source和value
           data = [source.assign(value), d.getTime()]
@@ -52,4 +54,5 @@ export default {
     storageSupport ? localStorage.removeItem(name) : C.delete(name)
   }
 }
+export default Cache
 

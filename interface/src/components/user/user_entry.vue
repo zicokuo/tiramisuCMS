@@ -48,14 +48,11 @@
 </template>
 <script>
   import _ from 'lodash'
-  import TiramisuConfig from '../../config'
-  import VueCookie from '../../plugins/cookies'
-  import VueStorage from '../../plugins/storage'
-  import UsetStorage from '../../store/store'
+  import Config from '../../config'
+  import Cache from '../../plugins/cache'
 
   export default {
     name: 'userEntry',
-    UsetStorage,
     data () {
       return {
         method: 'login',
@@ -70,8 +67,8 @@
     components: {},
     beforeMount: function () {
       let vm = this
-      vm.method = vm.$route.params.method || 'login';
-      (vm.$store.state.user.info === true) || vm.$router.push({path: '/admin/index'})
+      vm.method = vm.$route.params.method || 'login'
+      vm.$store.getters.isLogin === true || vm.$router.push({path: '/admin/index'})
     },
     watch: {
       'form.password': function (password) {
@@ -100,26 +97,21 @@
       //登录表单提交
       loginSubmit: function (event) {
         let vm = this
-        console.log(event)
         if (event.isTrusted) {
           //    todo 表单验证,需要分离
           if (this.loginForm.account.length < 3) {
-            this.$notify({
-              title: '警告',
-              message: '请输入正确的登录账户',
-              type: 'warning'
-            })
+            this.$notify({title: '警告', message: '请输入正确的登录账户', type: 'warning'})
             return false
           }
-          let loginUrl = TiramisuConfig.serverUrl + 'user/userLogin'
-          this.$http.get(loginUrl, {'params': this.loginForm}).then((res) => {
+          let api_url = Config.SERVER_API_URL + '/admin/user/userLogin'
+          this.$http.get(api_url, {'params': this.loginForm}).then((res) => {
 //            todo 用户密码加密传输,不能明码传输
             if (res.body.code === 1) {
               vm.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
               let user = res.body.data
               user.isLogin = true
               vm.$store.dispatch('USER_UPDATE', user)
-              VueStorage.set('user_info', user)
+              Cache.set('user_info', user)
               //  登录成功跳转
               vm.$router.push({path: '/admin/index'})
               return true
