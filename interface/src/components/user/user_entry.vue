@@ -103,7 +103,7 @@
             this.$notify({title: '警告', message: '请输入正确的登录账户', type: 'warning'})
             return false
           }
-          let api_url = Config.SERVER_API_URL + '/admin/user/userLogin'
+          let api_url = Config.SERVER_URL + 'user/userLogin'
           this.$http.get(api_url, {'params': this.loginForm}).then((res) => {
 //            todo 用户密码加密传输,不能明码传输
             if (res.body.code === 1) {
@@ -114,12 +114,10 @@
               Cache.set('user_info', user)
               //  登录成功跳转
               vm.$router.push({path: '/admin/index'})
-              return true
             }
             console.log(res)
           }, function (res) {
             vm.$notify({title: '警告', message: '登录失败,请重试', type: 'warning'})
-            return true
           })
         }
       },

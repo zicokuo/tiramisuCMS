@@ -28,6 +28,7 @@
     "html-webpack-plugin": "^2.24.1",
     "http-proxy-middleware": "^0.17.4",
     "lodash": "^4.17.4",
+    "mock": "^0.1.1",
     "node-sass": "^4.5.3",
     "once": "^1.4.0",
     "path": "^0.12.7",
