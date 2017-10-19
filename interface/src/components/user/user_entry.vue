@@ -18,7 +18,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="success" v-on:click="loginSubmit">登录</el-button>
-                <el-button type="primary" v-on:click="navigator('/user/entry/register')">注册</el-button>
+                <el-button type="primary" v-on:click="navigator('/admin/user/register')">注册</el-button>
             </el-form-item>
         </el-form>
         <el-form ref="form" :model="registerForm" label-width="120px" v-if="method == 'register'">
@@ -50,6 +50,7 @@
   import _ from 'lodash'
   import Config from '../../config'
   import Cache from '../../plugins/cache'
+  import { dump } from '../../plugins/dump'
 
   export default {
     name: 'userEntry',
@@ -66,10 +67,18 @@
     },
     components: {},
     beforeMount: function () {
+      //    同步Cache和Storage
+      let user = Cache.get('user_info')
+      this.$store.dispatch('USER_UPDATE', user)
+
       let vm = this
+      dump(vm.$route.params, '路由参数 - user_enter')
       vm.method = vm.$route.params.method || 'login'
-      vm.$store.getters.isLogin === true || vm.$router.push({path: '/admin/index'})
+      vm.$store.getters.isLogin === true && vm.$router.push({path: '/admin/index'})
     },
+//    beforeUpdate () {
+//      dump(this.$route.params, '路由参数 - user_enter')
+//    },
     watch: {
       'form.password': function (password) {
         this.passwordChange(password)

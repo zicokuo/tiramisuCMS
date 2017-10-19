@@ -16,7 +16,7 @@ const userStore = new Vuex.Store({
       return state.info
     },
     isLogin: function (state) {
-      return state.isLogin
+      return state.info.isLogin
     }
   },
   mutations: {

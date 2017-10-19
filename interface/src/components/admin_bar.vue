@@ -7,6 +7,7 @@
                 <i v-if="isCollapse" class="el-icon-i--fullscreen tiramisu-icon"></i>
                 <i v-if=" !isCollapse" class="el-icon-i--narrow tiramisu-icon"></i>
             </div>
+            <el-button v-on:click="userLogout">用户登出</el-button>
             <component_userAvatar>
 
             </component_userAvatar>
@@ -21,7 +22,10 @@
                     <span slot="title">微信接入</span>
                 </template>
                 <el-menu-item-group>
-                    <el-menu-item index="1-1" :route="{path:'/admin/weixin/configuration'}">
+                    <el-menu-item index="1-1" :route="{path:'/admin/weixin/info'}">
+                        微信信息
+                    </el-menu-item>
+                    <el-menu-item index="1-2" :route="{path:'/admin/weixin/configuration'}">
                         <i class="el-icon-i--createtask"></i>
                         参数配置
                     </el-menu-item>
@@ -54,6 +58,7 @@
 <script>
   import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
   import component_userAvatar from './user/user_avatar_s.vue'
+  import Cache from '../plugins/cache'
 
   export default {
     components: {ElMenuItem, component_userAvatar},
@@ -73,12 +78,16 @@
       },
       adminBarWidthToggle: function () {
         this.isCollapse = !this.isCollapse
+      },
+      userLogout: function () {
+        Cache.rem('user_info')
+        this.$router.push('/admin')
       }
     }
   }
 </script>
 <style scope>
     .admin-bar:not(.el-menu--collapse) {
-        width: 200px;
+        width: 100%;
     }
 </style>

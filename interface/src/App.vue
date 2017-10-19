@@ -30,6 +30,9 @@
           dump(e)
         })
       }
+      //    同步Cache和Storage
+      let user = Cache.get('user_info')
+      this.$store.dispatch('USER_UPDATE', user)
     }
   }
 </script>

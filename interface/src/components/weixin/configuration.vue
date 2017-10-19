@@ -3,7 +3,9 @@
         <h3>{{pageTitle}}</h3>
         <hr>
         <el-form ref="form" :model="config" label-width="120px">
-
+            <el-form-item label="活动名称">
+                <el-input v-model="config.weixin_name"></el-input>
+            </el-form-item>
         </el-form>
 
     </div>
