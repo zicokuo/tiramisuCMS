@@ -32,25 +32,27 @@ module.exports = (options = {}) => {
           exclude: /node_modules/
         },
         {
-          test: /\.css$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader']
+          test: /\.(css|scss|sass)$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
         },
         {
-          test: /\.scss$/,
-          loaders: ['style', 'css', 'sass']
-        }
-        ,
-        {
-          test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
+          test: /\.(png|jpg|jpeg|gif|svg|svgz)(\?.+)?$/,
           use:
             [{
               loader: 'url-loader',
               options: {limit: 10000}
+            }, {
+              loader: 'file-loader',
+              options: {name: '[hash:8].[name].[ext]', outputPath: '/imgs/'}
             }]
         }
         , {
           test: /\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file-loader'
+          use: [{
+            loader: 'file-loader',
+            options: {name: '[hash:8].[name].[ext]', outputPath: '/fonts/'}
+          }]
+
         },
       ]
     },

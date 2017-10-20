@@ -6,7 +6,6 @@
                          v-for="(item, index) in tabs"
                          :label="item.label"
                          :name="item.name">
-
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -15,6 +14,18 @@
   import { dump } from '../../plugins/dump'
   import * as _ from 'lodash'
   import router from 'vue-router'
+
+  //  Vue.component('elTabPlan', {
+  //    template: '<el-tab-pane ' +
+  //    ':key="name" ' +
+  //    ':label="label" :name="name">' +
+  //    '</el-tab-pane>',
+  //    data () {
+  //      return {
+  //        name: '', label: '', content: ''
+  //      }
+  //    }
+  //  })
 
   export default {
     name: 'navigation',
@@ -26,7 +37,7 @@
       }
     },
     beforeMount () {
-      this.tabs = [{name: 'dashboard', label: '后台首页', path: '/admin/index'}]
+      this.tabs = [{name: 'home', label: '后台首页', path: '/admin/index'}]
     },
     beforeUpdate () {
     },
@@ -41,20 +52,22 @@
       //    侦听路由变化,处理tabs
       '$route.path': function (href) {
         let newTabs = {name: this.$route.name, label: this.$route.name, path: href}
-        dump(_.findLastIndex(this.tabs, newTabs.name))
-        if (_.findLastIndex(this.tabs, {'name': newTabs.name}) < 1) {
+//        dump(_.findLastIndex(this.tabs, newTabs.name))
+        let isTabExist = _.findLastIndex(this.tabs, {'name': newTabs.name}) < 1
+        let isHomeTab = (href === '/admin/index')
+        if (!isHomeTab && isTabExist) {
           this.tabs.push(newTabs)
-        } else {
         }
         this.activeName = newTabs.name
-
       }
     },
 
   }
-  
+
 </script>
 <style scope>
-    .navigation {
+    .el-tabs__item:first-of-type > .el-icon-close {
+        display: none!important;
     }
+
 </style>

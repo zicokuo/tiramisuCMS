@@ -7,7 +7,9 @@
             <el-col>
                 <component_admin_navigation></component_admin_navigation>
                 <transition name="slide-fade" mode="out-in">
-                    <router-view></router-view>
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
                 </transition>
             </el-col>
         </el-row>
@@ -18,8 +20,6 @@
   import component_admin_bar from './admin_bar.vue'
   import component_admin_navigation from '../components/admin/navigation.vue'
   import Cache from '../plugins/cache'
-
-  let user = Cache.get('user_info')
 
   export default {
     name: 'frame',
@@ -39,11 +39,14 @@
     .slide-fade-enter-active {
         transition: all .1s ease;
     }
+
     .slide-fade-leave-active {
         transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
+
     .slide-fade-enter, .slide-fade-leave-to
-        /* .slide-fade-leave-active for below version 2.1.8 */ {
+        /* .slide-fade-leave-active for below version 2.1.8 */
+    {
         transform: translateX(100px);
         opacity: 0;
     }

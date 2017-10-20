@@ -22,7 +22,6 @@ const TiramisuRouter = new VueRouter({
     this.pre_params = this.$route.query
     transition.next()
   },
-
 })
 TiramisuRouter.beforeEach((to, from, next) => {
   dump(to.path, '根路由检测')

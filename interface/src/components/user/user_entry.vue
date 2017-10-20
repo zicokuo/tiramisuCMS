@@ -76,9 +76,6 @@
       vm.method = vm.$route.params.method || 'login'
       vm.$store.getters.isLogin === true && vm.$router.push({path: '/admin/index'})
     },
-//    beforeUpdate () {
-//      dump(this.$route.params, '路由参数 - user_enter')
-//    },
     watch: {
       'form.password': function (password) {
         this.passwordChange(password)

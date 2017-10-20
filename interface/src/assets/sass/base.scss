@@ -1,9 +1,13 @@
 @charset "UTF-8";
 @import "color";
 
+body {
+  margin: 0;
+}
+
 .tiramisu {
   &-body div {
-    font-family: "微软雅黑", "Tahoma", "monospace";
+    font-family: "monospace","Microsoft YaHei";
   }
   //  文字
   &-text {
