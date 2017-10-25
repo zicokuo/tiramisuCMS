@@ -4,9 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const url = require('url')
-// const Express = require('express')
-// const Proxy = require('http-proxy-middleware')
-const publicPath = ''
+const publicPath = '/assets/'
 
 module.exports = (options = {}) => {
   return ({
@@ -36,21 +34,22 @@ module.exports = (options = {}) => {
           use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
         },
         {
-          test: /\.(png|jpg|jpeg|gif|svg|svgz)(\?.+)?$/,
+          test: /\.(png|jpg|jpeg|gif|svg|svgz)$/,
           use:
             [{
               loader: 'url-loader',
-              options: {limit: 10000}
+              options: {limit: 1024},
+
             }, {
               loader: 'file-loader',
-              options: {name: '[hash:8].[name].[ext]', outputPath: '/imgs/'}
+              options: {name: '[name]_[hash:6].[ext]', outputPath: 'images/'}
             }]
         }
         , {
-          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          test: /\.(eot|ttf|woff|woff2)$/,
           use: [{
             loader: 'file-loader',
-            options: {name: '[hash:8].[name].[ext]', outputPath: '/fonts/'}
+            options: {name: '[hash:8]_[name].[ext]', outputPath: 'fonts/'}
           }]
 
         },
@@ -68,7 +67,8 @@ module.exports = (options = {}) => {
     resolve:
       {
         alias: {
-          '~': resolve(__dirname, 'src')
+          '~': resolve(__dirname, 'src'),
+          'assets': resolve(__dirname, '../src/assets'),
         }
       }
     ,

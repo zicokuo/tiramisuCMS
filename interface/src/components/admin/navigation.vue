@@ -1,6 +1,6 @@
 <template>
     <div class="navigation">
-        <el-tabs v-model="activeName" @tab-click="handleClick" editable>
+        <el-tabs v-model="activeName" @tab-click="changeTab" @tab-remove="removeTab" editable closable>
             <!--<el-tab-pane label="用户管理" name="first">1</el-tab-pane>-->
             <el-tab-pane :key="item.name"
                          v-for="(item, index) in tabs"
@@ -14,18 +14,6 @@
   import { dump } from '../../plugins/dump'
   import * as _ from 'lodash'
   import router from 'vue-router'
-
-  //  Vue.component('elTabPlan', {
-  //    template: '<el-tab-pane ' +
-  //    ':key="name" ' +
-  //    ':label="label" :name="name">' +
-  //    '</el-tab-pane>',
-  //    data () {
-  //      return {
-  //        name: '', label: '', content: ''
-  //      }
-  //    }
-  //  })
 
   export default {
     name: 'navigation',
@@ -42,10 +30,28 @@
     beforeUpdate () {
     },
     methods: {
-      handleClick (tab, event) {
+      changeTab (tab, event) {
         let tabNum = _.findIndex(this.tabs, {'name': tab.name})
         let path = this.tabs[tabNum].path
         this.$router.push({path: path})
+      },
+      //    关闭页
+      removeTab (targetName) {
+        let tabs = this.tabs
+        let activeName = this.activeName
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1]
+              if (nextTab) {
+                activeName = nextTab.name
+              }
+            }
+          })
+        }
+        this.activeName = activeName
+        this.tabs = tabs.filter(tab => tab.name !== targetName)
+        this.$router.push({path: this.tabs[0].path})
       }
     },
     watch: {
@@ -67,7 +73,7 @@
 </script>
 <style scope>
     .el-tabs__item:first-of-type > .el-icon-close {
-        display: none!important;
+        display: none !important;
     }
 
 </style>

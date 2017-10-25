@@ -7,13 +7,27 @@
                 <i v-if="isCollapse" class="el-icon-i--fullscreen tiramisu-icon"></i>
                 <i v-if=" !isCollapse" class="el-icon-i--narrow tiramisu-icon"></i>
             </div>
-            <el-button v-on:click="userLogout">用户登出</el-button>
-            <component_userAvatar>
+            <component_userAvatar class="admin-user">
 
             </component_userAvatar>
             <!--首页-->
+            <block v-for="(menu , index ) in router_menu">
+                <block v-if="menu.children.length>1">
+                    <el-submenu index="{{index}}">
+                        <template slot="title">
+                            <span slot="title">{{menu.title}}</span>
+                        </template>
+                        <el-menu-item-group>
+                            <block v-for="( subMenu , subIndex ) in menu.children">
+                                <el-menu-item index="{{index}}-{{subIndex}}" :route="{path:subMenu.path}">{{subMenu.name}}
+                                </el-menu-item>
+                            </block>
+                        </el-menu-item-group>
+                    </el-submenu>
+                </block>
+            </block>
             <el-menu-item index="0" :route="{path:'/admin/index'}">
-                <i class="el-icon-taobao-home_fill_light"></i>
+                <i class="el-icon-i--homepage_fill"></i>
                 <span slot="title">首页</span>
             </el-menu-item>
             <el-submenu index="1">
@@ -56,9 +70,12 @@
 
 </template>
 <script>
-  import ElMenuItem from '../../node_modules/element-ui/packages/menu/src/menu-item.vue'
+  import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
   import component_userAvatar from './user/user_avatar_s.vue'
-  import Cache from '../plugins/cache'
+  import Cache from './../plugins/cache'
+
+  //    引入路由
+  import design_router from './../router/frame-router/design'
 
   export default {
     components: {ElMenuItem, component_userAvatar},
@@ -66,8 +83,13 @@
     data () {
       return {
         wx_menu: {},
+        router_menu: [],
         isCollapse: false
       }
+    },
+    beforeMount () {
+      this.router_menu = [design_router]
+      console.log(this.router_menu[0])
     },
     methods: {
       handleOpen: event => {
@@ -88,6 +110,10 @@
 </script>
 <style scope>
     .admin-bar:not(.el-menu--collapse) {
-        width: 100%;
+        width: 300px;
+    }
+
+    .admin-bar.el-menu--collapse .admin-user {
+        display: none;
     }
 </style>

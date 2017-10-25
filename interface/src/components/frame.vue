@@ -1,7 +1,7 @@
 <template>
     <div class="frame">
         <el-row type="flex" :gutter="24">
-            <el-col :span="6">
+            <el-col style="width: 400px;min-width: 200px">
                 <component_admin_bar v-if="$store.getters.isLogin"></component_admin_bar>
             </el-col>
             <el-col>
@@ -47,7 +47,7 @@
     .slide-fade-enter, .slide-fade-leave-to
         /* .slide-fade-leave-active for below version 2.1.8 */
     {
-        transform: translateX(100px);
+        transform: rotateX(-90deg);
         opacity: 0;
     }
 </style>
