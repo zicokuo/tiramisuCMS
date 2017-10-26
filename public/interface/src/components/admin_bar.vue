@@ -12,21 +12,21 @@
             </component_userAvatar>
             <!--首页-->
             <!--<block v-for="(menu,index) in router_menu" v-if="menu.children.length>1">-->
-                    <!--<el-submenu index="{{index}}">-->
-                        <!--<template slot="title">-->
-                            <!--<span slot="title">{{menu.title}}</span>-->
-                        <!--</template>-->
-                        <!--<el-menu-item-group>-->
-                            <!--<block v-for="( subMenu , subIndex ) in menu.children">-->
-                                <!--<el-menu-item index="{{index}}-{{subIndex}}" :route="{path:subMenu.path}">-->
-                                    <!--{{subMenu.name}}-->
-                                <!--</el-menu-item>-->
-                            <!--</block>-->
-                        <!--</el-menu-item-group>-->
-                    <!--</el-submenu>-->
+            <!--<el-submenu index="{{index}}">-->
+            <!--<template slot="title">-->
+            <!--<span slot="title">{{menu.title}}</span>-->
+            <!--</template>-->
+            <!--<el-menu-item-group>-->
+            <!--<block v-for="( subMenu , subIndex ) in menu.children">-->
+            <!--<el-menu-item index="{{index}}-{{subIndex}}" :route="{path:subMenu.path}">-->
+            <!--{{subMenu.name}}-->
+            <!--</el-menu-item>-->
+            <!--</block>-->
+            <!--</el-menu-item-group>-->
+            <!--</el-submenu>-->
             <!--</block>-->
             <!--<block v-else>-->
-                <!--<el-menu-item>{{menu}}</el-menu-item>-->
+            <!--<el-menu-item>{{menu}}</el-menu-item>-->
             <!--</block>-->
             <el-menu-item index="0" :route="{path:'/admin/index'}">
                 <i class="el-icon-i--homepage_fill"></i>
@@ -72,43 +72,43 @@
 
 </template>
 <script>
-    import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-    import component_userAvatar from './user/user_avatar_s.vue'
-    import Cache from '../public-resource/modules/cache'
+  import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
+  import component_userAvatar from './user/user_avatar_s.vue'
+  import Cache from '../public-resource/modules/cache'
 
-    //    引入路由
-    import design_router from '../public-resource/router/frame-router/design'
+  //    引入路由
+  import design_router from '../public-resource/router/frame-router/design'
 
-    export default {
-        components: {ElMenuItem, component_userAvatar},
-        name: 'adminMenu',
-        data () {
-            return {
-                wx_menu: {},
-                router_menu: [],
-                isCollapse: false
-            }
-        },
-        beforeMount () {
-            this.router_menu = [design_router]
-            console.log(this.router_menu[0])
-        },
-        methods: {
-            handleOpen: event => {
-                console.log('菜单' + event + '打开')
-            },
-            handleClose: event => {
-                console.log('菜单' + event + '打开')
-            },
-            adminBarWidthToggle: function () {
-                this.isCollapse = !this.isCollapse
-            },
-            userLogout: function () {
-                Cache.rem('user_info')
-                this.$router.push('/admin')
-            }
-        }
+  export default {
+    components: {ElMenuItem, component_userAvatar},
+    name: 'adminMenu',
+    data () {
+      return {
+        wx_menu: {},
+        router_menu: [],
+        isCollapse: false
+      }
+    },
+    beforeMount () {
+      this.router_menu = [design_router]
+      console.log(this.router_menu[0])
+    },
+    methods: {
+      handleOpen: event => {
+        console.log('菜单' + event + '打开')
+      },
+      handleClose: event => {
+        console.log('菜单' + event + '打开')
+      },
+      adminBarWidthToggle: function () {
+        this.isCollapse = !this.isCollapse
+      },
+      userLogout: function () {
+        Cache.rem('user_info')
+        this.$router.push('/admin')
+      }
     }
+  }
 </script>
 <style scope>
     .admin-bar:not(.el-menu--collapse) {

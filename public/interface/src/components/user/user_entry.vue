@@ -50,7 +50,6 @@
   import _ from 'lodash'
   import Config from '../../config'
   import Cache from '../../public-resource/modules/cache'
-  import { dump } from '../../public-resource/modules/dump'
 
   export default {
     name: 'userEntry',
@@ -72,7 +71,7 @@
       this.$store.dispatch('USER_UPDATE', user)
 
       let vm = this
-      dump(vm.$route.params, '路由参数 - user_enter')
+      this.$dump(vm.$route.params, '路由参数 - user_enter')
       vm.method = vm.$route.params.method || 'login'
       vm.$store.getters.isLogin === true && vm.$router.push({path: '/admin/index'})
     },

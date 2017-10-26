@@ -1,11 +1,12 @@
 <template>
     <div class="tiramisu-text-center">
         <img :src="user.avatar" alt="userAvatar"/>
+        <img src="~public/images/avatar.png" alt="userAvatar"/>
         <p>{{ user.nick }}</p>
     </div>
 </template>
 <script>
-  import avatar from '../../public-resource/images/avatar.png'
+  import avatar from './../../public-resource/images/avatar.png'
 
   export default {
     data () {

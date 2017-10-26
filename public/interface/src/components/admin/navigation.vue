@@ -11,7 +11,6 @@
     </div>
 </template>
 <script>
-  import { dump } from '../../public-resource/modules/dump'
   import * as _ from 'lodash'
   import router from 'vue-router'
 
@@ -65,6 +64,7 @@
           this.tabs.push(newTabs)
         }
         this.activeName = newTabs.name
+        this.$pageTitle(newTabs.name)
       }
     },
 

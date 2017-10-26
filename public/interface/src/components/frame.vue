@@ -29,8 +29,7 @@
     },
     methods: {},
     beforeCreate () {
-    }
-
+    },
   }
 </script>
 <style scope>

@@ -5,11 +5,15 @@ const admin_router = {
   name: 'admin_router',
   path: '/admin*',
   component: component_frame,
+
   children: [
     {
       path: '',
       name: 'home',
       component: component_dashboard,
+      meta: {
+        pageTitle: 'tiramisuCMS'
+      },
     }
   ]
 }

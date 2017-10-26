@@ -12,3 +12,10 @@
         </div>
     </div>
 </template>
+<script>
+  export default {
+    mounted(){
+      this.$pageTitle('哈哈哈哈')
+    }
+  }
+</script>

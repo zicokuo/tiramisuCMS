@@ -1,6 +1,5 @@
 //  检测浏览器是否支持Storage,否则使用Cookie进行储存
 import C from './cookies'
-import { dump } from './dump'
 
 let d = new Date()
 
@@ -25,7 +24,7 @@ const Cache = {
         } else {
           return value = value.value || defaultValue
         }
-      }else{
+      } else {
         return value
       }
     } else {
@@ -56,7 +55,7 @@ const Cache = {
   },
   rem: function (name) {
     storageSupport ? localStorage.removeItem(name) : C.delete(name)
-  }
+  },
 }
 export default Cache
 

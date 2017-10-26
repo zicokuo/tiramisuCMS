@@ -1,6 +1,5 @@
 <template>
     <div id="app" class="tiramisu-body">
-        <Layout></Layout>
         <transition name="fade">
             <router-view></router-view>
         </transition>
@@ -9,22 +8,17 @@
 <script>
   import Config from './config'
   import Cache from './public-resource/modules/cache'
-  import { dump } from './public-resource/modules/dump'
   import ElementUI, { Loading as E_Loading, Message as E_Message } from 'element-ui'
-  import Layout from './public-resource/layout/layout.vue'
 
-  console.log(Config)
   export default {
-
     name: 'app',
     data () {
       return {}
     },
-    components: {Layout},
     beforeCreate: function () {
       let vm = this
       let ticket = Cache.get('user_ticket')
-      dump(ticket)
+      this.$dump(ticket)
       let url = Config.SERVER_URL + 'server/get_ticket'
       //    初始化检票
       if (ticket === null) {
@@ -53,5 +47,5 @@
 </script>
 
 <style lang="sass">
-    @import "./public-resource/sass/base"
+    @import "public-resource/sass/base"
 </style>

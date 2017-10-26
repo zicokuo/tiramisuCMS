@@ -1,5 +1,4 @@
 import VueRouter from 'vue-router'
-import { dump } from '../modules/dump'
 import Cache from '../modules/cache'
 
 //  引入子路由
@@ -19,13 +18,13 @@ let customs_routes = [index_router, design_router, weixin_router, user_router, a
 const TiramisuRouter = new VueRouter({
   mode: 'history',
   routes: customs_routes,
+
   activate (transition) {
     this.pre_params = this.$route.query
     transition.next()
   },
 })
 TiramisuRouter.beforeEach((to, from, next) => {
-  dump(to.path, '根路由检测')
   let user = Cache.get('user_info')
   if (pathFilterRegExp.test(to.path) || user !== null) {
     next()

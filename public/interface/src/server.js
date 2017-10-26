@@ -3,8 +3,6 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import Config from './config'
 import Cache from './public-resource/modules/cache'
-import Axios from 'axios'
-import { dump } from './public-resource/modules/dump'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -20,7 +18,7 @@ const Server = new Object({
       if (res.body.code === 1) {
         //  连接成功,更新本地储存的user_ticket,以作为前端换取数据的凭条
         ticket = res.body.data.user_ticket
-        dump(ticket)
+        this.$dump(ticket)
         // Cache.set('user_ticket', ticket)
       }
     })

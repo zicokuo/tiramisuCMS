@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const url = require('url')
 const publicPath = '/assets/'
-const itemName = 'dashboard'
+const itemName = 'dist'
 const devPath = '/interface/' + itemName + '/'
 
 module.exports = (options = {}) => {
@@ -38,7 +38,7 @@ module.exports = (options = {}) => {
           test: /\.(png|jpg|jpeg|gif|svg|svgz)$/,
           use: [{
             loader: 'url-loader',
-            options: {limit: 8129},
+            options: {limit: 1},
           }, {
             loader: 'file-loader',
             options: {name: '[name]_[hash:6].[ext]', outputPath: 'images/'}
@@ -65,8 +65,11 @@ module.exports = (options = {}) => {
     ],
     resolve: {
       alias: {
-        '~': resolve(__dirname, 'src'),
-        'assets': resolve(__dirname, '../src/assets'),
+        'src': resolve(__dirname, 'src'),
+        'public': resolve(__dirname, 'src/public-resource'),
+        'images': resolve(__dirname, 'src/public-resource/images'),
+        'modules': resolve(__dirname, 'src/public-resource/modules'),
+        'iconfont': resolve(__dirname, 'src/public-resource/iconfont'),
       }
     }
     ,
