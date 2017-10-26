@@ -1,5 +1,5 @@
-import component_frame from './../../components/frame.vue'
-import component_design_index from './../../components/design/index.vue'
+import component_frame from '../../../components/frame.vue'
+import component_design_index from '../../../components/design/index.vue'
 
 const design_router = {
   name: 'design_router',

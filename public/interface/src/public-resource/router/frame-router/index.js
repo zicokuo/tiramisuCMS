@@ -1,4 +1,4 @@
-import component_index from './../../components/index/index.vue'
+import component_index from '../../../components/index/index.vue'
 
 const index_router = {
   name: 'index_router',

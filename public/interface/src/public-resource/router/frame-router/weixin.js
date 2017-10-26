@@ -1,6 +1,6 @@
-import component_frame from '../../components/frame.vue'
-import component_configuration from '../../components/weixin/configuration.vue'
-import component_info from '../../components/weixin/info.vue'
+import component_frame from '../../../components/frame.vue'
+import component_configuration from '../../../components/weixin/configuration.vue'
+import component_info from '../../../components/weixin/info.vue'
 
 const weixin_router = {
   name: 'weixin_router',

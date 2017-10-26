@@ -74,10 +74,10 @@
 <script>
     import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
     import component_userAvatar from './user/user_avatar_s.vue'
-    import Cache from './../plugins/cache'
+    import Cache from '../public-resource/modules/cache'
 
     //    引入路由
-    import design_router from './../router/frame-router/design'
+    import design_router from '../public-resource/router/frame-router/design'
 
     export default {
         components: {ElMenuItem, component_userAvatar},

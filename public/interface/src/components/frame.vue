@@ -19,7 +19,7 @@
   import VueRouter from 'vue-router'
   import component_admin_bar from './admin_bar.vue'
   import component_admin_navigation from '../components/admin/navigation.vue'
-  import Cache from '../plugins/cache'
+  import Cache from '../public-resource/modules/cache'
 
   export default {
     name: 'frame',

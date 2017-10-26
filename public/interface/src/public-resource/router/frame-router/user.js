@@ -1,5 +1,5 @@
-import component_template from '../../components/template.vue'
-import component_user_enter from '../../components/user/user_entry.vue'
+import component_template from '../../../components/template.vue'
+import component_user_enter from '../../../components/user/user_entry.vue'
 
 const user_router = {
   name: 'user_router',

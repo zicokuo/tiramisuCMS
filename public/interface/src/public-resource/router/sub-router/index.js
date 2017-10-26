@@ -1,4 +1,4 @@
-import component_index from './../../components/index/index.vue'
+import component_index from '../../../components/index/index.vue'
 
 const admin_router = [
   //  管理后台 - 首页

@@ -1,20 +1,17 @@
 <template>
-    <div class="info">{{content}}
+    <div class="layout">
     </div>
 </template>
 <script>
-
   export default {
-    name: 'info',
+    name: 'layout',
     data () {
-      return {
-        content: 'I\'m weixin info',
-      }
+      return {}
     },
     methods: {}
   }
 </script>
 <style scope>
-    .info {
+    .layout {
     }
 </style>

@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-  import { dump } from '../../plugins/dump'
+  import { dump } from '../../public-resource/modules/dump'
   import * as _ from 'lodash'
   import router from 'vue-router'
 

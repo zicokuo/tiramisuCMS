@@ -49,8 +49,8 @@
 <script>
   import _ from 'lodash'
   import Config from '../../config'
-  import Cache from '../../plugins/cache'
-  import { dump } from '../../plugins/dump'
+  import Cache from '../../public-resource/modules/cache'
+  import { dump } from '../../public-resource/modules/dump'
 
   export default {
     name: 'userEntry',

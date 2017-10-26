@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
-import { dump } from '../plugins/dump'
-import Cache from '../plugins/cache'
+import { dump } from '../modules/dump'
+import Cache from '../modules/cache'
 
 //  引入子路由
 import admin_router from './frame-router/admin'

@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import Config from './config'
-import Cache from './plugins/cache'
+import Cache from './public-resource/modules/cache'
 import Axios from 'axios'
-import { dump } from './plugins/dump'
+import { dump } from './public-resource/modules/dump'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)

@@ -1,5 +1,5 @@
-import component_frame from './../../components/frame.vue'
-import component_dashboard from './../../components/admin/home.vue'
+import component_frame from '../../../components/frame.vue'
+import component_dashboard from '../../../components/admin/home.vue'
 
 const admin_router = {
   name: 'admin_router',

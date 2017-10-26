@@ -2,8 +2,8 @@ import index_router from './sub-router/index'
 import admin_router from './sub-router/admin'
 import weixin_router from './sub-router/weixin'
 
-import component_user_enter from './../components/user/user_entry.vue'
-import component_admin_home from './../components/admin/home.vue'
+import component_user_enter from '../../components/user/user_entry.vue'
+import component_admin_home from '../../components/admin/home.vue'
 
 // let sub_router = []
 // sub_router = sub_router.concat(weixin_router, admin_router)

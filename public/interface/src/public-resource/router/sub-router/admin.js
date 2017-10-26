@@ -1,5 +1,5 @@
-import component_admin_home from '../../components/admin/home.vue'
-import component_user_enter from '../../components/user/user_entry.vue'
+import component_admin_home from '../../../components/admin/home.vue'
+import component_user_enter from '../../../components/user/user_entry.vue'
 
 const admin_router = [
   //  管理后台 - 用户登录
