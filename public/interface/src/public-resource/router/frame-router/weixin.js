@@ -7,11 +7,11 @@ const weixin_router = {
   path: '/admin/weixin*',
   component: component_frame,
   children: [{
-    name: 'configuration',
+    name: '配置',
     path: 'configuration',
     component: component_configuration
   }, {
-    name: 'info',
+    name: '信息',
     path: 'info',
     component: component_info
   }

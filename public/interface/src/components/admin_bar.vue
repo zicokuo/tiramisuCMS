@@ -1,6 +1,6 @@
 <template>
     <div class="adminMenu">
-        <el-menu default-active="1-4-1" class="admin-bar" @open="handleOpen" @close="handleClose"
+        <el-menu default-active="1-1" class="admin-bar" @open="handleOpen" @close="handleClose"
                  :collapse="isCollapse" :router="true">
             <h2 align="center">标题</h2>
             <div class="tiramisu-text-center" v-on:click="adminBarWidthToggle">
@@ -11,6 +11,9 @@
 
             </component_userAvatar>
             <!--首页-->
+            <block v-for="(menu,index) in router_menu">
+                {{menu}}
+            </block>
             <!--<block v-for="(menu,index) in router_menu" v-if="menu.children.length>1">-->
             <!--<el-submenu index="{{index}}">-->
             <!--<template slot="title">-->
@@ -28,10 +31,10 @@
             <!--<block v-else>-->
             <!--<el-menu-item>{{menu}}</el-menu-item>-->
             <!--</block>-->
-            <el-menu-item index="0" :route="{path:'/admin/index'}">
-                <i class="el-icon-i--homepage_fill"></i>
-                <span slot="title">首页</span>
-            </el-menu-item>
+            <!--<el-menu-item index="0" :route="{path:'/admin/index'}">-->
+            <!--<i class="el-icon-i&#45;&#45;homepage_fill"></i>-->
+            <!--<span slot="title">首页</span>-->
+            <!--</el-menu-item>-->
             <el-submenu index="1">
                 <template slot="title">
                     <i class="el-icon-taobao-post"></i>
@@ -115,7 +118,7 @@
         width: 300px;
     }
 
-    .admin-bar.el-menu--collapse .admin-user {
+    .admin-bar.el-menu--collapse .admin-user .nickName {
         display: none;
     }
 </style>

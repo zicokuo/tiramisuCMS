@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const resolve = require('path').resolve
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -5,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const url = require('url')
 const publicPath = '/assets/'
 const itemName = 'dist'
-const devPath = '/interface/' + itemName + '/'
+const devPath = '/dev/'
 
 module.exports = (options = {}) => {
   return {
@@ -17,7 +18,7 @@ module.exports = (options = {}) => {
       path: resolve(__dirname, itemName),
       filename: options.dev ? '[name].js' : '[name].js?[chunkhash]',
       chunkFilename: '[id].js?[chunkhash]',
-      publicPath: options.dev ? devPath : publicPath
+      publicPath: options.dev ? devPath : publicPath,
     },
     module: {
       rules: [
@@ -36,40 +37,38 @@ module.exports = (options = {}) => {
         },
         {
           test: /\.(png|jpg|jpeg|gif|svg|svgz)$/,
-          use: [{
-            loader: 'url-loader',
-            options: {limit: 1},
-          }, {
-            loader: 'file-loader',
-            options: {name: '[name]_[hash:6].[ext]', outputPath: 'images/'}
-          }]
+          use: [
+            // {
+            //   loader: 'url-loader',
+            //   options: {limit: 8129},
+            // },
+            {
+              loader: 'file-loader',
+              options: {name: '[name]_[hash:6].[ext]', outputPath: 'images/'}
+            }]
         }
         , {
           test: /\.(eot|ttf|woff|woff2)$/,
           use: [{
             loader: 'file-loader',
-            options: {name: '[hash:8]_[name].[ext]', outputPath: 'fonts/'}
+            options: {name: '[name]_[hash:8].[ext]', outputPath: 'fonts/'}
           }]
-
         },
       ]
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']
-      }),
-      new HtmlWebpackPlugin({
-        template: 'src/index.html'
-      }),
+      new webpack.optimize.CommonsChunkPlugin({names: ['vendor', 'manifest']}),
+      new HtmlWebpackPlugin({template: 'src/index.html'}),
       new ExtractTextPlugin('styles.css'),
     ],
     resolve: {
       alias: {
-        'src': resolve(__dirname, 'src'),
-        'public': resolve(__dirname, 'src/public-resource'),
-        'images': resolve(__dirname, 'src/public-resource/images'),
-        'modules': resolve(__dirname, 'src/public-resource/modules'),
-        'iconfont': resolve(__dirname, 'src/public-resource/iconfont'),
+        '~': resolve(__dirname, './src'),
+        'src': resolve(__dirname, './src'),
+        'public': resolve(__dirname, './src/public-resource'),
+        'images': resolve(__dirname, './src/public-resource/images'),
+        'modules': resolve(__dirname, './src/public-resource/modules'),
+        'iconfont': resolve(__dirname, './src/public-resource/iconfont'),
       }
     }
     ,

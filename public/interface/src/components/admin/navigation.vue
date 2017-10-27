@@ -1,11 +1,11 @@
 <template>
     <div class="navigation">
-        <el-tabs v-model="activeName" @tab-click="changeTab" @tab-remove="removeTab" editable closable>
-            <!--<el-tab-pane label="用户管理" name="first">1</el-tab-pane>-->
+        <el-tabs v-model="activeName" type="card" @tab-click="changeTab" @tab-remove="removeTab">
             <el-tab-pane :key="item.name"
                          v-for="(item, index) in tabs"
                          :label="item.label"
-                         :name="item.name">
+                         :name="item.name"
+                         :closable="index!=0">
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -36,6 +36,9 @@
       },
       //    关闭页
       removeTab (targetName) {
+        if (targetName == 'home') {
+          return
+        }
         let tabs = this.tabs
         let activeName = this.activeName
         if (activeName === targetName) {
@@ -56,6 +59,7 @@
     watch: {
       //    侦听路由变化,处理tabs
       '$route.path': function (href) {
+        this.$dump(this.$router)
         let newTabs = {name: this.$route.name, label: this.$route.name, path: href}
 //        dump(_.findLastIndex(this.tabs, newTabs.name))
         let isTabExist = _.findLastIndex(this.tabs, {'name': newTabs.name}) < 1
@@ -72,8 +76,7 @@
 
 </script>
 <style scope>
-    .el-tabs__item:first-of-type > .el-icon-close {
+    .navigation i.el-icon-close:nth-of-type(1):before {
         display: none !important;
     }
-
 </style>

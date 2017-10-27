@@ -21,6 +21,9 @@ class User extends Controller
     function __construct(Request $request = null)
     {
         parent::__construct($request);
+        if ($this->request->action() == 'userlogin') {
+            return $this->userLogin();
+        }
         if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
 
         } else {

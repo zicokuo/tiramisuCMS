@@ -1,12 +1,13 @@
 <template>
     <div class="tiramisu-text-center">
-        <img :src="user.avatar" alt="userAvatar"/>
-        <img src="~public/images/avatar.png" alt="userAvatar"/>
-        <p>{{ user.nick }}</p>
+        <div class="userAvatarBox">
+            <img :src="user.avatar" alt="userAvatar" class="tiramisu-avatar-s"/>
+            <p class="nickName">{{ user.nick }}</p>
+        </div>
     </div>
 </template>
 <script>
-  import avatar from './../../public-resource/images/avatar.png'
+  import avatar from '../../public-resource/images/user.png'
 
   export default {
     data () {
@@ -14,14 +15,11 @@
         user: {},
       }
     }, mounted: function () {
+      console.log(avatar)
       this.user = this.$store.state.info
-      this.user.avatar = avatar
+      this.user.avatar = this.user.avatar || avatar
     }, methods: {}
   }
 </script>
 <style scope>
-    .testBox {
-        width: 200px;
-        height: 200px;
-    }
 </style>

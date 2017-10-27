@@ -6,16 +6,33 @@ body {
 
 .tiramisu {
   &-body div {
-    font-family: "monospace","Microsoft YaHei";
+    font-family: "monospace", "Microsoft YaHei";
   }
+
   //  文字
   &-text {
     &-center {
       text-align: center;
     }
   }
+
   //  图标
   &-icon {
     font-size: 16px;
+  }
+
+  //  头像
+  &-avatar {
+    width: auto;
+    margin: auto;
+    &-s {
+      max-width: 64px;
+    }
+    &-m {
+      max-width: 128px;
+    }
+    &-l {
+      max-width: 256px;
+    }
   }
 }
