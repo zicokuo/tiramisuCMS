@@ -11,19 +11,19 @@
     </div>
 </template>
 <script>
-  import Server from './../../server'
+    import Server from './../../server'
 
-  export default {
-    name: 'weixin_configuration',
-    data () {
-      return {
-        pageTitle: '微信接入参数配置',
-        config: {}
-      }
-    },
+    export default {
+        name: 'weixin_configuration',
+        data () {
+            return {
+                pageTitle: '微信接入参数配置',
+                config: {}
+            }
+        },
 
-    methods: {}
-  }
+        methods: {}
+    }
 </script>
 <style scope>
     .weixin_configuration {

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   'env': {
     'browser': true,
@@ -17,17 +19,11 @@ module.exports = {
   ],
   'rules': {
     'indent': [
-      // 'error',
-      2
-    ],
-    'linebreak-style': [
-      'error',
-      'windows'
-    ],
-    'quotes': [
-      'error',
-      'single'
-    ],
+    // 'error',
+    2],
+    'linebreak-style': ['error', 'windows'],
+    'quotes': ['error', 'single']
 
   }
-}
+};
+//# sourceMappingURL=.eslintrc.js.map

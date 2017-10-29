@@ -1,19 +1,14 @@
-import index_router from './sub-router/index'
-import admin_router from './sub-router/admin'
-import weixin_router from './sub-router/weixin'
+//  引入子路由
+import admin_router from './frame-router/admin'
+import index_router from './frame-router/index'
+import weixin_router from './frame-router/weixin'
+import user_router from './frame-router/user'
+import design_router from './frame-router/design'
+import test_router from'./frame-router/test_router'
 
-import component_user_enter from '../../components/user/user_entry.vue'
-import component_admin_home from '../../components/admin/home.vue'
+//  合并子路由
+let subRouters = [index_router, design_router, weixin_router, user_router, test_router, admin_router]
 
-// let sub_router = []
-// sub_router = sub_router.concat(weixin_router, admin_router)
-// sub_router = sub_router.concat(index_router)
-// export default sub_router
+// module.exports = subRouters
 
-const sub_router = [
-  //  管理后台 - 用户登录
-  {path: 'user/:method', component: component_user_enter, props: true},
-  //  管理后台 - 首页
-  {path:'index/:method', component: component_admin_home, props: true},
-]
-export default sub_router
+export default subRouters
