@@ -8,14 +8,13 @@
                 <i v-if="isCollapse" class="el-icon-i--fullscreen tiramisu-icon"></i>
                 <i v-if="!isCollapse" class="el-icon-i--narrow tiramisu-icon"></i>
             </div>
-            <component_userAvatar class="admin-user">
-
-            </component_userAvatar>
+            <!--用户窗口模块-->
+            <component_user_window class="userWindow"></component_user_window>
             <!--首页-->
             <template v-for="(menu,index) in router_menu">
                 <el-submenu name="menu.name" :index="index+''" v-if="menu.children">
                     <template slot="title">
-                        <span slot="title">{{ menu.title||menu.name }} {{ index }}</span>
+                        <span slot="title">{{ menu.title || menu.name || '无标题' }}</span>
                     </template>
                     <el-menu-item-group :title="menu.title+'功能'">
                         <template v-for="(submenu,subindex) in menu.children">
@@ -36,12 +35,12 @@
 </template>
 <script>
     import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-    import component_userAvatar from './user/user_avatar_s.vue'
+    import component_user_window from './user/user_avatar_s.vue'
     import Cache from '../public-resource/modules/cache'
     import routers from '../public-resource/router/sub_router'
 
     export default {
-        components: {ElMenuItem, component_userAvatar},
+        components: {ElMenuItem, component_user_window: component_user_window},
         name: 'adminMenu',
         data () {
             return {
@@ -50,9 +49,9 @@
             }
         },
         beforeMount () {
-//            this.router_menu = require('../public-resource/router/sub_router')
+            //  挂载前,加载路由设置
             this.router_menu = routers
-            console.log(this.router_menu)
+//      console.log(this.router_menu)
         },
         methods: {
             handleOpen: event => {
@@ -72,11 +71,19 @@
     }
 </script>
 <style scope>
+    .admin-bar {
+    }
+
     .admin-bar:not(.el-menu--collapse) {
         width: 300px;
     }
 
-    .admin-bar.el-menu--collapse .admin-user .nickName {
+    .userWindow {
+        padidng: 1em;
+        width: auto;
+    }
+
+    .admin-bar.el-menu--collapse .userWindow .nickName {
         display: none;
     }
 </style>

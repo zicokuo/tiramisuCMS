@@ -15,7 +15,7 @@ var _home2 = _interopRequireDefault(_home);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var admin_router = {
-    name: 'admin_router',
+    name: 'design_router',
     path: '/admin*',
     component: _frame2.default,
 

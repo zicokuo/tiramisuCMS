@@ -7,7 +7,9 @@ Layout.install = function (Vue, options) {
         ticket: '',
     }
     for (let property in options) {
-        settings[property] = options[property]  // 使用 options 的配置
+        if (options.hasOwnProperty(property)) {
+            settings[property] = options[property]  // 使用 options 的配置
+        }
     }
     Vue.prototype.$pageTitle = (title) => {
         settings.title = title
@@ -16,11 +18,11 @@ Layout.install = function (Vue, options) {
     Vue.mixin({
         updated: function () {
             //  更新界面时候更新网页标题
-            document.title = settings.title || 'TiramisuCMS'
+            document.title = 'TiramisuCMS' + (settings.title || '')
         },
         mounted: function () {
             //  挂载时更新网页标题
-            document.title = settings.title || 'TiramisuCMS'
+            document.title = 'TiramisuCMS' + (settings.title || '')
         }
     })
 }

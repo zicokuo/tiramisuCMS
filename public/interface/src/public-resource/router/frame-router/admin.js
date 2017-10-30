@@ -8,11 +8,13 @@ const admin_router = {
 
     children: [
         {
+            title: '管理台首页',
+            url: '/admin/index',
             path: '',
-            name: 'home',
+            name: 'admin_index',
             component: component_dashboard,
             meta: {
-                pageTitle: 'tiramisuCMS'
+                pageTitle: '管理台首页'
             },
         }
     ]

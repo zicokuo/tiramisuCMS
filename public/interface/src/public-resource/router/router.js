@@ -9,7 +9,7 @@ const TiramisuRouter = new VueRouter({
     mode: 'history',
     routes: routers,
     activate (transition) {
-        this.pre_params = this.$route.query;
+        this.pre_params = this.$route.query
         transition.next()
     },
 })

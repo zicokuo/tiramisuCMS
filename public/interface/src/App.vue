@@ -8,7 +8,7 @@
 <script>
     import Config from './config'
     import Cache from './public-resource/modules/cache'
-    import ElementUI, {Loading as E_Loading, Message as E_Message} from 'element-ui'
+    import ElementUI, { Loading as E_Loading, Message as E_Message } from 'element-ui'
 
     export default {
         name: 'app',
@@ -27,16 +27,10 @@
                         Cache.set('user_ticket', res.body.data.user_ticket)
                     }
                 }).catch(e => {
-                    E_Loading.service().close()
-                    this.$alert('服务连接失败', '警告', {
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            this.$message({
-                                type: 'error',
-                                message: `action: ${ action }`
-                            })
-                        }
-                    })
+                    let loading = E_Loading.service({fullscreen: true, text: '服务器链接失败'})
+                    loading.close()
+                    console.log(e)
+                    this.$message.error('服务器链接失败')
                 })
             }
             //    同步Cache和Storage

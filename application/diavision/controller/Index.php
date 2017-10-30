@@ -21,6 +21,11 @@ class Index extends Controller
         return json_encode(['msg' => $msg, 'url' => $url || $this->request->path(), 'data' => $content, 'code' => $code]);
     }
 
+    private function _get_db()
+    {
+        return Db::connect(Config::get('database'));
+    }
+
     public function index()
     {
         $this->test_sql();
@@ -32,6 +37,18 @@ class Index extends Controller
 
     }
 
+    public function get_list()
+    {
+        $sql = 'SELECT * FROM weixin_design_submit';
+        $data = db('weixin_design_submit')->select();
+        return $this->_package_return('获取用户提交数据列表', '', $data);
+    }
+
+    public function get_user()
+    {
+
+    }
+
     public function design_submit()
     {
         $params = $this->request->param();
@@ -39,7 +56,7 @@ class Index extends Controller
         if (isset($params['userInfo']['nickName'])) {
             $dbConfigs = Config::get('database');
             $sql = 'INSERT INTO weixin_design_submit (user_id,create_time,status,contact,from_data) VALUES (:user,:createTime,:status,:contact,:fromData)';
-            $bindData = ['user_id' => 1, 'create_time' => time(), 'status' => '未处理', 'from_data' => json_encode($params)];
+            $bindData = ['user_id' => 1, 'create_time' => time(), 'status' => 0, 'from_data' => json_encode($params)];
             $db = db('weixin_design_submit')->insert($bindData);
             return $this->_package_return('成功提交设计', null, '', 1);
         } else {
