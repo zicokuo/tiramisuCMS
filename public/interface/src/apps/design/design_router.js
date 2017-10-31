@@ -23,7 +23,6 @@ const design_router = {
         url: root_url + '/list',
         path: 'list',
         name: 'design_list',
-        component: component_design_index,
         meta: {
             pageTitle: '客户申请'
         },

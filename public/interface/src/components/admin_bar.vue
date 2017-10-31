@@ -70,8 +70,12 @@
         }
     }
 </script>
-<style scope>
+<style scope lang="scss">
     .admin-bar {
+        transition: all 1s ease;
+        &:not(:hover) {
+            opacity: 0.3;
+        }
     }
 
     .admin-bar:not(.el-menu--collapse) {

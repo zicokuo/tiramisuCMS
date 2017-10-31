@@ -40,7 +40,7 @@ class Index extends Controller
     public function get_list()
     {
         $sql = 'SELECT * FROM weixin_design_submit';
-        $data = db('weixin_design_submit')->select();
+        $data = db('weixin_design_submit')->order('create_time', 'desc')->select();
         return $this->_package_return('获取用户提交数据列表', '', $data);
     }
 
@@ -49,10 +49,28 @@ class Index extends Controller
 
     }
 
+    public function finished()
+    {
+        $id = $this->request->param('id');
+        $result = db('weixin_design_submit')->where('id', '=', $id)->update(['status' => 1]);
+        return $this->_package_return('修改订单状态成功', '', $result);
+    }
+
+    public function deleted()
+    {
+        $id = $this->request->param('id');
+        $result = db('weixin_design_submit')->where('id', '=', $id)->delete();
+        return $this->_package_return($id, '', $result);
+    }
+
     public function design_submit()
     {
         $params = $this->request->param();
 //        var_dump($params);
+        $weixinNick = $params['userInfo']['nickName'];
+        $result = db('weixin_design_submit');
+
+
         if (isset($params['userInfo']['nickName'])) {
             $dbConfigs = Config::get('database');
             $sql = 'INSERT INTO weixin_design_submit (user_id,create_time,status,contact,from_data) VALUES (:user,:createTime,:status,:contact,:fromData)';

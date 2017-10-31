@@ -7,7 +7,7 @@
 
 .iconfont, [class^=el-icon-i-], [class*=el-icon-i-] {
     font-family: "iconfont" !important;
-    font-size: 28px;
+    /*font-size: 16px;*/
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
