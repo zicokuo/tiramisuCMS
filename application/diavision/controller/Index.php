@@ -8,18 +8,15 @@
 
 namespace app\diavision\controller;
 
+use app\diavision\common\BaseController;
 use think\Config;
 use think\Controller;
 use think\Db;
 
 class Index extends Controller
 {
+    use BaseController;
     public $db_configs;
-
-    private function _package_return($msg = '', $url = null, $content = '', $code = 1)
-    {
-        return json_encode(['msg' => $msg, 'url' => $url || $this->request->path(), 'data' => $content, 'code' => $code]);
-    }
 
     private function _get_db()
     {
