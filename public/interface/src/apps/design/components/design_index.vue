@@ -216,7 +216,6 @@
         }
     }
 
-
 </script>
 <style lang="scss">
     .design_index {

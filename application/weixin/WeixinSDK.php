@@ -37,5 +37,35 @@ class WeixinSDK
         return $result;
     }
 
+    /**
+     * 检测cache中的3rd
+     * @param $srd
+     */
+    public function check_session_3rd($srd)
+    {
+        return $session_3rd = Cache::has($srd);
+    }
+
+    /**
+     * 生成128位随机数
+     * @param $sign
+     * @return string
+     */
+    public function get_third_session($sign = null)
+    {
+        $r = rand(0, 2);
+        $string = '';
+        for ($a = 0; $a < 3; $a++) {
+            $string .= ($a == $r) ? sha1($sign) : sha1($this->generate_code(8));
+        }
+        return $string . $this->generate_code(8);
+    }
+
+
+    public function generate_code($length = 4)
+    {
+        return rand(pow(10, ($length - 1)), pow(10, $length) - 1);
+    }
+
 
 }

@@ -56,7 +56,7 @@ trait WeixinAPI
         // 关闭URL请求
         curl_close($curl);
         // 显示获得的数据
-        return $data ? json_decode($data) : curl_errno($curl);
+        return $data ? json_decode($data, true) : curl_errno($curl);
     }
 
 }
