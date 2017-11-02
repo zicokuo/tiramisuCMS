@@ -1,12 +1,8 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-
-var _lodash = require('lodash');
-
-var _ = _interopRequireWildcard(_lodash);
 
 var _vue = require('vue');
 
@@ -42,10 +38,6 @@ var _dump = require('./public-resource/plugins/dump');
 
 var _dump2 = _interopRequireDefault(_dump);
 
-var _cache = require('./public-resource/modules/cache');
-
-var _cache2 = _interopRequireDefault(_cache);
-
 require('./public-resource/iconfont/iconfont.css');
 
 var _store = require('./public-resource/store/store');
@@ -58,31 +50,25 @@ var _router2 = _interopRequireDefault(_router);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-_vue2.default.use(_vuex2.default);
-
 //  引入ElementUI
+_vue2.default.use(_vuex2.default);
+//  引入iconfont
+
+//  加载框架
 
 _vue2.default.use(_vueRouter2.default);
 _vue2.default.use(_vueResource2.default);
 _vue2.default.use(_elementUi2.default);
 
-//  加载框架
-
-
 _vue2.default.use(_layout2.default);
 _vue2.default.use(_dump2.default);
 
-//  引入iconfont
-
-
 var vm = new _vue2.default({
-  el: '#app',
-  router: _router2.default, store: _store2.default,
-  render: function render(h) {
-    return h(_App2.default);
-  }
+    el: '#app',
+    router: _router2.default, store: _store2.default,
+    render: function render(h) {
+        return h(_App2.default);
+    }
 });
 
 exports.default = vm;

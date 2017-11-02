@@ -1,7 +1,18 @@
 <template>
     <div class="design_index">
         <p>这里是标志定制Logo小程序后台</p>
-        <template>
+        <template name="toolbar">
+            <el-row :gutter="8">
+                <el-col align="right">
+                    操作
+                    <el-button type="primary" icon="el-icon-i--right" size="mini">批量完成</el-button>
+                    <el-button type="primary" icon="el-icon-i--empty" size="mini">批量删除</el-button>
+                </el-col>
+
+            </el-row>
+
+        </template>
+        <template name="table">
             <el-table :data="listDatas" style="width: 100%" :default-sort="{prop: 'create_time', order: 'descending'}">
                 <el-table-column type="expand">
                     <template slot-scope="props">
@@ -46,6 +57,8 @@
                         </el-form>
                     </template>
                 </el-table-column>
+                <el-table-column type="selection"></el-table-column>
+
                 <el-table-column prop="id" label="序号" width="60"></el-table-column>
                 <el-table-column prop="user_id" label="用户" width="80">
                     <template slot-scope="scope">
@@ -75,14 +88,13 @@
                 </el-table-column>
                 <el-table-column prop="id" label="操作">
                     <template slot-scope="scope">
-                        <el-button-group>
-                            <el-button type="success" icon="el-icon-i--right" size="mini"
-                                       @click="finishIt(scope.row.id)" :disabled="parseInt(scope.row.status)===1">完成
-                            </el-button>
-                            <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteIt(scope.row.id)">
-                                删除
-                            </el-button>
-                        </el-button-group>
+                        <el-button type="success" icon="el-icon-i--right" size="mini"
+                                   @click="finishIt(scope.row.id)" :disabled="parseInt(scope.row.status)===1">
+                        </el-button>
+                        <el-button type="primary" icon="el-icon-i--editor" size="mini"></el-button>
+                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteIt(scope.row.id)">
+
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -95,7 +107,7 @@
 </template>
 <script>
     import Configs from '../../../config'
-    import { formatDate } from '../../../public-resource/plugins/datetime'
+    import {formatDate} from '../../../public-resource/plugins/datetime'
 
     let designAppUrl = Configs.SERVER_DEV_URL + 'diavision/index/'
 
@@ -166,7 +178,8 @@
                             vm.$message('[' + id + ']号订单删除失败...')
                         }
                     })
-                }).catch(_ => {})
+                }).catch(_ => {
+                })
             },
             //  完成提交
             finishIt (id) {
@@ -187,57 +200,46 @@
             formatDate (stamp) {
                 return formatDate(new Date(stamp * 1000), 'yyyy-MM-dd h:m:s')
             },
-            share (url) {
-                let vm = this
-                let p = {
-                    url: location.href, /*获取URL，可加上来自分享到QQ标识，方便统计*/
-                    desc: '', /*分享理由(风格应模拟用户对话),支持多分享语随机展现（使用|分隔）*/
-                    title: '', /*分享标题(可选)*/
-                    summary: '', /*分享摘要(可选)*/
-                    pics: '', /*分享图片(可选)*/
-                    flash: '', /*视频地址(可选)*/
-                    site: '', /*分享来源(可选) 如：QQ分享*/
-                    style: '201',
-                    width: 32,
-                    height: 32
-                }
-                let s = []
-                for (let i in p) {
-                    s.push(i + '=' + encodeURIComponent(p[i] || ''))
-                }
-                let url2 = 'http://connect.qq.com/widget/shareqq/index.html'
-                vm.$http.get(url2, p)
-            }
-
-        }
-        ,
+        },
         components: {
             taskStatus: comp_taskStatus
         }
     }
 
 </script>
-<style lang="scss">
+<style lang="scss" scope>
     .design_index {
         max-width: 1200px;
-        & .table-expand {
-            & h3, & p{
-                text-indent: 1em;
-            }
-            & h3 {
-                font-weight: 900;
-                color: #ffffff;
-                background: #aaa;
-                line-height: 2em;
-                text-indent: 1em;
-                text-decoration: underline;
-            }
-        }
-        & .el-form-item__label {
-            font-weight: 900;
-            color: #666666;
-            background: #cccccc;
-            line-height: 1.5em;
-        }
+
+    &
+    .table-expand {
+
+    &
+    h3,
+
+    &
+    p {
+        text-indent: 1em;
+    }
+
+    &
+    h3 {
+        font-weight: 900;
+        color: #ffffff;
+        background: #aaa;
+        line-height: 2em;
+        text-indent: 1em;
+        text-decoration: underline;
+    }
+
+    }
+    &
+    .el-form-item__label {
+        font-weight: 900;
+        color: #666666;
+        background: #cccccc;
+        line-height: 1.5em;
+    }
+
     }
 </style>

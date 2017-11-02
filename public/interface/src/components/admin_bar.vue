@@ -74,7 +74,7 @@
     .admin-bar {
         transition: all 1s ease;
         &:not(:hover) {
-            opacity: 0.3;
+            opacity: 0.1;
         }
     }
 

@@ -21,7 +21,7 @@
     import component_admin_bar from './admin_bar.vue'
     import component_admin_navigation from '../components/admin/navigation.vue'
     import Cache from '../public-resource/modules/cache'
-    import { Loading as E_Loading, Message as E_Message } from 'element-ui'
+    import {Loading as E_Loading, Message as E_Message} from 'element-ui'
 
     export default {
         name: 'frame',
@@ -50,7 +50,11 @@
                         console.log(response.result.msg || '通讯出错..')
                     }
                     //  至少500ms反馈时间
-                    setTimeout(() => {if (loading.close()) {loading.close()}}, 2000)
+                    setTimeout(() => {
+                        if (loading.close()) {
+                            loading.close()
+                        }
+                    }, 2000)
                     return response
                 })
             }
