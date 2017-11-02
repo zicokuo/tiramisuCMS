@@ -80,7 +80,7 @@ class Weixin extends Controller
      */
     public function design_submit()
     {
-        
+
         $params = $this->request->param();
 //        var_dump($params);
         if (isset($params['userInfo']['nickName'])) {

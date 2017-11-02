@@ -143,7 +143,7 @@
             this.$http.get(designAppUrl + 'get_list').then(response => {
                 console.log(response)
                 if (response.result.code === 1) {
-                    vm.listDatas = response.result.data
+                    vm.listDatas = response.result.response
                 } else {
                     vm.$message.error('提交数据获取失败')
                 }

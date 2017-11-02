@@ -60,24 +60,24 @@ class Index extends Controller
         return $this->_package_return($id, '', $result);
     }
 
-    public function design_submit()
-    {
-        $params = $this->request->param();
-//        var_dump($params);
-        $weixinNick = $params['userInfo']['nickName'];
-        $result = db('weixin_design_submit');
-
-
-        if (isset($params['userInfo']['nickName'])) {
-            $dbConfigs = Config::get('database');
-            $sql = 'INSERT INTO weixin_design_submit (user_id,create_time,status,contact,from_data) VALUES (:user,:createTime,:status,:contact,:fromData)';
-            $bindData = ['user_id' => 1, 'create_time' => time(), 'status' => 0, 'from_data' => json_encode($params)];
-            $db = db('weixin_design_submit')->insert($bindData);
-            return $this->_package_return('成功提交设计', null, '', 1);
-        } else {
-            return $this->_package_return('提交失败,请重试', null, '', 0);
-        }
-    }
+//    public function design_submit()
+//    {
+//        $params = $this->request->param();
+////        var_dump($params);
+//        $weixinNick = $params['userInfo']['nickName'];
+//        $result = db('weixin_design_submit');
+//
+//
+//        if (isset($params['userInfo']['nickName'])) {
+//            $dbConfigs = Config::get('database');
+//            $sql = 'INSERT INTO weixin_design_submit (user_id,create_time,status,contact,from_data) VALUES (:user,:createTime,:status,:contact,:fromData)';
+//            $bindData = ['user_id' => 1, 'create_time' => time(), 'status' => 0, 'from_data' => json_encode($params)];
+//            $db = db('weixin_design_submit')->insert($bindData);
+//            return $this->_package_return('成功提交设计', null, '', 1);
+//        } else {
+//            return $this->_package_return('提交失败,请重试', null, '', 0);
+//        }
+//    }
 
     public function test()
     {
