@@ -1,8 +1,11 @@
 let rootPath = require('path').resolve(__dirname, 'src')
+let extraPath = '/diavision/public'
+// let extraPath = ''
 export default {
-    SERVER_DEV_URL: '/server/',
-    SERVER_URL: '/server/admin/',
-    SERVER_API_URL: '/server/admin/server/',
+    BASE_URL:extraPath,
+    SERVER_DEV_URL: extraPath + '/server/',
+    SERVER_URL: extraPath + '/server/admin/',
+    SERVER_API_URL: extraPath + '/server/admin/server/',
     __ROOT__: rootPath,
     publicPath: rootPath + '/public-resource/',
     imagePath: rootPath + '/images/',

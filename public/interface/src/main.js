@@ -10,6 +10,7 @@ import App from './App.vue'
 //  加载框架
 import Layout from './public-resource/layout/layout'
 import Dump from './public-resource/plugins/dump'
+import Units from './public-resource/plugins/units'
 //  引入iconfont
 import './public-resource/iconfont/iconfont.css'
 
@@ -23,7 +24,7 @@ Vue.use(ElementUI)
 
 Vue.use(Layout)
 Vue.use(Dump)
-
+Vue.use(Units)
 let vm = new Vue({
     el: '#app',
     router, store,

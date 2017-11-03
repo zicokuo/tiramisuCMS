@@ -36,9 +36,15 @@ class Index extends Controller
 
     public function get_list()
     {
-        $sql = 'SELECT * FROM weixin_design_submit';
-        $data = db('weixin_design_submit')->order('create_time', 'desc')->select();
-        return $this->_package_return('获取用户提交数据列表', '', $data);
+        $pageSize = $this->request->param('page_size', 1);
+        $paged = $this->request->param('paged', 1);
+        $total = db('weixin_design_submit')->count();
+        $data['data'] = db('weixin_design_submit')->page($paged, $pageSize)->order('create_time', 'desc')->select();
+        $data['totals'] = $total;
+        $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持单页
+        $data['paged'] = $paged;
+        $data['size'] = $pageSize;
+        return $this->_package_return('获取用户提交数据列表成功', '', $data);
     }
 
     public function get_user()
@@ -49,15 +55,30 @@ class Index extends Controller
     public function finished()
     {
         $id = $this->request->param('id');
-        $result = db('weixin_design_submit')->where('id', '=', $id)->update(['status' => 1]);
+        $id = explode(',', $id);
+        if (count($id) < 1) {
+            return $this->_package_return('无效操作', '', '', 0);
+        }
+        $result = '';
+        foreach ($id as $i) {
+//            $updateArray[] = ['id' => $i, 'status' => 1];
+            $result .= db('weixin_design_submit')->where('id', '=', $i)->update(['status' => 1]);
+        }
         return $this->_package_return('修改订单状态成功', '', $result);
     }
 
     public function deleted()
     {
         $id = $this->request->param('id');
-        $result = db('weixin_design_submit')->where('id', '=', $id)->delete();
-        return $this->_package_return($id, '', $result);
+        $id = explode(',', $id);
+        if (count($id) < 1) {
+            return $this->_package_return('无效操作', '', '', 0);
+        }
+        $result = '';
+        foreach ($id as $i) {
+            $result .= db('weixin_design_submit')->where('id', '=', $i)->delete();
+        }
+        return $this->_package_return('已删除订单' . $result, '', $result);
     }
 
 //    public function design_submit()

@@ -18,7 +18,8 @@
                     </template>
                     <el-menu-item-group :title="menu.title+'功能'">
                         <template v-for="(submenu,subindex) in menu.children">
-                            <el-menu-item :route="{path:submenu.url}" :index="index+'-'+subindex">
+                            <el-menu-item :route="{path:submenu.url}" :index="index+'-'+subindex"
+                                          v-if="submenu.path.length>1">
                                 <i v-if="submenu.icon" :class="submenu.icon"></i>
                                 {{ submenu.title }}
                             </el-menu-item>
@@ -74,7 +75,22 @@
     .admin-bar {
         transition: all 1s ease;
         &:not(:hover) {
-            opacity: 0.1;
+            animation-fill-mode: forwards;
+            animation-delay: 3s;
+            animation: myfadeOut 1s;
+            opacity: 0.5;
+        }
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    @keyframes myfadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0.5;
         }
     }
 

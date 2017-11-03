@@ -1,5 +1,6 @@
 import component_frame from '../../components/frame.vue'
 import component_design_index from './components/design_index.vue'
+import component_design_submits from './components/design_submits.vue'
 
 let root_url = '/admin/design'
 
@@ -12,7 +13,7 @@ const design_router = {
     children: [{
         title: '首页',
         url: root_url + '/index',
-        path: '',
+        path: 'home',
         name: 'design_index',
         component: component_design_index,
         meta: {
@@ -23,8 +24,18 @@ const design_router = {
         url: root_url + '/list',
         path: 'list',
         name: 'design_list',
+        component: component_design_submits,
         meta: {
             pageTitle: '客户申请'
+        },
+    }, {
+        title: '首页',
+        url: root_url + '/index',
+        path: '',
+        name: 'design_index',
+        component: component_design_index,
+        meta: {
+            pageTitle: '首页'
         },
     }
     ]

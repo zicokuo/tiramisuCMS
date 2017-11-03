@@ -18,11 +18,11 @@ Layout.install = function (Vue, options) {
     Vue.mixin({
         updated: function () {
             //  更新界面时候更新网页标题
-            document.title = 'TiramisuCMS' + (settings.title || '')
+            document.title = 'TiramisuCMS' + (' - ' + settings.title || '')
         },
         mounted: function () {
             //  挂载时更新网页标题
-            document.title = 'TiramisuCMS' + (settings.title || '')
+            document.title = 'TiramisuCMS' + (' - ' + settings.title || '')
         }
     })
 }

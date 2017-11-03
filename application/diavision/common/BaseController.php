@@ -25,7 +25,7 @@ trait BaseController
      */
     private function _package_return($msg = '', $url = null, $data = '', $code = 1)
     {
-        return json_encode(['msg' => $msg, 'url' => $url, 'response' => $data, 'code' => $code]);
+        return json_encode(['msg' => $msg, 'url' => $url, 'content' => $data, 'code' => $code]);
     }
 
     public function _is($res)

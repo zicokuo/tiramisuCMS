@@ -4,9 +4,9 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const url = require('url')
-const publicPath = '/assets/'
+const publicPath = './assets/'
 const itemName = 'dist'
-const devPath = '/dev/'
+const devPath = ''
 
 module.exports = (options = {}) => {
     return {

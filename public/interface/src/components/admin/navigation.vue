@@ -64,7 +64,7 @@
             //    侦听路由变化,处理tabs
             '$route.path': function (href) {
                 let curRouter = findRouteByPath(href, routers)
-                this.$dump(curRouter)
+//                this.$dump(curRouter)
                 let newTabs = {name: this.$route.name, label: curRouter.title, path: href, url: curRouter.url}
 //        dump(_.findLastIndex(this.tabs, newTabs.name))
                 let isTabExist = _.findLastIndex(this.tabs, {'name': newTabs.name}) < 1
@@ -73,7 +73,7 @@
                     this.tabs.push(newTabs)
                 }
                 this.activeName = newTabs.name
-                this.$pageTitle(newTabs.name)
+                this.$pageTitle(newTabs.label || newTabs.name)
             }
         },
 
