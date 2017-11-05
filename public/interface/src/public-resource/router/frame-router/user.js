@@ -1,14 +1,15 @@
-import component_template from '../../../components/template.vue'
-import component_user_enter from '../../../components/user/user_entry.vue'
+let rootPath = '../../../components/';
 
+const component_template = () => import('../../../components/template.vue')
+const component_user_enter = () => import('../../../components/user/user_entry.vue')
 const user_router = {
-  name: 'user_router',
-  path: '/admin/user*',
-  component: component_template,
-  children: [{
-    path: 'login',
-    component: component_user_enter
-  }]
+    name: 'user_router',
+    path: '/admin/user*',
+    component: () => import('../../../components/template.vue'),
+    children: [{
+        path: 'login',
+        component: component_user_enter
+    }]
 
 }
 export default user_router

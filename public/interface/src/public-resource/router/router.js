@@ -3,12 +3,14 @@ import Cache from '../modules/cache'
 import routers from './sub_router'
 
 // let Config = import('./../../config.js')
-// let routers = require('./sub_router')
+// let routers = resolve => {
+//     require(['./sub_router'], resolve)
+// }
 //  过滤规则 - 用户登录/注册/登出
 let pathFilterRegExp = new RegExp('(/admin/user)/(login|register|logout)', 'i')
 
 const TiramisuRouter = new VueRouter({
-    base: '/diavision/public/',
+    // base: '/diavision/public/',
     mode: 'history',
     routes: routers,
     activate (transition) {

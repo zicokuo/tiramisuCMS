@@ -10,7 +10,7 @@
                 </el-button>
                 <el-button type="success" icon="el-icon-i--refresh" size="mini" @click="refreshTable">刷新</el-button>
             </p>
-            <p> 共有{{tableTotals}}条项目, 已选择{{tableSelected.length || 0}}条</p>
+            <p> 共有{{tableTotals}}条项目,当前显示{{ listDatas.length||0 }}条,已选择{{tableSelected.length || 0}}条</p>
         </template>
         <template name="table">
             <el-table :data="listDatas" style="width: 100%" :default-sort="{prop: 'create_time', order: 'descending'}"
@@ -112,10 +112,9 @@
     </div>
 </template>
 <script>
-    import Configs from '../../../config'
-    import { formatDate } from '../../../public-resource/plugins/datetime'
+    //    import Configs from '../../../config'
+    import {formatDate} from '../../../public-resource/plugins/datetime'
 
-    let designAppUrl = Configs.SERVER_DEV_URL + 'diavision/index/'
 
     let comp_taskStatus = {
         template: '<el-tag :type="getTypeByStatus(status)">{{getTextByStatus(status)}}</el-tag>',
@@ -139,6 +138,7 @@
         name: 'design_submits',
         data () {
             return {
+                serverUrl: this.$getUrl('serverUrl') + 'diavision/index/',
                 submits: [],
                 listDatas: [],
                 userDatas: [],
@@ -159,7 +159,7 @@
                 tablePaged: 1,  //  当前页数
                 tablePages: 1,   //  页数
                 tableTotals: 0, //  项目数
-                tablePageSize: 20   //  每页项目数
+                tablePageSize: 15   //  每页项目数
             }
         },
         beforeMount () {
@@ -174,17 +174,17 @@
             //  获取表单数据
             getTableDataHandler (data = {}, func) {
                 let vm = this
-                data.page_size = vm.tablePageSize
-                data.paged = vm.tablePaged
-                console.log(data)
-                vm.$http.post(designAppUrl + 'get_list', data).then(res => {
+                data.page_size ? '' : data.page_size = vm.tablePageSize
+                data.paged ? '' : data.paged = vm.tablePaged
+//                console.log(data)
+                vm.$http.post(vm.serverUrl + 'get_list', data).then(res => {
 //                console.log(response)
                     if (res.result.code === 1) {
                         typeof func === 'function' ? func(res) : vm.listDatas = res.result.content.data
                         res.result.content.paged ? vm.tablePaged = parseInt(res.result.content.paged) : ''
                         res.result.content.pages ? vm.tablePages = parseInt(res.result.content.pages) : ''
                         res.result.content.totals ? vm.tableTotals = parseInt(res.result.content.totals) : ''
-                        res.result.content.size ? vm.tableSize = parseInt(res.result.content.size) : ''
+                        res.result.content.size ? vm.tablePageSize = parseInt(res.result.content.size) : ''
                     } else {
                         this.$message.error('提交数据获取失败')
                     }
@@ -193,7 +193,7 @@
             //  翻页
             pagedChanged (paged) {
                 let vm = this
-                console.log('改变页码:' + paged + ',当前页码:' + vm.tablePaged)
+//                console.log('改变页码:' + paged + ',当前页码:' + vm.tablePaged)
                 if (paged !== vm.tablePaged) {
                     this.getTableDataHandler({paged: paged})
                 }
@@ -205,13 +205,13 @@
             //  刷新
             refreshTable () {
                 let vm = this
-                vm.getTableDataHandler({paged: vm.tablePaged})
+                vm.getTableDataHandler({paged: vm.tablePaged, page_size: vm.tablePageSize})
             },
             //  删除
             deleteIt (id) {
                 let vm = this
                 vm.$confirm('是否删除?', '删除[' + id + ']号订单').then(_ => {
-                    vm.$http.post(designAppUrl + 'deleted', {'id': id}).then(response => {
+                    vm.$http.post(vm.serverUrl + 'deleted', {'id': id}).then(response => {
                         if (response.result.code === 1) {
                             vm.$message('[' + id + ']号订单已经删除')
                             vm.listDatas = vm.listDatas.filter(item => item.id !== id)
@@ -219,12 +219,13 @@
                             vm.$message('[' + id + ']号订单删除失败...')
                         }
                     })
-                }).catch(_ => {})
+                }).catch(_ => {
+                })
             },
             //  完成提交
             finishIt (id) {
                 let vm = this
-                vm.$http.post(designAppUrl + 'finished', {'id': id.toString()}).then(response => {
+                vm.$http.post(vm.serverUrl + 'finished', {'id': id.toString()}).then(response => {
                     if (response.result.code === 1) {
                         vm.$message('[' + id + ']号订单处理完成')
                         for (let index in vm.listDatas) {
@@ -250,7 +251,7 @@
                     vm.tableSelected = []
 
                     vm.refreshTable()
-//                    vm.$http.post(designAppUrl+'finished',{id})
+//                    vm.$http.post(vm.serverUrl+'finished',{id})
                 }
             },
             batchDeleted () {
@@ -261,7 +262,7 @@
                         ids.push(vm.tableSelected[key].id)
                     }
                     vm.$confirm('是否删除?', '删除[' + ids + ']号订单').then(_ => {
-                        vm.$http.post(designAppUrl + 'deleted', {'id': ids.toString()}).then(response => {
+                        vm.$http.post(vm.serverUrl + 'deleted', {'id': ids.toString()}).then(response => {
                             if (response.result.code === 1) {
                                 vm.$message('[' + ids + ']号订单已经删除')
 //                                vm.listDatas = vm.listDatas.filter(item => item.id !== id)
@@ -272,8 +273,9 @@
                                 vm.$message('[' + ids + ']号订单删除失败...')
                             }
                         })
-                    }).catch(_ => {})
-//                    vm.$http.post(designAppUrl+'finished',{id})
+                    }).catch(_ => {
+                    })
+//                    vm.$http.post(vm.serverUrl+'finished',{id})
                 }
             },
             handleSelectionChange (row) {
@@ -301,34 +303,35 @@
     .design_submits {
         max-width: 1200px;
 
-        &
-        .table-expand {
+    &
+    .table-expand {
 
-            &
-            h3,
-            &
-            p {
-                text-indent: 1em;
-            }
+    &
+    h3,
 
-            &
-            h3 {
-                font-weight: 900;
-                color: #ffffff;
-                background: #aaa;
-                line-height: 2em;
-                text-indent: 1em;
-                text-decoration: underline;
-            }
+    &
+    p {
+        text-indent: 1em;
+    }
 
-        }
-        &
-        .el-form-item__label {
-            font-weight: 900;
-            color: #666666;
-            background: #cccccc;
-            line-height: 1.5em;
-        }
+    &
+    h3 {
+        font-weight: 900;
+        color: #ffffff;
+        background: #aaa;
+        line-height: 2em;
+        text-indent: 1em;
+        text-decoration: underline;
+    }
+
+    }
+    &
+    .el-form-item__label {
+        font-weight: 900;
+        color: #666666;
+        background: #cccccc;
+        line-height: 1.5em;
+    }
 
     }
 </style>

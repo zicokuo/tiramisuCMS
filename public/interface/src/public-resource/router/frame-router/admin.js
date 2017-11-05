@@ -1,18 +1,14 @@
-import component_frame from '../../../components/frame.vue'
-import component_dashboard from '../../../components/admin/home.vue'
-
 const admin_router = {
     name: 'admin_router',
     path: '/admin*',
-    component: component_frame,
-
+    component: () => import('../../../components/frame.vue'),
     children: [
         {
             title: '管理台首页',
             url: '/admin/index',
             path: '',
             name: 'admin_index',
-            component: component_dashboard,
+            component: () => import('../../../components/admin/home.vue'),
             meta: {
                 pageTitle: '管理台首页'
             },

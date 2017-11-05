@@ -108,7 +108,7 @@
                         this.$notify({title: '警告', message: '请输入正确的登录账户', type: 'warning'})
                         return false
                     }
-                    let api_url = Config.SERVER_URL + 'user/userLogin'
+                    let api_url = vm.$getUrl('adminUrl') + 'user/userLogin'
                     this.$http.get(api_url, {'params': this.loginForm}).then((res) => {
 //            todo 用户密码加密传输,不能明码传输
                         if (res.body.code === 1) {

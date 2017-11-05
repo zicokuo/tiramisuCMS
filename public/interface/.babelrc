@@ -2,5 +2,8 @@
   "presets": [
     "vue-app",
     "es2015"
+  ],
+  "plugins": [
+    "syntax-dynamic-import"
   ]
 }

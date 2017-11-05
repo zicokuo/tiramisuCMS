@@ -25,31 +25,36 @@ class Index extends Controller
 
     public function index()
     {
-        $this->test_sql();
         return 'welcome';
     }
 
     public function dashboard()
     {
-
+        return $this->index();
     }
 
+    /**
+     * 获取用户提交列表接口
+     * @return string
+     */
     public function get_list()
     {
-        $pageSize = $this->request->param('page_size', 1);
+        $pageSize = $this->request->param('page_size', 20);
         $paged = $this->request->param('paged', 1);
         $total = db('weixin_design_submit')->count();
-        $data['data'] = db('weixin_design_submit')->page($paged, $pageSize)->order('create_time', 'desc')->select();
+        $data['data'] = db('weixin_design_submit')->order('create_time', 'desc')->page($paged)->limit($pageSize)->select();
         $data['totals'] = $total;
-        $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持单页
+        $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持多一页页
         $data['paged'] = $paged;
-        $data['size'] = $pageSize;
+        $data['size'] = intval($pageSize);
         return $this->_package_return('获取用户提交数据列表成功', '', $data);
     }
 
+
     public function get_user()
     {
-
+        $data['data'] = db('weixin_user')->select();
+        return $this->_package_return('获取用户列表成功', '', $data);
     }
 
     public function finished()
@@ -81,24 +86,6 @@ class Index extends Controller
         return $this->_package_return('已删除订单' . $result, '', $result);
     }
 
-//    public function design_submit()
-//    {
-//        $params = $this->request->param();
-////        var_dump($params);
-//        $weixinNick = $params['userInfo']['nickName'];
-//        $result = db('weixin_design_submit');
-//
-//
-//        if (isset($params['userInfo']['nickName'])) {
-//            $dbConfigs = Config::get('database');
-//            $sql = 'INSERT INTO weixin_design_submit (user_id,create_time,status,contact,from_data) VALUES (:user,:createTime,:status,:contact,:fromData)';
-//            $bindData = ['user_id' => 1, 'create_time' => time(), 'status' => 0, 'from_data' => json_encode($params)];
-//            $db = db('weixin_design_submit')->insert($bindData);
-//            return $this->_package_return('成功提交设计', null, '', 1);
-//        } else {
-//            return $this->_package_return('提交失败,请重试', null, '', 0);
-//        }
-//    }
 
     public function test()
     {

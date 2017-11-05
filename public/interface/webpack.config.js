@@ -3,10 +3,10 @@ const resolve = require('path').resolve
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 const url = require('url')
-const publicPath = './assets/'
+const publicPath = '/assets/'
 const itemName = 'dist'
-const devPath = ''
 
 module.exports = (options = {}) => {
     return {
@@ -16,9 +16,9 @@ module.exports = (options = {}) => {
         },
         output: {
             path: resolve(__dirname, itemName),
-            filename: options.dev ? '[name].js' : '[name].js?[chunkhash]',
-            chunkFilename: '[id].js?[chunkhash]',
-            publicPath: options.dev ? devPath : publicPath,
+            filename: '[name].js?[hash]',
+            chunkFilename: 'chunk[id].js?[hash]',
+            publicPath: publicPath,
         },
         module: {
             rules: [
@@ -28,7 +28,14 @@ module.exports = (options = {}) => {
                 },
                 {
                     test: /\.js$/,
-                    use: ['babel-loader'],
+                    use: [{
+                        loader: 'babel-loader',
+                        //  es7 加载
+                        options: {
+                            presets: [['es2015', {modules: false}]],
+                            plugins: ['syntax-dynamic-import']
+                        },
+                    }],
                     exclude: /node_modules/
                 },
                 {
@@ -69,12 +76,8 @@ module.exports = (options = {}) => {
             alias: {
                 '~': resolve(__dirname, './src'),
                 'src': resolve(__dirname, './src'),
-                'public': resolve(__dirname, './src/public-resource'),
-                'images': resolve(__dirname, './src/public-resource/images'),
-                'modules': resolve(__dirname, './src/public-resource/modules'),
-                'iconfont': resolve(__dirname, './src/public-resource/iconfont'),
                 //  别名vue,用作动态解释模板
-                'vue': 'vue/dist/vue.js',
+                'vue': 'vue/dist/vue.min.js',
             }
         }
         ,
@@ -93,7 +96,7 @@ module.exports = (options = {}) => {
             }
             ,
             historyApiFallback: {
-                index: url.parse(options.dev ? devPath : publicPath).pathname
+                index: url.parse(publicPath).pathname
             }
         }
         ,
