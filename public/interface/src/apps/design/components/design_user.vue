@@ -3,7 +3,7 @@
         <template name="table">
             <el-table :data="listDatas" style="width: 100%" :default-sort="{prop: '', order: 'descending'}"
                       @selection-change="handleSelectionChange" ref="designTable">
-                <el-table-column type="selection"></el-table-column>
+                <el-table-column type="selection"  align="center"></el-table-column>
                 <el-table-column prop="id" label="序号" width="60"></el-table-column>
                 <el-table-column prop="avatar_url" label="头像">
                     <template slot-scope="scope">
@@ -16,6 +16,11 @@
                         <el-tag>{{ scope.row.country }}</el-tag>
                         <el-tag>{{ scope.row.province }}</el-tag>
                         <el-tag>{{ scope.row.city }}</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column lable="操作">
+                    <template slot-scope="scope">
+                        <el-button type="danger" size="mini">禁止该用户</el-button>
                     </template>
                 </el-table-column>
             </el-table>
