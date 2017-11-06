@@ -8,15 +8,17 @@
 
 namespace app\admin\controller;
 
+use app\diavision\common\BaseController;
+use app\tiramisu\Base as TiramisuBase;
+use app\tiramisu\User as TiramisuUser;
 use think\Cache;
 use think\Controller;
 use think\Cookie;
-use app\tiramisu\User as TiramisuUser;
-use app\tiramisu\Base as TiramisuBase;
 use think\Request;
 
 class User extends Controller
 {
+    use BaseController;
 
     function __construct(Request $request = null)
     {
@@ -27,7 +29,7 @@ class User extends Controller
         if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
 
         } else {
-            $this->error('无效的数据交互');
+            return $this->_package_return('无效的数据交互', '', '', 0);
         }
     }
 
@@ -51,17 +53,18 @@ class User extends Controller
     {
         $account = $this->request->get('account', null);
         $password = $this->request->get('password', null);
-
+//        var_dump($account,$password);
         if ($account == '13828471634' || $password == '123456') {
             //  todo 暂时模拟用户登录数据
             $user = TiramisuUser::born($account);
             $user['isLogin'] = true;
             $user['nick'] = $account;
+//            var_dump($user);
             Cache::set('logined.' . $user['user_token'], $user, 7200);
-            $this->success('您通过认证..', '/admin/index', $user);
+            return $this->_package_return('您通过认证..', '/admin/index', $user);
         }
         if (is_null($account) || is_null($password)) {
-            $this->error('请输入正确的登录账户与密码..');
+            return $this->_package_return('请输入正确的登录账户与密码..', '', '', 0);
         }
 
     }

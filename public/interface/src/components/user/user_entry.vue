@@ -111,9 +111,10 @@
                     let api_url = vm.$getUrl('adminUrl') + 'user/userLogin'
                     this.$http.get(api_url, {'params': this.loginForm}).then((res) => {
 //            todo 用户密码加密传输,不能明码传输
-                        if (res.body.code === 1) {
-                            vm.$notify({title: '成功', message: res.body.data.nick + '登录成功!', type: 'success'})
-                            let user = res.body.data
+                        res.result = JSON.parse(res.body)
+                        if (res.result.code === 1) {
+                            vm.$notify({title: '成功', message: res.result.content.nick + '登录成功!', type: 'success'})
+                            let user = res.result.content
                             user.isLogin = true
                             vm.$store.dispatch('USER_UPDATE', user)
                             Cache.set('user_info', user)

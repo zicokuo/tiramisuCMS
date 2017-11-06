@@ -17,6 +17,7 @@ import './public-resource/iconfont/iconfont.css'
 
 import store from './public-resource/store/store'
 import router from './public-resource/router/router'
+
 Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -26,6 +27,9 @@ Vue.use(Config)
 Vue.use(Layout)
 Vue.use(Dump)
 Vue.use(Units)
+
+//  vue-router  跨域
+Vue.http.options.xhr = {withCredentials: true}
 let vm = new Vue({
     el: '#app',
     router, store,

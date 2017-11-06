@@ -18,16 +18,19 @@ class Index extends Controller
     use BaseController;
     public $db_configs;
 
-    private function _get_db()
-    {
-        return Db::connect(Config::get('database'));
-    }
-
+    /**
+     * 首页
+     * @return string
+     */
     public function index()
     {
         return 'welcome';
     }
 
+    /**
+     * 首页 - 别名
+     * @return string
+     */
     public function dashboard()
     {
         return $this->index();
@@ -51,12 +54,20 @@ class Index extends Controller
     }
 
 
+    /**
+     * 获取用户列表
+     * @return string
+     */
     public function get_user()
     {
         $data['data'] = db('weixin_user')->select();
         return $this->_package_return('获取用户列表成功', '', $data);
     }
 
+    /**
+     * 单个提交完成
+     * @return string
+     */
     public function finished()
     {
         $id = $this->request->param('id');
@@ -72,6 +83,10 @@ class Index extends Controller
         return $this->_package_return('修改订单状态成功', '', $result);
     }
 
+    /**
+     * 单个删除
+     * @return string
+     */
     public function deleted()
     {
         $id = $this->request->param('id');

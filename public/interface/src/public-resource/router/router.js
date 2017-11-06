@@ -10,7 +10,7 @@ import routers from './sub_router'
 let pathFilterRegExp = new RegExp('(/admin/user)/(login|register|logout)', 'i')
 
 const TiramisuRouter = new VueRouter({
-    // base: '/diavision/public/',
+    base: '/interface/',
     mode: 'history',
     routes: routers,
     activate (transition) {

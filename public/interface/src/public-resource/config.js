@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2017-11-04.
  */
-let is_dev = true;
+let is_dev = false;
 let rootPath = require('path').resolve(__dirname, 'src')
-let serverUrl = is_dev ? '/server/' : 'http://www.diavision.cn/diavision/public/'
+let serverUrl = is_dev ? '/server/' : 'http://design.logods.cn/public/index.php/'
 let config = {}
 let configs = {
     //  开发模式

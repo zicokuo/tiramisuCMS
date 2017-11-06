@@ -21,7 +21,7 @@
     import component_admin_bar from './admin_bar.vue'
     import component_admin_navigation from '../components/admin/navigation.vue'
     import Cache from '../public-resource/modules/cache'
-    import {Loading as E_Loading, Message as E_Message} from 'element-ui'
+    import { Loading as E_Loading, Message as E_Message } from 'element-ui'
 
     export default {
         name: 'frame',
@@ -33,8 +33,6 @@
         beforeCreate () {
             //  frame 框架初始化
 
-            //  vue-router  跨域
-            Vue.http.options.xhr = {withCredentials: true}
             //  vue-resource  预发送拦截器
             Vue.http.interceptor.before = (request, next) => {
                 let loading = E_Loading.service({fullscreen: true, text: '通信中'})
