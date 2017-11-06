@@ -7,7 +7,6 @@ import design_router from '../../apps/design/design_router'
 
 //  合并子路由
 let subRouters = [index_router, design_router, weixin_router, user_router, admin_router]
-// console.log(subRouters);
 // module.exports = subRouters
 
 export default subRouters

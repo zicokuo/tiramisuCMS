@@ -1,5 +1,3 @@
-import component_frame from '../../components/frame.vue'
-
 let root_url = '/admin/design'
 
 const design_router = {
@@ -7,7 +5,7 @@ const design_router = {
     name: 'design_router',
     path: root_url + '*',
     url: '/admin/design',
-    component: component_frame,
+    component: () => import('../../components/frame.vue'),
     children: [{
         title: '首页',
         url: root_url + '/index',
@@ -26,7 +24,7 @@ const design_router = {
         meta: {
             pageTitle: '客户申请'
         },
-    },{
+    }, {
         title: '客户列表',
         url: root_url + '/user',
         path: 'user',
@@ -40,7 +38,7 @@ const design_router = {
         url: root_url + '/index',
         path: '',
         name: 'design_index',
-        component:  () => import('./components/design_index.vue'),
+        component: () => import('./components/design_index.vue'),
         meta: {
             pageTitle: '首页'
         },

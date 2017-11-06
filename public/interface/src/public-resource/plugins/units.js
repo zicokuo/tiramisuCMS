@@ -8,5 +8,17 @@ Units.install = function (Vue) {
         }
         return array1
     }
+    Vue.prototype.$cache = (name, value, exp = 7200, remove = false) => {
+        let cache = () => import('./../modules/cache.js');
+        if (remove) {
+            return cache.rem(name)
+        }
+        return value ? cache.set(name, value, exp) : cahce.get(name);
+    }
+    Vue.prototype.$dump = (msg) => {
+        console.log('---->调试')
+        console.log(msg)
+        console.log(' ')
+    }
 }
 module.exports = Units

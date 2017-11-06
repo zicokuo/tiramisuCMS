@@ -1,7 +1,8 @@
+import comp_frame from '../../../components/frame.vue';
 const admin_router = {
     name: 'admin_router',
     path: '/admin*',
-    component: () => import('../../../components/frame.vue'),
+    component: comp_frame,
     children: [
         {
             title: '管理台首页',

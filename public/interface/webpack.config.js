@@ -5,7 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const url = require('url')
-const publicPath = '/interface/assets/'
+// const publicPath = '/interface/assets/'
+const publicPath = '/'
 const itemName = 'dist'
 
 module.exports = (options = {}) => {
@@ -16,8 +17,8 @@ module.exports = (options = {}) => {
         },
         output: {
             path: resolve(__dirname, itemName),
-            filename: '[name].js?[hash]',
-            chunkFilename: 'chunk[id].js?[hash]',
+            filename: 'js/[name].js?[hash]',
+            chunkFilename: 'js/chunk[id].js?[hash]',
             publicPath: publicPath,
         },
         module: {
@@ -55,14 +56,14 @@ module.exports = (options = {}) => {
                         // },
                         {
                             loader: 'file-loader',
-                            options: {name: '[name]_[hash:6].[ext]', outputPath: 'images/'}
+                            options: {name: '[name]_[hash:6].[ext]', outputPath: '.' + publicPath + 'images/'}
                         }]
                 }
                 , {
                     test: /\.(eot|ttf|woff|woff2)$/,
                     use: [{
                         loader: 'file-loader',
-                        options: {name: '[name]_[hash:8].[ext]', outputPath: 'fonts/'}
+                        options: {name: '[name]_[hash:8].[ext]', outputPath: '.' + publicPath + 'fonts/'}
                     }]
                 },
             ]

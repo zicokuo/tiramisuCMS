@@ -10,7 +10,6 @@ import App from './App.vue'
 //  加载框架
 import Config from './public-resource/config'
 import Layout from './public-resource/layout/layout'
-import Dump from './public-resource/plugins/dump'
 import Units from './public-resource/plugins/units'
 //  引入iconfont
 import './public-resource/iconfont/iconfont.css'
@@ -25,7 +24,6 @@ Vue.use(ElementUI)
 
 Vue.use(Config)
 Vue.use(Layout)
-Vue.use(Dump)
 Vue.use(Units)
 
 //  vue-router  跨域

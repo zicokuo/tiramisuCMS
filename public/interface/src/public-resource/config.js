@@ -1,10 +1,12 @@
 /**
  * Created by Administrator on 2017-11-04.
  */
-let is_dev = false;
+let is_dev = 1;
 let rootPath = require('path').resolve(__dirname, 'src')
 let serverUrl = is_dev ? '/server/' : 'http://design.logods.cn/public/index.php/'
-let config = {}
+let config = {
+    is_dev: is_dev
+}
 let configs = {
     //  开发模式
     dev: is_dev,
@@ -29,14 +31,17 @@ let configs = {
     pushUrl: (name, path) => {
         configs.url[name] = path
     },
-
 }
+
 config.install = function (Vue) {
     Vue.prototype.$getPath = (name) => {
         return configs.path[name] || null;
     }
     Vue.prototype.$getUrl = (name) => {
         return configs.url[name] || null;
+    }
+    Vue.prototype.$isDev = () => {
+        return is_dev;
     }
 }
 
