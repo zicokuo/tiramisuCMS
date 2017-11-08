@@ -8,6 +8,8 @@
 
 namespace app\weixin;
 
+use think\Cache;
+
 trait WeixinAPI
 {
 
@@ -57,6 +59,11 @@ trait WeixinAPI
         curl_close($curl);
         // 显示获得的数据
         return $data ? json_decode($data, true) : curl_errno($curl);
+    }
+
+    static function check_3rd($srd)
+    {
+        return $session_3rd = Cache::get($srd, false);
     }
 
 }

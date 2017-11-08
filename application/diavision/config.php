@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Created by PhpStorm.
@@ -7,3 +6,7 @@
  * Time: 10:13
  */
 
+return [
+//    'app_trace' => true,
+    // Trace信息
+];

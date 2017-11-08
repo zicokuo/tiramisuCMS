@@ -8,6 +8,7 @@
 
 namespace app\weixin;
 
+use think\Cache;
 use think\Config;
 
 class WeixinSDK
@@ -43,7 +44,7 @@ class WeixinSDK
      */
     public function check_session_3rd($srd)
     {
-        return $session_3rd = Cache::has($srd);
+        return $session_3rd = Cache::get($srd, false);
     }
 
     /**
