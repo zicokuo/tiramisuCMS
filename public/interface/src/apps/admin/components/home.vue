@@ -13,9 +13,11 @@
     </div>
 </template>
 <script>
-  export default {
-    mounted(){
-      this.$pageTitle('哈哈哈哈')
+    export default {
+        mounted () {
+            //  设置页面标题
+            this.$pageTitle(this.$route.meta.pageTitle || '')
+            this.$loadVue('加载home.vue')
+        }
     }
-  }
 </script>

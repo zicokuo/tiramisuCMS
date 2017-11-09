@@ -2,15 +2,15 @@ let root_url = '/admin/design'
 
 const design_router = {
     title: '标志定制小程序管理',
-    name: 'design_router',
-    path: root_url + '*',
+    key: 'design_router',
+    path: 'design/*',
     url: '/admin/design',
-    component: () => import('../../components/frame.vue'),
+    // component: () => import('../../components/frame.vue'),
     children: [{
         title: '首页',
         url: root_url + '/index',
         path: 'home',
-        name: 'design_index',
+        title: 'design_index',
         component: () => import('./components/design_index.vue'),
         meta: {
             pageTitle: '首页'

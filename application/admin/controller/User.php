@@ -61,10 +61,10 @@ class User extends Controller
             $user['nick'] = $account;
 //            var_dump($user);
             Cache::set('logined.' . $user['user_token'], $user, 7200);
-            return $this->_package_return('您通过认证..', '/admin/index', $user);
+            return $this->success('您通过认证..', '/admin/index', $user);
         }
         if (is_null($account) || is_null($password)) {
-            return $this->_package_return('请输入正确的登录账户与密码..', '', '', 0);
+            return $this->error('请输入正确的登录账户与密码..');
         }
 
     }

@@ -11,10 +11,10 @@
             <!--用户窗口模块-->
             <component_user_window class="userWindow"></component_user_window>
             <!--首页-->
-            <template v-for="(menu,index) in router_menu">
-                <el-submenu name="menu.name" :index="index+''" v-if="menu.children">
+            <template v-for="(menu,index) in router_menu.children">
+                <el-submenu name="menu.key" :index="index+''" v-if="menu.children">
                     <template slot="title">
-                        <span slot="title">{{ menu.title || menu.name || '无标题' }}</span>
+                        <span slot="title">{{ menu.title || menu.label || menu.key || '无标题' }}</span>
                     </template>
                     <el-menu-item-group :title="menu.title+'功能'">
                         <template v-for="(submenu,subindex) in menu.children">
@@ -35,10 +35,10 @@
     </div>
 </template>
 <script>
-    import ElMenuItem from './../../node_modules/element-ui/packages/menu/src/menu-item.vue'
+    import ElMenuItem from '../../../../node_modules/element-ui/packages/menu/src/menu-item.vue'
     import component_user_window from './user/user_avatar_s.vue'
-    import Cache from '../public-resource/modules/cache'
-    import routers from '../public-resource/router/sub_router'
+    import Cache from '../../../public-resource/modules/cache'
+    import routers from './../admin_router'
 
     export default {
         components: {ElMenuItem, component_user_window: component_user_window},
@@ -52,7 +52,7 @@
         beforeMount () {
             //  挂载前,加载路由设置
             this.router_menu = routers
-//      console.log(this.router_menu)
+            console.log(this.router_menu)
         },
         methods: {
             handleOpen: event => {
@@ -68,6 +68,9 @@
                 Cache.rem('user_info')
                 this.$router.push('/admin')
             },
+        },
+        mounted () {
+            console.log('左侧管理菜单加载')
         }
     }
 </script>

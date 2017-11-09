@@ -17,15 +17,21 @@ trait BaseController
 
     /**
      * 标准化api接口返回数据
+     * @deprecated 弃用 _package_return,将一致采用thinkphp原配的success和error
      * @param string $msg 处理信息
      * @param null $url 跳转url || 请求url
      * @param string $data 返回数据内容
      * @param int $code 处理结果,默认1成功,0失败
      * @return string 返回json
      */
-    private function _package_return($msg = '', $url = null, $data = '', $code = 1)
+    private function _package_return($msg = '', $url = null, $data = '', $code = 1, $isEnd = false)
     {
-        return json_encode(['msg' => $msg, 'url' => $url, 'content' => $data, 'code' => $code]);
+        $result = ['msg' => $msg, 'url' => $url, 'content' => $data, 'code' => $code];
+        if ($isEnd) {
+            echo json_encode($result);
+            exit();
+        }
+        return json_encode($result);
     }
 
     public function _is($res)
@@ -39,10 +45,10 @@ trait BaseController
         }
     }
 
-    public function clear_array_values($array)
+    public function array_match($array, $values = [])
     {
         foreach ($array as $key => $item) {
-            $array[$key] = '';
+            $array[$key] = isset($values[$key]) ?: '';
         }
         return $array;
     }

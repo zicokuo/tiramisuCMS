@@ -1,3 +1,5 @@
+import Cache from './../modules/cache.js'
+
 let Units = {}
 
 Units.install = function (Vue) {
@@ -9,11 +11,10 @@ Units.install = function (Vue) {
         return array1
     }
     Vue.prototype.$cache = (name, value, exp = 7200, remove = false) => {
-        let cache = () => import('./../modules/cache.js');
         if (remove) {
-            return cache.rem(name)
+            return Cache.rem(name)
         }
-        return value ? cache.set(name, value, exp) : cahce.get(name);
+        return value ? Cache.set(name, value, exp) : Cache.get(name)
     }
     Vue.prototype.$dump = (msg) => {
         console.log('---->调试')

@@ -9,6 +9,7 @@
 namespace app\weixin;
 
 use think\Cache;
+use think\Config;
 
 trait WeixinAPI
 {
@@ -59,6 +60,20 @@ trait WeixinAPI
         curl_close($curl);
         // 显示获得的数据
         return $data ? json_decode($data, true) : curl_errno($curl);
+    }
+
+    /**
+     * 微信通信接口 - get_access_token
+     * js_code 换 session_key 和 openid
+     * @param $js_code
+     * @return mixed
+     */
+    static function get_session($js_code, $configs)
+    {
+        $configs['js_code'] = $js_code;
+        $api = self::buildApi(Config::get('apis.code_to_session', 'weixin'), $configs);
+        $result = self::send($api);
+        return $result;
     }
 
     static function check_3rd($srd)

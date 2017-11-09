@@ -3,6 +3,6 @@ const index_router = {
     title: '首页',
     name: 'index_router',
     path: '(admin)*',
-    component: ()=>import('../../../components/index/index.vue')
+    component: () => import('./components/index.vue')
 }
 export default index_router

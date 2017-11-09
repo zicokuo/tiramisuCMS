@@ -13,8 +13,7 @@
 <script>
     import * as _ from 'lodash'
     import router from 'vue-router'
-    import routers from '../../public-resource/router/sub_router'
-    import admin_router from '../../public-resource/router/frame-router/admin'
+    import routers from './../admin_router'
 
     export default {
         name: 'navigation',
@@ -27,7 +26,7 @@
         },
         beforeMount () {
             console.log(routers)
-            this.tabs = [admin_router.children[0]]
+            this.tabs = [routers.children[routers.children.length - 1]]
         },
         beforeUpdate () {
         },
@@ -63,11 +62,11 @@
         watch: {
             //    侦听路由变化,处理tabs
             '$route.path': function (href) {
-                let curRouter = findRouteByPath(href, routers)
-//                this.$dump(curRouter)
+                let curRouter = findRouteByPath(href, routers.children)
+                console.log(curRouter)
                 let newTabs = {name: this.$route.name, label: curRouter.title, path: href, url: curRouter.url}
 //        dump(_.findLastIndex(this.tabs, newTabs.name))
-                let isTabExist = _.findLastIndex(this.tabs, {'name': newTabs.name}) < 1
+                let isTabExist = _.findLastIndex(this.tabs, {'name': newTabs.key}) < 1
                 let isHomeTab = (href === '/admin/index')
                 if (!isHomeTab && isTabExist) {
                     this.tabs.push(newTabs)

@@ -10,5 +10,4 @@ namespace app\weixin;
 return [
     'appid' => 'wxb615cb13ae726095',
     'secret' => '39bbcf2c50acfddc12df9f170e542bfb',
-    'aaa' => 'ddd',
 ];

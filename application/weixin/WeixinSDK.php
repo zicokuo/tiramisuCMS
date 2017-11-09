@@ -13,27 +13,27 @@ use think\Config;
 
 class WeixinSDK
 {
-    private $_config, $_apis;
+    public $config, $apis;
 
     public function __construct()
     {
         Config::load(__DIR__ . '/config/weixin_config.php', 'config', 'weixin');
         Config::load(__DIR__ . '/config/weixin_applet_api.php', 'apis', 'weixin');
-        $this->_config = Config::get('config', 'weixin');
-        $this->_apis = Config::get('apis', 'weixin');
+        $this->config = Config::get('config', 'weixin');
+        $this->apis = Config::get('apis', 'weixin');
     }
 
     /**
+     * 微信通信接口
      * js_code 换 session_key 和 openid
      * @param $js_code
      * @return mixed
      */
     public function get_session($js_code)
     {
-        $param = $this->_config;
+        $param = $this->config;
         $param['js_code'] = $js_code;
         $api = WeixinAPI::buildApi(Config::get('apis.code_to_session', 'weixin'), $param);
-//        var_dump($api);
         $result = WeixinAPI::send($api);
         return $result;
     }

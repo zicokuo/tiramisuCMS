@@ -10,7 +10,7 @@
                 </el-button>
                 <el-button type="success" icon="el-icon-i--refresh" size="mini" @click="refreshTable">刷新</el-button>
             </p>
-            <p> 共有{{tableTotals}}条项目,当前显示{{ listDatas.length||0 }}条,已选择{{tableSelected.length || 0}}条</p>
+            <p> 共有{{tableTotals}}条项目,当前显示{{ listDatas.length || 0 }}条,已选择{{tableSelected.length || 0}}条</p>
         </template>
         <template name="table">
             <el-table :data="listDatas" style="width: 100%" :default-sort="{prop: 'create_time', order: 'descending'}"
@@ -113,8 +113,7 @@
 </template>
 <script>
     //    import Configs from '../../../config'
-    import {formatDate} from '../../../public-resource/plugins/datetime'
-
+    import { formatDate } from '../../../public-resource/plugins/datetime'
 
     let comp_taskStatus = {
         template: '<el-tag :type="getTypeByStatus(status)">{{getTextByStatus(status)}}</el-tag>',
@@ -166,6 +165,9 @@
             let vm = this
             //  初始化获取数据
             vm.getTableDataHandler()
+        },
+        Mounted () {
+            console.log('加载design_submit')
         },
         deactivated () {
             console.log('我被冻住了')
@@ -303,35 +305,34 @@
     .design_submits {
         max-width: 1200px;
 
-    &
-    .table-expand {
+        &
+        .table-expand {
 
-    &
-    h3,
+            &
+            h3,
+            &
+            p {
+                text-indent: 1em;
+            }
 
-    &
-    p {
-        text-indent: 1em;
-    }
+            &
+            h3 {
+                font-weight: 900;
+                color: #ffffff;
+                background: #aaa;
+                line-height: 2em;
+                text-indent: 1em;
+                text-decoration: underline;
+            }
 
-    &
-    h3 {
-        font-weight: 900;
-        color: #ffffff;
-        background: #aaa;
-        line-height: 2em;
-        text-indent: 1em;
-        text-decoration: underline;
-    }
-
-    }
-    &
-    .el-form-item__label {
-        font-weight: 900;
-        color: #666666;
-        background: #cccccc;
-        line-height: 1.5em;
-    }
+        }
+        &
+        .el-form-item__label {
+            font-weight: 900;
+            color: #666666;
+            background: #cccccc;
+            line-height: 1.5em;
+        }
 
     }
 </style>

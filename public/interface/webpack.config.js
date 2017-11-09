@@ -17,8 +17,8 @@ module.exports = (options = {}) => {
         },
         output: {
             path: resolve(__dirname, itemName),
-            filename: 'js/[name].js?[hash]',
-            chunkFilename: 'js/chunk[id].js?[hash]',
+            filename: 'js/[name]-[hash].js?[hash]',
+            chunkFilename: 'js/chunk[id]-[hash].js?[hash]',
             publicPath: publicPath,
         },
         module: {
@@ -78,7 +78,8 @@ module.exports = (options = {}) => {
                 '~': resolve(__dirname, './src'),
                 'src': resolve(__dirname, './src'),
                 //  别名vue,用作动态解释模板
-                'vue': 'vue/dist/vue.min.js',
+                // 'vue': 'vue/dist/vue.min.js',
+                'vue': 'vue/dist/vue.js',
             }
         }
         ,
