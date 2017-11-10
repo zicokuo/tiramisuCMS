@@ -8,6 +8,7 @@
 
 namespace app\weixin;
 
+use Couchbase\Exception;
 use think\Cache;
 use think\Config;
 
@@ -26,6 +27,7 @@ class WeixinSDK
     /**
      * 微信通信接口
      * js_code 换 session_key 和 openid
+     * @deprecated 即将废弃,转为WeixinAPI中的get_session
      * @param $js_code
      * @return mixed
      */
@@ -45,6 +47,32 @@ class WeixinSDK
     public function check_session_3rd($srd)
     {
         return $session_3rd = Cache::get($srd, false);
+    }
+
+    /**
+     * 构建weixin session_3rd
+     * @param $session_key
+     * @param $openid
+     * @param $expire
+     */
+    public function build_session_3rd($session_key, $openid)
+    {
+        return $session_key . ',' . $openid;
+    }
+
+    /**
+     * 拆解weixin session_3rd
+     * @param $srdValue
+     * @return array
+     */
+    public function explain_session_3rd($srdValue)
+    {
+        $array = explode(',', $srdValue);
+        try {
+            return array_combine(['session_key', 'openid'], $array);
+        } catch (Exception $e) {
+            return $array;
+        }
     }
 
     /**
