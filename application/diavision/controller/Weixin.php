@@ -26,12 +26,28 @@ class Weixin extends Controller
         parent::__construct($request);
     }
 
+    /**
+     * 标准化api返回接口
+     *
+     * @param string $msg
+     * @param integer $code
+     * @param array $data
+     * @param string $url
+     * @return void
+     */
     private function _reply_wx($msg = '', $code = 1, $data = [], $url = '')
     {
         echo json_encode(['msg' => $msg, 'code' => $code, 'content' => $data, 'url' => $url]);
         exit();
     }
 
+    /**
+     * 获取session_3rd
+     *
+     * @param string $sKey
+     * @param boolean $isRefer
+     * @return void
+     */
     private function _get_session_3rd($sKey = 'session_3rd', $isRefer = false)
     {
         $sKey != 'session_3rd' ?: $sKey = $this->request->param($sKey, false);
@@ -145,14 +161,18 @@ class Weixin extends Controller
     /**
      * 获取小程序提交内容 by 用户
      * 根据用户提交的status字段进行获取
-     * @return string
+     * @return void
      */
     public
     function get_user_submits()
     {
         $srd = $this->_get_session_3rd();
         $params = $this->request->param();
-        $result = db('weixin_design_submit')->where('status', '=', $params['status'])->where('user_openid', '=', $params['openid'])->select();
+        $db = db('weixin_design_submit');
+        if (isset($params['status'])) {
+            $db->where('status', '=', $params['status']);
+        }
+        $result = $db->where('user_openid', '=', $params['openid'])->select();
         $this->_reply_wx('查询' . $params['openid'] . '用户提交的记录', 1, $result);
     }
 
