@@ -9,7 +9,7 @@
                 <i v-if="!isCollapse" class="el-icon-i--narrow tiramisu-icon"></i>
             </div>
             <!--用户窗口模块-->
-            <component_user_window class="userWindow"></component_user_window>
+            <comp_user_box class="userWindow"></comp_user_box>
             <!--首页-->
             <template v-for="(menu,index) in router_menu.children">
                 <el-submenu name="menu.key" :index="index+''" v-if="menu.children">
@@ -36,12 +36,12 @@
 </template>
 <script>
     import ElMenuItem from '../../../../node_modules/element-ui/packages/menu/src/menu-item.vue'
-    import component_user_window from './user/user_avatar_s.vue'
     import Cache from '../../../public-resource/modules/cache'
     import routers from './../admin_router'
 
+    let comp_user_box = () => ('./user/user_avatar_s.vue')
     export default {
-        components: {ElMenuItem, component_user_window: component_user_window},
+        components: {ElMenuItem, comp_user_box},
         name: 'adminMenu',
         data () {
             return {

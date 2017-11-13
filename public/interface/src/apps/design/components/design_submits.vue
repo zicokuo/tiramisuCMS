@@ -54,7 +54,6 @@
                                     </template>
                                 </template>
                             </el-row>
-
                         </el-form>
                     </template>
                 </el-table-column>
@@ -125,10 +124,10 @@
         },
         methods: {
             getTypeByStatus: function (e) {
-                return parseInt(e) === 0 ? 'info' : 'success'
+                return parseInt(e) === 0 ? 'info' : parseInt(e) === 1 ? 'success' : 'danger'
             },
             getTextByStatus: function (e) {
-                return parseInt(e) === 0 ? '未处理' : '已完成'
+                return parseInt(e) === 0 ? '未处理' : parseInt(e) === 1 ? '已完成' : '用户撤销'
             }
         },
     }
@@ -181,12 +180,12 @@
 //                console.log(data)
                 vm.$http.post(vm.serverUrl + 'get_list', data).then(res => {
 //                console.log(response)
-                    if (res.result.code === 1) {
-                        typeof func === 'function' ? func(res) : vm.listDatas = res.result.content.data
-                        res.result.content.paged ? vm.tablePaged = parseInt(res.result.content.paged) : ''
-                        res.result.content.pages ? vm.tablePages = parseInt(res.result.content.pages) : ''
-                        res.result.content.totals ? vm.tableTotals = parseInt(res.result.content.totals) : ''
-                        res.result.content.size ? vm.tablePageSize = parseInt(res.result.content.size) : ''
+                    if (res.body.code === 1) {
+                        typeof func === 'function' ? func(res) : vm.listDatas = res.body.data.data
+                        res.body.data.paged ? vm.tablePaged = parseInt(res.body.data.paged) : ''
+                        res.body.data.pages ? vm.tablePages = parseInt(res.body.data.pages) : ''
+                        res.body.data.totals ? vm.tableTotals = parseInt(res.body.data.totals) : ''
+                        res.body.data.size ? vm.tablePageSize = parseInt(res.body.data.size) : ''
                     } else {
                         this.$message.error('提交数据获取失败')
                     }

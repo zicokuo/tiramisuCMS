@@ -4,7 +4,7 @@ import Cache from '../../public-resource/modules/cache'
 
 require('./preload')
 
-let default_router = {
+let  default_router = {
     title: '管理台首页',
     url: '/admin/index',
     path: '',
@@ -20,7 +20,7 @@ let pathFilterRegExp = new RegExp('(/admin/user)/(login|register|logout)', 'i')
 
 const admin_router = {
     key: 'admin_default',
-    path: '/admin*',
+    path: '/admin',
     component: () => import('./components/frame.vue'),
     children: [admin_user_router, design_router, default_router],
     meta: {

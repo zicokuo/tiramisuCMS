@@ -50,7 +50,7 @@ class Index extends Controller
         $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持多一页页
         $data['paged'] = $paged;
         $data['size'] = intval($pageSize);
-        return $this->_package_return('获取用户提交数据列表成功', '', $data);
+        $this->success('获取用户提交数据列表成功','',$data);
     }
 
 
