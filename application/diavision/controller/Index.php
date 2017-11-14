@@ -50,7 +50,7 @@ class Index extends Controller
         $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持多一页页
         $data['paged'] = $paged;
         $data['size'] = intval($pageSize);
-        $this->success('获取用户提交数据列表成功','',$data);
+        $this->success('获取用户提交数据列表成功', '', $data);
     }
 
 
@@ -60,8 +60,8 @@ class Index extends Controller
      */
     public function get_user()
     {
-        $data['data'] = db('weixin_user')->select();
-        return $this->_package_return('获取用户列表成功', '', $data);
+        $data['data'] = db('weixin_user')->cache()->select();
+        $this->success('成功:获取用户列表', '', $data);
     }
 
     /**

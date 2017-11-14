@@ -51,7 +51,7 @@ class Weixin extends Controller
      */
     private function _get_session_3rd($sKey = 'session_3rd', $isRefer = false)
     {
-        $sKey != 'session_3rd' ? : $sKey = $this->request->param($sKey, false);
+        $sKey != 'session_3rd' ?: $sKey = $this->request->param($sKey, false);
         $weixinApplet = new WeixinSDK();
         if ($sKey) {
             $srd = Cache::get($sKey, false);
@@ -77,7 +77,7 @@ class Weixin extends Controller
      * 使用js_code换取用户access
      */
     public
-        function check_login()
+    function check_login()
     {
         $weixinApplet = new WeixinSDK();
 
@@ -104,7 +104,7 @@ class Weixin extends Controller
      * @param 需要传入用户信息rawData ,session_3rd
      */
     public
-        function sync_user()
+    function sync_user()
     {
         $result = $this->_get_session_3rd();
         //  计算用户sha1值 , 验证用户信息真实性
@@ -144,7 +144,7 @@ class Weixin extends Controller
      * @return string
      */
     public
-        function design_submit()
+    function design_submit()
     {
         $srd = $this->_get_session_3rd();
 
@@ -165,7 +165,7 @@ class Weixin extends Controller
      * @return void
      */
     public
-        function get_user_submits()
+    function get_user_submits()
     {
         $srd = $this->_get_session_3rd();
         $params = $this->request->param();
@@ -173,12 +173,15 @@ class Weixin extends Controller
         if (isset($params['status'])) {
             $db->where('status', '=', $params['status']);
         }
-        $result = $db->where('user_openid', '=', $params['openid'])->order('create_time','desc')->select();
+        if (isset($params['id'])) {
+            $db->where('id', '=', $params['id']);
+        }
+        $result = $db->where('user_openid', '=', $params['openid'])->order('create_time', 'desc')->select();
         $this->_reply_wx('查询' . $params['openid'] . '用户提交的记录', 1, $result);
     }
 
     public
-        function del_user_submit()
+    function del_user_submit()
     {
         $srd = $this->_get_session_3rd();
         $rid = $this->request->param('id', false);

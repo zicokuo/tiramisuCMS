@@ -4,7 +4,7 @@ import C from './cookies'
 let d = new Date()
 
 let expired = 24 * 60 * 60 * 1000 // 1日
-let storageSupport = (typeof(localStorage) === 'object')
+let storageSupport = (typeof (localStorage) === 'object')
 
 //  todo storage应该增加数据时效性
 const Cache = {
@@ -37,15 +37,24 @@ const Cache = {
             let data
             if (isRewrite === true) {
                 //  覆盖
-                data = {'value': value, 'expired': d.getTime()}
+                data = {
+                    'value': value,
+                    'expired': d.getTime()
+                }
             } else {
                 let source = localStorage.getItem(name)
                 if (source !== null) {
                     //  原来有数据,则合并source和value
-                    data = {'value': source.assign(value), 'expired': d.getTime()}
+                    data = {
+                        'value': source.assign(value),
+                        'expired': d.getTime()
+                    }
                 } else {
                     //  原来没有数据或者过期,则直接使用value
-                    data = {'value': value, 'expired': d.getTime()}
+                    data = {
+                        'value': value,
+                        'expired': d.getTime()
+                    }
                 }
             }
             localStorage.setItem(name, JSON.stringify(data))
@@ -57,5 +66,5 @@ const Cache = {
         storageSupport ? localStorage.removeItem(name) : C.delete(name)
     },
 }
+module.exports = Cache
 export default Cache
-
