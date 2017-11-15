@@ -42,7 +42,7 @@ export default {
       let tabNum = _.findIndex(this.tabs, { name: tab.name });
       this.$router.push({ path: this.tabs[tabNum].url || "/admin/index" });
     },
-    //    关闭页
+    //  关闭页
     removeTab(targetName) {
       if (targetName === "home") {
         return;

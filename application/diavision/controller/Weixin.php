@@ -59,7 +59,6 @@ class Weixin extends Controller
                 return $weixinApplet->explain_session_3rd($srd);
             }
         }
-
         return $isRefer ? false : $this->_reply_wx('您的登录已过期,请重新登录', 0, $this->request->param());
     }
 
@@ -92,6 +91,7 @@ class Weixin extends Controller
                 //  缓存3rd
                 Cache::set($thirdSession, $result['session_key'] . ',' . $result['openid'], $result['expires_in']);
                 $result['session_3rd'] = $thirdSession;
+                $resutl['openid'] = $result['openid'];
                 $this->_reply_wx('成功换取用户s3rd和openid', 1, $result);
             } else {
                 $this->_reply_wx('换取access_token失败,请提交有效的js_code', 0, $result);
@@ -103,15 +103,17 @@ class Weixin extends Controller
      * 同步用户信息
      * @param 需要传入用户信息rawData ,session_3rd
      */
-    public
-    function sync_user()
+    public function sync_user()
     {
         $result = $this->_get_session_3rd();
+        $weixinApplet = new WeixinSDK();
         //  计算用户sha1值 , 验证用户信息真实性
-        $signature2 = sha1($this->request->param('rawData') . $this->request->param('session_key'));
+        $srd = $weixinApplet->explain_session_3rd(Cache::get($this->request->param('session_3rd')));
+        $signature2 = sha1($this->request->param('rawData') . $srd['session_key']);
         if ($signature2 !== $this->request->param('signature')) {
             $this->error("signNotMatch");
         }
+
         //  转化字段名
         $userInfo = $this->table_fields_trans(json_decode($this->request->param()['rawData'], 1));
 
@@ -121,7 +123,7 @@ class Weixin extends Controller
         //  储蓄用户信息
 
         //  新用户 - 合并数据
-        $userInfo['openid'] = $result['openid'];
+        $userInfo['openid'] = $this->request->param('openid');
         $fields = array_flip(db('weixin_user')->getTableFields());
         $fields = $this->array_match($fields);
         $userInfo = array_intersect_key(array_merge($fields, $userInfo), $fields);
@@ -130,13 +132,14 @@ class Weixin extends Controller
         if ($userExist === false || is_null($userExist)) {
             //  新用户
             db('weixin_user')->insert($userInfo);
-            $this->success('新微信用户' . $result['nickName'] . '注册和登录成功', '', $result);
+            $this->_reply_wx('新微信用户' . $result['nickName'] . '注册和登录成功', 1, $result);
         } else {
             db('weixin_user')->where('id', '=', $userExist['id'])->update($userInfo);
-            $result['openid_client'] = md5($result['openid']);
-            $this->success('微信用户' . $result['nickName'] . '登录成功', '', $result);
+            $this->_reply_wx('微信用户' . $result['nickName'] . '登录成功', 1, $result);
         }
     }
+
+
 
 
     /**

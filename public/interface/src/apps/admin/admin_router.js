@@ -4,7 +4,7 @@ import Cache from '../../public-resource/modules/cache'
 
 require('./preload')
 
-let  default_router = {
+let default_router = {
     title: '管理台首页',
     url: '/admin/index',
     path: '',
@@ -13,6 +13,11 @@ let  default_router = {
     meta: {
         pageTitle: '管理台首页'
     },
+}
+
+function P () {
+    this.ex = function (){console.log('触发了')}
+    this.ex2 = function (){setInterval(function () {P.ex()}, 2000)}
 }
 
 //  过滤规则 - 用户登录/注册/登出

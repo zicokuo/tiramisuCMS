@@ -5,3 +5,5 @@ thinkphp
 public/frontend
 runtime
 dist/
+.vscode
+.idea
