@@ -127,6 +127,7 @@ class Weixin extends Controller
         $fields = array_flip(db('weixin_user')->getTableFields());
         $fields = $this->array_match($fields);
         $userInfo = array_intersect_key(array_merge($fields, $userInfo), $fields);
+        $userInfo['nick_name'] = json_encode($userInfo['nick_name']);
         //  检查用户记录
         $userExist = db('weixin_user')->where('openid', '=', $result['openid'])->find();
         if ($userExist === false || is_null($userExist)) {

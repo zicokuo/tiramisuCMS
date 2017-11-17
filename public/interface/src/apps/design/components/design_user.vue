@@ -51,12 +51,12 @@
 //                console.log(data)
                 vm.$http.post(vm.serverUrl + 'get_user', data).then(res => {
 //                console.log(response)
-                    if (res.result.code === 1) {
-                        typeof func === 'function' ? func(res) : vm.listDatas = res.result.content.data
-                        res.result.content.paged ? vm.tablePaged = parseInt(res.result.content.paged) : ''
-                        res.result.content.pages ? vm.tablePages = parseInt(res.result.content.pages) : ''
-                        res.result.content.totals ? vm.tableTotals = parseInt(res.result.content.totals) : ''
-                        res.result.content.size ? vm.tablePageSize = parseInt(res.result.content.size) : ''
+                    if (res.body.code === 1) {
+                        vm.listDatas = res.body.data.formData || '';
+                        res.body.data.paged ? vm.tablePaged = parseInt(res.body.data.paged) : ''
+                        res.body.data.pages ? vm.tablePages = parseInt(res.body.data.pages) : ''
+                        res.body.data.totals ? vm.tableTotals = parseInt(res.body.data.totals) : ''
+                        res.body.data.size ? vm.tablePageSize = parseInt(res.body.data.size) : ''
                     } else {
                         this.$message.error('提交数据获取失败')
                     }

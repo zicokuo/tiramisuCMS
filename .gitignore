@@ -1,9 +1,8 @@
-.idea
 composer.lock
 *.log
-thinkphp
-public/frontend
-runtime
+thinkphp/
+runtime/
 dist/
-.vscode
-.idea
+.vscode/
+.idea/
+vendor/

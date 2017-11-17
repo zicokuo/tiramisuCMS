@@ -7,7 +7,7 @@ require('./preload')
 let default_router = {
     title: '管理台首页',
     url: '/admin/index',
-    path: '',
+    path: '/admin*',
     name: 'admin_index',
     component: () => import('./components/home.vue'),
     meta: {

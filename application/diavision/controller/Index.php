@@ -45,12 +45,22 @@ class Index extends Controller
         $pageSize = $this->request->param('page_size', 20);
         $paged = $this->request->param('paged', 1);
         $total = db('weixin_design_submit')->count();
-        $data['data'] = db('weixin_design_submit')->order('create_time', 'desc')->page($paged)->limit($pageSize)->select();
+        $data['formData'] = db('weixin_design_submit')->order('create_time', 'desc')->page($paged)->limit($pageSize)->select();
         $data['totals'] = $total;
         $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持多一页页
         $data['paged'] = $paged;
         $data['size'] = intval($pageSize);
         $this->success('获取用户提交数据列表成功', '', $data);
+    }
+
+    public function export_list()
+    {
+        $itemsId = $this->request->param('exports_ids');
+        $result = db('weixin_design_submit')->whereIn('id', explode(',', $itemsId))->select();
+        $fileName = 'weixin submits export';
+        $excelHandle = new \phpToExcel();
+        $fields = db('weixin_design_submit')->getTableFields();
+        return $excelHandle->push($result, $fields, $fileName);
     }
 
 
@@ -60,8 +70,22 @@ class Index extends Controller
      */
     public function get_user()
     {
-        $data['data'] = db('weixin_user')->cache()->select();
+        $data['formData'] = db('weixin_user')->select();
+        foreach ($data['formData'] as $key => $user) {
+            $data['formData'][$key]['nick_name'] = is_null(json_decode($user['nick_name'])) ? $user['nick_name'] : json_decode($user['nick_name']);
+        }
         $this->success('成功:获取用户列表', '', $data);
+    }
+
+    public function export_users()
+    {
+        $data['formData'] = db('weixin_user')->select();
+        foreach ($data['formData'] as $key => $user) {
+            $data[$key]['nick_name'] = base64_decode($user['nick_name']);
+        }
+        $name = 'Excelfile';    //生成的Excel文件文件名
+        $excelHandle = new \phpToExcel();
+        return $res = $excelHandle->push($data['formData'], $name);
     }
 
     /**
@@ -77,10 +101,9 @@ class Index extends Controller
         }
         $result = '';
         foreach ($id as $i) {
-//            $updateArray[] = ['id' => $i, 'status' => 1];
             $result .= db('weixin_design_submit')->where('id', '=', $i)->update(['status' => 1]);
         }
-        return $this->_package_return('修改订单状态成功', '', $result);
+        return $this->success('修改订单状态成功', '', $result);
     }
 
     /**

@@ -1,8 +1,8 @@
 /*
  * @Author: Azusakuo 
  * @Date: 2017-11-14 10:02:22 
- * @Last Modified by:   Azusakuo 
- * @Last Modified time: 2017-11-14 10:02:22 
+ * @Last Modified by: Azusakuo
+ * @Last Modified time: 2017-11-17 13:34:33
  * 
  */
 
@@ -10,10 +10,6 @@
  * @deprecated 本文件已由proload取代
  */
 /* eslint-disable no-console */
-import {
-    Loading,
-    Message
-} from 'element-ui'
 
 let Layout = {}
 
@@ -39,19 +35,25 @@ Layout.install = function (Vue, options) {
     }
 
     Vue.mixin({
-        beforeCreate: function () {},
-        created: function () {
-
+        beforeCreate: function () {
+            settings.title = this.$route.meta.pageTitle || '';
         },
+        created: function () {},
 
         updated: function () {
             //  更新界面时候更新网页标题
-            document.title = 'TiramisuCMS' + (' - ' + settings.title || '')
+            setDocumentTitle(settings.title)
+
         },
         mounted: function () {
             //  挂载时更新网页标题
-            document.title = 'TiramisuCMS' + (' - ' + settings.title || '')
+            setDocumentTitle(settings.title)
+
         }
     })
 }
 module.exports = Layout
+
+let setDocumentTitle = title => {
+    document.title = 'tiramisuCMS' + ('-' + title || '');
+}
