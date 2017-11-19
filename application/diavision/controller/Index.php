@@ -64,29 +64,7 @@ class Index extends Controller
     }
 
 
-    /**
-     * 获取用户列表
-     * @return string
-     */
-    public function get_user()
-    {
-        $data['formData'] = db('weixin_user')->select();
-        foreach ($data['formData'] as $key => $user) {
-            $data['formData'][$key]['nick_name'] = is_null(json_decode($user['nick_name'])) ? $user['nick_name'] : json_decode($user['nick_name']);
-        }
-        $this->success('成功:获取用户列表', '', $data);
-    }
 
-    public function export_users()
-    {
-        $data['formData'] = db('weixin_user')->select();
-        foreach ($data['formData'] as $key => $user) {
-            $data[$key]['nick_name'] = base64_decode($user['nick_name']);
-        }
-        $name = 'Excelfile';    //生成的Excel文件文件名
-        $excelHandle = new \phpToExcel();
-        return $res = $excelHandle->push($data['formData'], $name);
-    }
 
     /**
      * 单个提交完成

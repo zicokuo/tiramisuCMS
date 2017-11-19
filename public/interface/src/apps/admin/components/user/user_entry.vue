@@ -48,8 +48,6 @@
 </template>
 <script>
 import _ from "lodash";
-import Config from "../../../../config";
-import Cache from "../../../../public-resource/modules/cache";
 
 export default {
   name: "userEntry",
@@ -83,6 +81,8 @@ export default {
     let vm = this;
     //    同步Cache和Storage
     let user = vm.$cache("user_info");
+    let logined = vm.$cache("user_logined")||false;
+    
     this.$store.dispatch("USER_UPDATE", user);
     vm.method = vm.$route.params.method || "login";
     if (vm.$store.getters.isLogin === true) {
@@ -122,7 +122,7 @@ export default {
         }
         let api_url = vm.$getUrl("adminUrl") + "user/userLogin";
         this.$http.get(api_url, { params: this.loginForm }).then(res => {
-          //            todo 用户密码加密传输,不能明码传输
+          //  TODO: 用户密码加密传输,不能明码传输
           console.log(res.body.msg);
           if (res.body.code === 1) {
             vm.$notify({
@@ -133,7 +133,7 @@ export default {
             let user = res.body.data;
             user.isLogin = true;
             vm.$store.dispatch("USER_UPDATE", user);
-            Cache.set("user_info", user);
+            vm.$cache("user_info", user);
             //  登录成功跳转
             vm.$router.push({ path: "/admin/index" });
           }

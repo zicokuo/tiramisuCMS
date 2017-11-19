@@ -13,8 +13,7 @@
 <script>
 import * as _ from "lodash";
 import router from "vue-router";
-import routers from "./../admin_router";
-
+import routers from "../router";
 export default {
   name: "navigation",
   data() {

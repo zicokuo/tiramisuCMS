@@ -2,9 +2,10 @@ module.exports = {
     'env': {
         'browser': true,
         'commonjs': true,
-        'es6': true
+        'es6': true,
+        'node':true,
     },
-    'extends': 'eslint:recommended',
+    'extends': ['eslint:recommended'],
     'parserOptions': {
         'ecmaFeatures': {
             // "experimentalObjectRestSpread": true,
@@ -17,10 +18,10 @@ module.exports = {
         "import"
     ],
     'rules': {
-        'indent': [
-            'error',
-            4
-        ],
+        // 'indent': [
+        //     'error',
+        //     4
+        // ],        
         'linebreak-style': [
             'error',
             'windows'

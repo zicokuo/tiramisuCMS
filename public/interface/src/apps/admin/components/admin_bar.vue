@@ -36,10 +36,10 @@
 </template>
 <script>
 import ElMenuItem from "../../../../node_modules/element-ui/packages/menu/src/menu-item.vue";
-import routers from "./../admin_router";
+import routers from "../router";
 
 let Cache = () => import("../../../public-resource/modules/cache");
-let comp_user_box = () => "./user/user_avatar_s.vue";
+let comp_user_box = () => import( "./user/user_avatar_s.vue");
 export default {
   components: { ElMenuItem, comp_user_box },
   name: "adminMenu",

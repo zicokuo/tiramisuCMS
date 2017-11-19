@@ -1,16 +1,29 @@
 <template>
     <div class="design_user">
+        <template name="toolbar">
+            <p>
+                <el-button type="infor" icon="el-icon-i--" size="mini" :disabled="tableSelected == 0"
+                           @click="exportSubmits">导出成Excel
+                </el-button>
+                <el-button type="success" icon="el-icon-i--refresh" size="mini" @click="refreshTable">刷新</el-button>
+            </p>
+            <p> 共有{{tableTotals}}条项目,当前显示{{ listDatas.length || 0 }}条,已选择{{tableSelected.length || 0}}条</p>
+        </template>
         <template name="table">
             <el-table :data="listDatas" style="width: 100%" :default-sort="{prop: '', order: 'descending'}"
                       @selection-change="handleSelectionChange" ref="designTable">
-                <el-table-column type="selection"  align="center"></el-table-column>
+                <el-table-column type="selection" align="center"></el-table-column>
                 <el-table-column prop="id" label="序号" width="60"></el-table-column>
                 <el-table-column prop="avatar_url" label="头像">
                     <template slot-scope="scope">
                         <img :src="scope.row.avatar_url" alt="用户头像" height="64">
                     </template>
                 </el-table-column>
-                <el-table-column prop="nick_name" label="微信昵称"></el-table-column>
+                <el-table-column prop="nick_name" label="微信昵称">
+                    <template slot-scope="scope">
+                        {{JSON.parse(scope.row.nick_name)}}
+                    </template>
+                </el-table-column>
                 <el-table-column lable="地区">
                     <template slot-scope="scope">
                         <el-tag>{{ scope.row.country }}</el-tag>
@@ -20,7 +33,8 @@
                 </el-table-column>
                 <el-table-column lable="操作">
                     <template slot-scope="scope">
-                        <el-button type="danger" size="mini">禁止该用户</el-button>
+                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteIt(scope.row.id)">删除
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -30,7 +44,7 @@
 <script>
     export default {
         name: 'design_user',
-        data () {
+        data() {
             return {
                 serverUrl: this.$getUrl('serverUrl') + 'diavision/index/',
                 listDatas: [],
@@ -44,7 +58,7 @@
         },
         methods: {
             //  获取表单数据
-            getTableDataHandler (data = {}, func) {
+            getTableDataHandler(data = {}, func) {
                 let vm = this
                 data.page_size ? '' : data.page_size = vm.tablePageSize
                 data.paged ? '' : data.paged = vm.tablePaged
@@ -62,11 +76,72 @@
                     }
                 })
             },
-            handleSelectionChange(val){
+            delUserHandle(id) {
+                //  删除
+                let vm = this;
+                vm.$confirm("是否删除?", "删除[" + id + "]号订单")
+                    .then(_ => {
+                        vm.$http.post(vm.serverUrl + "user/deleted", {id: id}).then(response => {
+                            if (response.result.code === 1) {
+                                vm.$message("[" + id + "]号订单已经删除");
+                                vm.listDatas = vm.listDatas.filter(item => item.id !== id);
+                            } else {
+                                vm.$message("[" + id + "]号订单删除失败...");
+                            }
+                        });
+                    })
+                    .catch(_ => {
+                    });
+
+            },
+            exportSubmits(e) {
+                let vm = this;
+                if (vm.tableSelected.length > 0) {
+                    let ids = [];
+                    for (let key in vm.tableSelected) {
+                        ids.push(vm.tableSelected[key].id);
+                    }
+                    vm.$confirm("是否导出所选项?", "选择[" + ids + "]项目").then(_ => {
+                        vm.$http
+                            .post(vm.serverUrl + "export_list", {
+                                exports_ids: ids.toString()
+                            })
+                            .then(response => {
+                                console.log(response);
+                            });
+                    });
+                }
+            },
+            refreshTable() {
+                let vm = this;
+                vm.getTableDataHandler({
+                    paged: vm.tablePaged,
+                    page_size: vm.tablePageSize
+                });
+            },
+            //  删除
+            deleteIt(id) {
+                let vm = this;
+                vm
+                    .$confirm("是否删除?", "删除[" + id + "]号订单")
+                    .then(_ => {
+                        vm.$http.post(vm.serverUrl + "deleted", {id: id}).then(response => {
+                            if (response.result.code === 1) {
+                                vm.$message("[" + id + "]号订单已经删除");
+                                vm.listDatas = vm.listDatas.filter(item => item.id !== id);
+                            } else {
+                                vm.$message("[" + id + "]号订单删除失败...");
+                            }
+                        });
+                    })
+                    .catch(_ => {
+                    });
+            },
+            handleSelectionChange(val) {
                 console.log(val);
             }
         },
-        beforeMount(){
+        beforeMount() {
             this.getTableDataHandler();
         }
     }

@@ -8,6 +8,8 @@
 
 namespace app\admin\controller;
 
+use app\tiramisu\units\ticket;
+use think\Cache;
 use think\Controller;
 use app\tiramisu\Base as TiramisuBase;
 use think\Request;
@@ -30,11 +32,15 @@ class Server extends Controller
      */
     public function get_ticket()
     {
-        $this->request->isAjax(true);
-        $user_ticket = $this->request->param('user_ticket');
-        $user_ticket = empty($user_ticket) || is_null($user_ticket) ? base64_encode(md5(time())) : $user_ticket;
-//        return json_encode(['body' => ['code' => 1, 'data' => ['user_ticket'=>$user_ticket]]]);
-        return $this->success('前端申请票据成功', '', ['user_ticket' => $user_ticket]);
+        //  生成门票
+        $ticket = $this->request->param('user_ticket', null);
+        $ticket = is_null($ticket) ? ticket::build(session_id()) : $ticket;
+
+        //  缓存门票列表
+        $tickets = Cache::get('ticket_list', []);
+        array_push($tickets, $ticket);
+        Cache::set('ticket_list', $tickets);
+        return $this->success('前端申请票据成功', '', ['user_ticket' => $ticket]);
     }
 
     public function index()

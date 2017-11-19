@@ -18,8 +18,8 @@
   "require": {
     "php": ">=5.4.0",
     "topthink/framework": "~5.0.0",
-    "liuggio/excelbundle": "~2.1.0",
-    "iamcal/php-emoji":"~1.4.2"
+    "iamcal/php-emoji": "~1.4.2",
+    "phpoffice/phpexcel": "dev-develop"
   },
   "extra": {
     "think-path": "thinkphp"

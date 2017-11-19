@@ -4,13 +4,12 @@ import C from './cookies'
 let d = new Date()
 
 let expired = 24 * 60 * 60 * 1000 // 1日
-let storageSupport = (typeof (localStorage) === 'object')
+let isStorage = (typeof (localStorage) === 'object')
 
 //  todo storage应该增加数据时效性
 const Cache = {
     get: function (name, defaultValue = null) {
-        // return JSON.parse(storageSupport ? localStorage.getItem(name) : C.get(name))
-        if (storageSupport) {
+        if (isStorage) {
             //  本地storage支持的话,则选用storage进行取值
             let value = JSON.parse(localStorage.getItem(name))
             // console.log(value)
@@ -32,8 +31,7 @@ const Cache = {
         }
     },
     set: function (name, value, isRewrite = true) {
-        // storageSupport ? localStorage.setItem(name, value) : C.set(name, value, 1)
-        if (storageSupport) {
+        if (isStorage) {
             let data
             if (isRewrite === true) {
                 //  覆盖
@@ -63,7 +61,7 @@ const Cache = {
         }
     },
     rem: function (name) {
-        storageSupport ? localStorage.removeItem(name) : C.delete(name)
+        isStorage ? localStorage.removeItem(name) : C.delete(name)
     },
 }
 module.exports = Cache

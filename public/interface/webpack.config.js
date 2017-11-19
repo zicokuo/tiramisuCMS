@@ -75,8 +75,8 @@ module.exports = (options = {}) => {
         ],
         resolve: {
             alias: {
-                '~': resolve(__dirname, './src'),
-                'src': resolve(__dirname, './src'),
+                '@': resolve('src'),
+                '@app': resolve('src/apps'),
                 //  别名vue,用作动态解释模板
                 // 'vue': 'vue/dist/vue.min.js',
                 'vue': 'vue/dist/vue.js',

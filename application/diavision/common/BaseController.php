@@ -10,10 +10,6 @@ namespace app\diavision\common;
 
 trait BaseController
 {
-    static function output($e)
-    {
-        return json_encode($e);
-    }
 
     /**
      * 标准化api接口返回数据
