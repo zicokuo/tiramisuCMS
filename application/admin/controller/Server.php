@@ -21,7 +21,7 @@ class Server extends Controller
         $this->initialization();
         parent::__construct($request);
 
-
+        $this->request->isAjax();
     }
 
     /**
