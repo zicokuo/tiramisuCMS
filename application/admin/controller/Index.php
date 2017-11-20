@@ -8,13 +8,26 @@
 
 namespace app\admin\controller;
 
+use app\admin\common\BaseController;
 use think\Controller;
-use app\tiramisu\Base as TiramisuBase;
+use think\Request;
 
 class Index extends Controller
 {
+    use BaseController;
+
+    public function __construct(Request $request = null)
+    {
+        $this->initialization();
+        parent::__construct($request);
+    }
+
+
+
+
     public function index()
     {
+        var_dump($this->userInfo);
         return 'welcome';
     }
 

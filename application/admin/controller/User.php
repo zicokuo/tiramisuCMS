@@ -24,15 +24,18 @@ class User extends Controller
     {
         parent::__construct($request);
         if ($this->request->action() == 'userlogin') {
-            return $this->userLogin();
+            return $this->user_login();
         }
-        if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
+        if ($this->request->isAjax() && TiramisuBase::check_ticket()) {
 
         } else {
             return $this->_package_return('无效的数据交互', '', '', 0);
         }
     }
 
+    /**
+     * @deprecated checkLogin方法已废弃,被Server取代
+     */
     public function checkLogin()
     {
         $token = Cookie::has('user_token') ? Cookie::get('user_token') : null;
@@ -46,26 +49,28 @@ class User extends Controller
         }
 
         //  todo 添加用户登录验证并返回用户信息
-        return $this->success('', '', ['user' => $user]);
+        $this->success('', '', ['user' => $user]);
     }
 
-    public function userLogin()
+
+    /**
+     * 用户登录接口
+     * TODO:数据均为模拟,后续需要接入用户模型
+     */
+    public function api_user_login()
     {
         $account = $this->request->get('account', null);
         $password = $this->request->get('password', null);
 //        var_dump($account,$password);
         if ($account == '13828471634' || $password == '123456') {
             //  todo 暂时模拟用户登录数据
-            $user = TiramisuUser::born($account);
+            $user = TiramisuUser::born('Azusakuo', ['account' => $account, 'mail' => '21520993@qq.com']);
             $user['isLogin'] = true;
-            $user['nick'] = $account;
-//            var_dump($user);
-            Cache::set('logined.' . $user['user_token'], $user, 7200);
-            return $this->success('您通过认证..', '/admin/index', $user);
+            Cache::set('logined.' . $user['signature'], $user, 7200);
+            $this->success('您通过用户签名认证', '', $user);
         }
         if (is_null($account) || is_null($password)) {
-            return $this->error('请输入正确的登录账户与密码..');
+            $this->error('请输入正确的登录账户与密码..');
         }
-
     }
 }

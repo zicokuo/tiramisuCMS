@@ -112,7 +112,6 @@
     </div>
 </template>
 <script>
-//    import Configs from '../../../config'
 import { formatDate } from "../../../public-resource/plugins/datetime";
 
 let comp_taskStatus = {
@@ -307,6 +306,11 @@ export default {
     },
     exportSubmits(e) {
       let vm = this;
+      vm.$message({
+        message: "很遗憾,导出Excel功能还在优化中",
+        type: "warning"
+      });
+      return;
       if (vm.tableSelected.length > 0) {
         let ids = [];
         for (let key in vm.tableSelected) {
@@ -317,8 +321,9 @@ export default {
             .post(vm.serverUrl + "export_list", {
               exports_ids: ids.toString()
             })
-            .then(response => {
-              console.log(response);
+            .then(success_res => {
+              console.log(success_res);
+              window.open(success_res.body.data.fileUrl);
             });
         });
       }

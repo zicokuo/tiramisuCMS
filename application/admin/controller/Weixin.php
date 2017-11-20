@@ -18,7 +18,7 @@ class Weixin extends Controller
     {
         parent::__construct($request);
         if ($this->request->action() != 'get_ticket') {
-            if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
+            if ($this->request->isAjax() && TiramisuBase::check_ticket()) {
             } else {
                 $this->error('无效的数据交互');
             }

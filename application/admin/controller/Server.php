@@ -8,40 +8,31 @@
 
 namespace app\admin\controller;
 
-use app\tiramisu\units\ticket;
-use think\Cache;
+use app\admin\common\BaseController;
 use think\Controller;
-use app\tiramisu\Base as TiramisuBase;
 use think\Request;
 
 class Server extends Controller
 {
+    use BaseController;
+
     function __construct(Request $request = null)
     {
+        $this->initialization();
         parent::__construct($request);
-        if ($this->request->action() != 'get_ticket') {
-            if ($this->request->isAjax() && TiramisuBase::interactionCheck()) {
-            } else {
-                $this->error('无效的数据交互');
-            }
-        }
+
+
     }
 
     /**
-     * 前端ticket获取 - 唯一一个不需检票的入口
+     *  前端同步用户身份接口
      */
-    public function get_ticket()
+    public function get_user_signature()
     {
-        //  生成门票
-        $ticket = $this->request->param('user_ticket', null);
-        $ticket = is_null($ticket) ? ticket::build(session_id()) : $ticket;
-
-        //  缓存门票列表
-        $tickets = Cache::get('ticket_list', []);
-        array_push($tickets, $ticket);
-        Cache::set('ticket_list', $tickets);
-        return $this->success('前端申请票据成功', '', ['user_ticket' => $ticket]);
+        $signature = $this->userInfo['signature'];
+        $this->success('用户身份已生成' . $this->userInfo['nick_name'], $this->request->url(), ['user_signature' => $signature]);
     }
+
 
     public function index()
     {

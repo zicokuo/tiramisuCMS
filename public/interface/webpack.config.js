@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const url = require('url')
-// const publicPath = '/interface/assets/'
-const publicPath = '/'
+const publicPath = '/interface/assets/'
+// const publicPath = '/'
 const itemName = 'dist'
 
 module.exports = (options = {}) => {

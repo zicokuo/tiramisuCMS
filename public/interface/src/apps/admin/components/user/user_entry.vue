@@ -81,8 +81,8 @@ export default {
     let vm = this;
     //    同步Cache和Storage
     let user = vm.$cache("user_info");
-    let logined = vm.$cache("user_logined")||false;
-    
+    let logined = vm.$cache("user_logined") || false;
+
     this.$store.dispatch("USER_UPDATE", user);
     vm.method = vm.$route.params.method || "login";
     if (vm.$store.getters.isLogin === true) {
@@ -120,16 +120,18 @@ export default {
           this.$notify({ title: "警告", message: "请输入正确的登录账户", type: "warning" });
           return false;
         }
-        let api_url = vm.$getUrl("adminUrl") + "user/userLogin";
+        let api_url = vm.$getUrl("adminUrl") + "user/api_user_login";
         this.$http.get(api_url, { params: this.loginForm }).then(res => {
           //  TODO: 用户密码加密传输,不能明码传输
           console.log(res.body.msg);
           if (res.body.code === 1) {
+
             vm.$notify({
               title: "成功",
               message: res.body.data.nick + "登录成功!",
               type: "success"
             });
+
             let user = res.body.data;
             user.isLogin = true;
             vm.$store.dispatch("USER_UPDATE", user);

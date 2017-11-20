@@ -2,38 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: hoo
- * Date: 2017/11/1
- * Time: 10:02
+ * Date: 2017/11/20
+ * Time: 11:53
  */
 
-namespace app\diavision\common;
-/**
- * Trait BaseController
- * @package app\diavision\common
- * @deprecated 本基础类即将废弃,部分方法已经转移到app/common/tool.php下
- */
-trait BaseController
+namespace app\common;
+trait Tool
 {
-
-    /**
-     * 标准化api接口返回数据
-     * @deprecated 弃用 _package_return,将一致采用thinkphp原配的success和error
-     * @param string $msg 处理信息
-     * @param null $url 跳转url || 请求url
-     * @param string $data 返回数据内容
-     * @param int $code 处理结果,默认1成功,0失败
-     * @return string 返回json
-     */
-    private function _package_return($msg = '', $url = null, $data = '', $code = 1, $isEnd = false)
-    {
-        $result = ['msg' => $msg, 'url' => $url, 'content' => $data, 'code' => $code];
-        if ($isEnd) {
-            echo json_encode($result);
-            exit();
-        }
-        return json_encode($result);
-    }
-
     public function _is($res)
     {
         if ($res === false) {
@@ -95,6 +70,4 @@ trait BaseController
 
         return $result;
     }
-
-
 }

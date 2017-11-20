@@ -4,7 +4,7 @@
   "author": "21520993@qq.com",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --env.dev",
+    "dev": "webpack-dev-server --inline --hot --open --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules"
   },
   "dependencies": {

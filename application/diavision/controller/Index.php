@@ -60,10 +60,9 @@ class Index extends Controller
         $fileName = 'weixin submits export';
         $excelHandle = new \phpToExcel();
         $fields = db('weixin_design_submit')->getTableFields();
-        return $excelHandle->push($result, $fields, $fileName);
+        $fileUrl = $excelHandle->push($result, $fields, $fileName);
+        $this->success('提交列表已成功导出', $fileUrl, ['fileUrl' => $fileUrl, 'fileName' => $fileName]);
     }
-
-
 
 
     /**

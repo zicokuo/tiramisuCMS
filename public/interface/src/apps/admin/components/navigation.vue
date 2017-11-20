@@ -76,7 +76,8 @@ export default {
         path: href,
         url: curRouter.url
       };
-      let isTabExist = _.findLastIndex(this.tabs, { name: newTabs.key }) < 1;
+      let isTabExist = _.findLastIndex(this.tabs, { name: newTabs.name }) < 1;
+      console.log(newTabs);
       let isHomeTab = href === "/admin/index";
       if (!isHomeTab && isTabExist) {
         this.tabs.push(newTabs);
