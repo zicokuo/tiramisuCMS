@@ -8,22 +8,21 @@
 
 namespace app\diavision\controller;
 
+use app\admin\common\BaseController;
 use app\diavision\model\userModel;
-use app\tiramisu\Base;
 use think\Controller;
 use think\Exception;
 use think\Request;
 
 class User extends Controller
 {
-    use Base;
+    use BaseController;
 
     function __construct(Request $request = null)
     {
+        $this->initialization();
         parent::__construct($request);
-        if (self::check_ticket()) {
 
-        }
     }
 
     public function index()
@@ -42,7 +41,7 @@ class User extends Controller
             //  转换用户名 - 处理emoji表情
             $data['formData'][$key]['nick_name'] = json_encode(base64_decode($user['nick_name']));
         }
-        $this->success('成功:获取用户列表', '', $data);
+        $this->response_success('成功:获取用户列表', '', $data);
     }
 
     /**
@@ -56,12 +55,12 @@ class User extends Controller
             //  禁止使用
             try {
                 $res = $userModel->where('id', '=', $uid)->isUpdate(true)->save(['enabled' => 0]);
-                $this->success('用户[' . $uid . ']被禁用', $this->request->url(), $res);
+                $this->response_success('用户[' . $uid . ']被禁用', $this->request->url(), $res);
             } catch (Exception $e) {
-                $this->error('禁用用户[' . $uid . ']失败', $this->request->url());
+                $this->response_error('禁用用户[' . $uid . ']失败', $this->request->url());
             }
         } else {
-            $this->error('用户禁用操作缺少参数', $this->request->url());
+            $this->response_error('用户禁用操作缺少参数', $this->request->url());
         }
     }
 

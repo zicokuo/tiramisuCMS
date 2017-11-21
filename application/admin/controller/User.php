@@ -8,8 +8,7 @@
 
 namespace app\admin\controller;
 
-use app\diavision\common\BaseController;
-use app\tiramisu\Base as TiramisuBase;
+use app\admin\common\BaseController;
 use app\tiramisu\User as TiramisuUser;
 use think\Cache;
 use think\Controller;
@@ -24,13 +23,9 @@ class User extends Controller
     {
         parent::__construct($request);
         if ($this->request->action() == 'userlogin') {
-            return $this->user_login();
+//            return $this->user_login();
         }
-        if ($this->request->isAjax() && TiramisuBase::check_ticket()) {
-
-        } else {
-            return $this->_package_return('无效的数据交互', '', '', 0);
-        }
+        $this->request->isAjax(1);
     }
 
     /**
@@ -67,10 +62,10 @@ class User extends Controller
             $user = TiramisuUser::born('Azusakuo', ['account' => $account, 'mail' => '21520993@qq.com']);
             $user['isLogin'] = true;
             Cache::set('logined.' . $user['signature'], $user, 7200);
-            $this->success('您通过用户签名认证', '', $user);
+            $this->response_success('您通过用户签名认证', '', $user);
         }
         if (is_null($account) || is_null($password)) {
-            $this->error('请输入正确的登录账户与密码..');
+            $this->response_error('请输入正确的登录账户与密码..');
         }
     }
 }

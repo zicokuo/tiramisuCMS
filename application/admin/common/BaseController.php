@@ -31,13 +31,36 @@ trait BaseController
     }
 
     /**
-     * 服务器接口入口 - 唯一
-     * 本入口用于分发接口操作
+     * 服务器标准化返回数据函数
+     * success
      * TODO: 以后需要规范化接口分发与调用
+     * @param string $msg
+     * @param string $url
+     * @param string $response
      */
-    public function api()
+    public function response_success($msg = '', $url = '', $response = '')
     {
+        if (request()->isAjax()) {
+            $this->success($msg, $url, $response);
+        } else {
+            echo $this->display(json_encode(['code' => 1, 'msg' => $msg, 'data' => $response, 'url' => $url]));
+        }
+    }
 
+    /**
+     * 服务器标准化返回数据函数
+     * error
+     * @param string $msg
+     * @param string $url
+     * @param string $response
+     */
+    public function response_error($msg = '', $url = '', $response = '')
+    {
+        if (request()->isAjax()) {
+            $this->success($msg, $url, $response);
+        } else {
+            echo $this->display(json_encode(['code' => 0, 'msg' => $msg, 'data' => $response, 'url' => $url]));
+        }
     }
 
 

@@ -21,7 +21,6 @@ class Server extends Controller
         $this->initialization();
         parent::__construct($request);
 
-        $this->request->isAjax();
     }
 
     /**
@@ -30,7 +29,7 @@ class Server extends Controller
     public function get_user_signature()
     {
         $signature = $this->userInfo['signature'];
-        $this->success('用户身份已生成' . $this->userInfo['nick_name'], $this->request->url(), ['user_signature' => $signature]);
+        $this->response_success('用户身份已生成' . $this->userInfo['nick_name'], $this->request->url(), ['user_signature' => $signature]);
     }
 
 

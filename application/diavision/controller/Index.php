@@ -8,10 +8,8 @@
 
 namespace app\diavision\controller;
 
-use app\diavision\common\BaseController;
-use think\Config;
+use app\admin\common\BaseController;
 use think\Controller;
-use think\Db;
 
 class Index extends Controller
 {
@@ -50,7 +48,7 @@ class Index extends Controller
         $data['pages'] = ceil($total / $pageSize);    //  进一法取整,保持多一页页
         $data['paged'] = $paged;
         $data['size'] = intval($pageSize);
-        $this->success('获取用户提交数据列表成功', '', $data);
+        $this->response_success('获取用户提交数据列表成功', '', $data);
     }
 
     public function export_list()
@@ -61,7 +59,7 @@ class Index extends Controller
         $excelHandle = new \phpToExcel();
         $fields = db('weixin_design_submit')->getTableFields();
         $fileUrl = $excelHandle->push($result, $fields, $fileName);
-        $this->success('提交列表已成功导出', $fileUrl, ['fileUrl' => $fileUrl, 'fileName' => $fileName]);
+        $this->response_success('提交列表已成功导出', $fileUrl, ['fileUrl' => $fileUrl, 'fileName' => $fileName]);
     }
 
 
@@ -74,13 +72,13 @@ class Index extends Controller
         $id = $this->request->param('id');
         $id = explode(',', $id);
         if (count($id) < 1) {
-            return $this->_package_return('无效操作', '', '', 0);
+            $this->response_error('无效操作', '', $id);
         }
         $result = '';
         foreach ($id as $i) {
             $result .= db('weixin_design_submit')->where('id', '=', $i)->update(['status' => 1]);
         }
-        return $this->success('修改订单状态成功', '', $result);
+        $this->response_success('修改订单状态成功', '', $result);
     }
 
     /**
@@ -92,36 +90,14 @@ class Index extends Controller
         $id = $this->request->param('id');
         $id = explode(',', $id);
         if (count($id) < 1) {
-            return $this->_package_return('无效操作', '', '', 0);
+            $this->response_error('无效操作');
         }
         $result = '';
         foreach ($id as $i) {
             $result .= db('weixin_design_submit')->where('id', '=', $i)->delete();
         }
-        return $this->_package_return('已删除订单' . $result, '', $result);
+        $this->response_success('已删除订单' . $result, '', $result);
     }
 
-
-    public function test()
-    {
-        $this->design_submit();
-        $params = $this->request->param();
-        if (!is_null($params)) {
-            return $this->_package_return('服务器成功接收数据', $this->request->path(), $params);
-        } else {
-            return '';
-        }
-    }
-
-    public function test_sql()
-    {
-//        Config::load('database.php', '', 'diavision');
-        $this->db_configs = Config::get();
-        $db = Db::connect(Config::get('database'));
-        $tables = $db->getTables();
-        $userRouter = $this->db_configs;
-        var_dump($tables);
-        return 'welcome';
-    }
 
 }
