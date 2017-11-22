@@ -141,8 +141,6 @@ class Weixin extends Controller
     }
 
 
-
-
     /**
      * 小程序表单提交
      * @return string
@@ -162,6 +160,8 @@ class Weixin extends Controller
             $this->_reply_wx('提交设计需求缺少必要字段,请重试', 1, $this->request->param());
         }
     }
+
+
 
     /**
      * 获取小程序提交内容 by 用户

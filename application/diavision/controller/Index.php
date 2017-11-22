@@ -100,4 +100,20 @@ class Index extends Controller
     }
 
 
+    /**
+     * 单页设计表单提交
+     */
+    public function design_submit()
+    {
+        $params = $this->request->param();
+        if (isset($params['design_signature'])) {
+            $bindData = ['user_openid' => '网页用户', 'create_time' => time(), 'status' => 0, 'from_data' => json_encode($params)];
+            $result = db('weixin_design_submit')->insert($bindData);
+            $this->response_success('成功提交设计', '', $result);
+        } else {
+            $this->response_error('本次提交无效');
+        }
+    }
+
+
 }

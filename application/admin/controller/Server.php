@@ -33,6 +33,7 @@ class Server extends Controller
     }
 
 
+
     public function index()
     {
         return 'welcome';
