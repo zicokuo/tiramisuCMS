@@ -8,7 +8,7 @@ class Index extends Controller
 {
     public function index()
     {
-        $token = $this->request->param();
-        return json_encode($this->request);
+        $template = "<a href='/admin'>后台</a>";
+        return $this->display($template);
     }
 }

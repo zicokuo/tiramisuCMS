@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use app\admin\common\BaseController;
+use app\admin\model\UserModel;
 use think\Controller;
 use think\Request;
 
@@ -23,12 +24,10 @@ class Index extends Controller
     }
 
 
-
-
     public function index()
     {
-        var_dump($this->userInfo);
-        return 'welcome';
+        $userModel = new UserModel();
+        var_dump($userModel->get_users(['id'=>2]));
     }
 
 }
