@@ -9,10 +9,12 @@
 namespace app\admin\controller;
 
 use app\admin\common\BaseController;
+use app\admin\model\UserModel;
 use app\tiramisu\User as TiramisuUser;
 use think\Cache;
 use think\Controller;
 use think\Cookie;
+use think\Exception;
 use think\Request;
 
 class User extends Controller
@@ -54,6 +56,19 @@ class User extends Controller
      */
     public function api_user_login()
     {
+        $params = $this->request->param();
+
+        try {
+            $userModel = new UserModel();
+            $userModel->get_user($params)->getResultArray();
+            if (empty($userModel)) {
+
+            }
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+
+
         $account = $this->request->get('account', null);
         $password = $this->request->get('password', null);
 //        var_dump($account,$password);
@@ -66,6 +81,38 @@ class User extends Controller
         }
         if (is_null($account) || is_null($password)) {
             $this->response_error('请输入正确的登录账户与密码..');
+        }
+    }
+
+    /**
+     *  用户登出接口
+     *  TODO:用户登出操作数据接口,用于记录用户行为
+     */
+    public function api_user_logout()
+    {
+        var_dump($this->request->param());
+
+    }
+
+    /**
+     *  用户注册接口
+     * TODO:用于处理用户注册行为
+     */
+    public function api_user_register()
+    {
+        $params = $this->request->param();
+        try {
+            if ($params['account'] || $params['password'] || $params['phone']) {
+                $userModel = new UserModel();
+                $result = $userModel->add_user($params);
+                if (true === $result['code']) {
+                    $this->success($params['nick_name'] . '用户注册成功', '', $result['result']);
+                } else {
+                    $this->error($result['msg'], '', $result['result']);
+                }
+            }
+        } catch (Exception $e) {
+            var_dump($e);
         }
     }
 }

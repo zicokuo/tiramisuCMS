@@ -34,7 +34,9 @@ class UserModel extends BaseModel
     public function get_user($params = [])
     {
         $params['is_enable'] = isset($params['is_enable']) ?: true;
-        $this->where($params);
+        //  密码加密匹配
+        isset($params['password']) ? $params['password'] = md5($params['password']) : '';
+        $this->where($params)->allowField(true);
         return $this;
     }
 
@@ -51,5 +53,20 @@ class UserModel extends BaseModel
         $params['is_enable'] = isset($params['is_enable']) ?: true;
         $this->where($params);
         return $this->getResult();
+    }
+
+    public function add_user($params = [])
+    {
+        //  检测用户碰撞
+        $userExist = $this->where('account', $params['account'])->find();
+        if (empty($userExist)) {
+            $params['password'] = md5($params['password']);
+            $params['register_time'] = time();
+            //  储存用户 - 开始
+            $result = $this->allowField(true)->save($params);
+            return $this->returnResult(true, '用户保存成功', $result);
+        } else {
+            return $this->returnResult(false, '用户已经存在', $params);
+        }
     }
 }

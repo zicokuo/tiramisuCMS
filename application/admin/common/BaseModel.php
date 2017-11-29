@@ -42,4 +42,15 @@ class BaseModel extends Model
         $this->order($field, $order);
         return $this;
     }
+
+    /**
+     * 数据模型返回结果标准化
+     * @param $code true/false 成与败
+     * @param string $msg 返回的信息
+     * @param string $result 结果数据
+     */
+    protected function returnResult($code, $msg = '', $result = '')
+    {
+        return ['code' => $code, 'msg' => $msg, 'result' => $result];
+    }
 }
