@@ -15,6 +15,7 @@ use think\Cache;
 use think\Controller;
 use think\Cookie;
 use think\Exception;
+use think\Log;
 use think\Request;
 
 class User extends Controller
@@ -57,30 +58,31 @@ class User extends Controller
     public function api_user_login()
     {
         $params = $this->request->param();
-
+        if (!isset($params['account']) || !isset($params['password'])) {
+            $this->response_error('请输入正确的登录账户与密码..');
+        }
         try {
             $userModel = new UserModel();
-            $userModel->get_user($params)->getResultArray();
-            if (empty($userModel)) {
+            $user = $userModel->get_user($params)->getResult();
 
+            if (empty($user)) {
+                $this->response_error('不存在该用户,无法登陆', '', $params);
+            } else {
+                if (count($user) != 1) {
+                    $this->response_error('该用户存在多个记录,无法正常使用和登录', '');
+                } else {
+                    $user = $user[0];
+                }
+                //  成功登录 - 记录登录时间,返回用户数据
+                unset($user['password']);
+                $user = TiramisuUser::born($user['nick_name'], $user);
+                $user['isLogin'] = true;
+                Cache::set('logined.' . $user['signature'], $user, 7200);
+                $user = $this->_user_login_handle($user);
+                $this->response_success('您通过用户签名认证', '', $user);
             }
         } catch (Exception $e) {
-            var_dump($e);
-        }
-
-
-        $account = $this->request->get('account', null);
-        $password = $this->request->get('password', null);
-//        var_dump($account,$password);
-        if ($account == '13828471634' || $password == '123456') {
-            //  todo 暂时模拟用户登录数据
-            $user = TiramisuUser::born('Azusakuo', ['account' => $account, 'mail' => '21520993@qq.com']);
-            $user['isLogin'] = true;
-            Cache::set('logined.' . $user['signature'], $user, 7200);
-            $this->response_success('您通过用户签名认证', '', $user);
-        }
-        if (is_null($account) || is_null($password)) {
-            $this->response_error('请输入正确的登录账户与密码..');
+            echo $e;
         }
     }
 
@@ -113,6 +115,28 @@ class User extends Controller
             }
         } catch (Exception $e) {
             var_dump($e);
+        }
+    }
+
+    /**
+     * 用于处理用户登录逻辑流程
+     * @param $user
+     */
+    private function _user_login_handle($user)
+    {
+        //  记录用户登录时间
+        $login_time = time();
+        $userModel = new UserModel();
+        try {
+            $result = $userModel->update_login_time($user['account'], $login_time);
+            if ($result['code'] == 1) {
+                $user['login_time'] = $login_time;
+                return $user;
+            } else {
+                $this->response_error($result['msg'], $user);
+            }
+        } catch (Exception $e) {
+            Log::error($user['account'] . '无法记录登录时间');
         }
     }
 }

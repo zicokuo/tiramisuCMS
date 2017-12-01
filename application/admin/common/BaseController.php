@@ -57,7 +57,7 @@ trait BaseController
     public function response_error($msg = '', $url = '', $response = '')
     {
         if (request()->isAjax()) {
-            $this->success($msg, $url, $response);
+            $this->error($msg, $url, $response);
         } else {
             echo $this->display(json_encode(['code' => 0, 'msg' => $msg, 'data' => $response, 'url' => $url]));
         }

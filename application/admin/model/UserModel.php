@@ -9,6 +9,7 @@
 namespace app\admin\model;
 
 use app\admin\common\BaseModel;
+use think\Exception;
 use think\Model;
 
 class UserModel extends BaseModel
@@ -36,7 +37,7 @@ class UserModel extends BaseModel
         $params['is_enable'] = isset($params['is_enable']) ?: true;
         //  密码加密匹配
         isset($params['password']) ? $params['password'] = md5($params['password']) : '';
-        $this->where($params)->allowField(true);
+        $this->where($this->filterFields($params));
         return $this;
     }
 
@@ -68,5 +69,30 @@ class UserModel extends BaseModel
         } else {
             return $this->returnResult(false, '用户已经存在', $params);
         }
+    }
+
+    /**
+     * 跟新用户登录时间
+     * @param $user
+     * @param $login_time
+     * @return array
+     */
+    public function update_login_time($user, $login_time)
+    {
+        if (isset($user['id'])) {
+            $this->where('id', '=', $user['id']);
+        } elseif (isset($user['account'])) {
+            $this->where('account', '=', $user['account']);
+        } else {
+            return $this->returnResult(false, '用户更新索引字段不存在', $user);
+        }
+        try {
+
+            $result = $this->isUpdate(true)->data(['login_time'], $login_time);
+            return $this->returnResult(true, '用户更新数据成功');
+        } catch (Exception $e) {
+            return $this->returnResult(false, '用户更新数据失败');
+        }
+
     }
 }

@@ -22,7 +22,11 @@ class BaseModel extends Model
      */
     protected function getResultArray()
     {
-        return $result = collection($this->select())->toArray();
+        $result = $this->select();
+        if (false === empty($result)) {
+            return $result = collection($result)->toArray();
+        }
+        return $result;
     }
 
     /**
@@ -52,5 +56,18 @@ class BaseModel extends Model
     protected function returnResult($code, $msg = '', $result = '')
     {
         return ['code' => $code, 'msg' => $msg, 'result' => $result];
+    }
+
+    /**
+     * 过滤查询字段
+     * @param $data
+     * @param array $fields
+     * @return array
+     */
+    protected function filterFields($data, $fields = [])
+    {
+        $tableFields = array_flip($this->getTableFields());
+        $fields = empty($fields) ? $tableFields : array_merge(array_flip($fields), $tableFields);
+        return array_intersect_key($data, $fields);
     }
 }
